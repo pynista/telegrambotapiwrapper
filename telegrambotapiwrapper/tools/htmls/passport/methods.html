@@ -1,0 +1,29 @@
+<h4><a class="anchor" name="setpassportdataerrors" href="#setpassportdataerrors"><i class="anchor-icon"></i></a>setPassportDataErrors
+</h4>
+<p>Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able
+    to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the
+    error must change). Returns <em>True</em> on success.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Yes</td>
+        <td>User identifier</td>
+    </tr>
+    <tr>
+        <td>errors</td>
+        <td>Array of <a href="#passportelementerror">PassportElementError</a></td>
+        <td>Yes</td>
+        <td>A JSON-serialized array describing the errors</td>
+    </tr>
+    </tbody>
+</table>

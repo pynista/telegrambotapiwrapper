@@ -1,0 +1,267 @@
+<h4><a class="anchor" name="sendsticker" href="#sendsticker"><i class="anchor-icon"></i></a>sendSticker</h4>
+<p>Use this method to send .webp stickers. On success, the sent <a href="#message">Message</a> is returned.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>chat_id</td>
+        <td>Integer or String</td>
+        <td>Yes</td>
+        <td>Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)
+        </td>
+    </tr>
+    <tr>
+        <td>sticker</td>
+        <td><a href="#inputfile">InputFile</a> or String</td>
+        <td>Yes</td>
+        <td>Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended),
+            pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using
+            multipart/form-data. <a href="#sending-files">More info on Sending Files »</a></td>
+    </tr>
+    <tr>
+        <td>disable_notification</td>
+        <td>Boolean</td>
+        <td>Optional</td>
+        <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will
+            receive a notification with no sound.
+        </td>
+    </tr>
+    <tr>
+        <td>reply_to_message_id</td>
+        <td>Integer</td>
+        <td>Optional</td>
+        <td>If the message is a reply, ID of the original message</td>
+    </tr>
+    <tr>
+        <td>reply_markup</td>
+        <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>
+            or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
+        <td>Optional</td>
+        <td>Additional interface options. A JSON-serialized object for an <a
+                href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
+                href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
+            keyboard or to force a reply from the user.
+        </td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="getstickerset" href="#getstickerset"><i class="anchor-icon"></i></a>getStickerSet</h4>
+<p>Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>name</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>Name of the sticker set</td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="uploadstickerfile" href="#uploadstickerfile"><i class="anchor-icon"></i></a>uploadStickerFile
+</h4>
+<p>Use this method to upload a .png file with a sticker for later use in <em>createNewStickerSet</em> and <em>addStickerToSet</em>
+    methods (can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Yes</td>
+        <td>User identifier of sticker file owner</td>
+    </tr>
+    <tr>
+        <td>png_sticker</td>
+        <td><a href="#inputfile">InputFile</a></td>
+        <td>Yes</td>
+        <td><strong>Png</strong> image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed
+            512px, and either width or height must be exactly 512px. <a href="#sending-files">More info on Sending Files
+                »</a></td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="createnewstickerset" href="#createnewstickerset"><i class="anchor-icon"></i></a>createNewStickerSet
+</h4>
+<p>Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set.
+    Returns <em>True</em> on success.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Yes</td>
+        <td>User identifier of created sticker set owner</td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>Short name of sticker set, to be used in <code>t.me/addstickers/</code> URLs (e.g., <em>animals</em>). Can
+            contain only english letters, digits and underscores. Must begin with a letter, can&#39;t contain
+            consecutive underscores and must end in <em>“_by_&lt;bot username&gt;”</em>. <em>&lt;bot_username&gt;</em>
+            is case insensitive. 1-64 characters.
+        </td>
+    </tr>
+    <tr>
+        <td>title</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>Sticker set title, 1-64 characters</td>
+    </tr>
+    <tr>
+        <td>png_sticker</td>
+        <td><a href="#inputfile">InputFile</a> or String</td>
+        <td>Yes</td>
+        <td><strong>Png</strong> image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed
+            512px, and either width or height must be exactly 512px. Pass a <em>file_id</em> as a String to send a file
+            that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from
+            the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More info on Sending
+                Files »</a></td>
+    </tr>
+    <tr>
+        <td>emojis</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>One or more emoji corresponding to the sticker</td>
+    </tr>
+    <tr>
+        <td>contains_masks</td>
+        <td>Boolean</td>
+        <td>Optional</td>
+        <td>Pass <em>True</em>, if a set of mask stickers should be created</td>
+    </tr>
+    <tr>
+        <td>mask_position</td>
+        <td><a href="#maskposition">MaskPosition</a></td>
+        <td>Optional</td>
+        <td>A JSON-serialized object for position where the mask should be placed on faces</td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="addstickertoset" href="#addstickertoset"><i class="anchor-icon"></i></a>addStickerToSet</h4>
+<p>Use this method to add a new sticker to a set created by the bot. Returns <em>True</em> on success.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Yes</td>
+        <td>User identifier of sticker set owner</td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>Sticker set name</td>
+    </tr>
+    <tr>
+        <td>png_sticker</td>
+        <td><a href="#inputfile">InputFile</a> or String</td>
+        <td>Yes</td>
+        <td><strong>Png</strong> image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed
+            512px, and either width or height must be exactly 512px. Pass a <em>file_id</em> as a String to send a file
+            that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from
+            the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More info on Sending
+                Files »</a></td>
+    </tr>
+    <tr>
+        <td>emojis</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>One or more emoji corresponding to the sticker</td>
+    </tr>
+    <tr>
+        <td>mask_position</td>
+        <td><a href="#maskposition">MaskPosition</a></td>
+        <td>Optional</td>
+        <td>A JSON-serialized object for position where the mask should be placed on faces</td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="setstickerpositioninset" href="#setstickerpositioninset"><i class="anchor-icon"></i></a>setStickerPositionInSet
+</h4>
+<p>Use this method to move a sticker in a set created by the bot to a specific position . Returns <em>True</em> on
+    success.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>sticker</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>File identifier of the sticker</td>
+    </tr>
+    <tr>
+        <td>position</td>
+        <td>Integer</td>
+        <td>Yes</td>
+        <td>New sticker position in the set, zero-based</td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="deletestickerfromset" href="#deletestickerfromset"><i class="anchor-icon"></i></a>deleteStickerFromSet
+</h4>
+<p>Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>sticker</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>File identifier of the sticker</td>
+    </tr>
+    </tbody>
+</table>

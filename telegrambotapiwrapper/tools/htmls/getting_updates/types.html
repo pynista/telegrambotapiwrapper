@@ -1,0 +1,122 @@
+<h4><a class="anchor" name="update" href="#update"><i class="anchor-icon"></i></a>Update</h4>
+<p>This <a href="#available-types">object</a> represents an incoming update.<br>At most <strong>one</strong> of the optional parameters can be present in any given update.</p>
+<table class="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>update_id</td>
+<td>Integer</td>
+<td>The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using <a href="#setwebhook">Webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.</td>
+</tr>
+<tr>
+<td>message</td>
+<td><a href="#message">Message</a></td>
+<td><em>Optional</em>. New incoming message of any kind — text, photo, sticker, etc.</td>
+</tr>
+<tr>
+<td>edited_message</td>
+<td><a href="#message">Message</a></td>
+<td><em>Optional</em>. New version of a message that is known to the bot and was edited</td>
+</tr>
+<tr>
+<td>channel_post</td>
+<td><a href="#message">Message</a></td>
+<td><em>Optional</em>. New incoming channel post of any kind — text, photo, sticker, etc.</td>
+</tr>
+<tr>
+<td>edited_channel_post</td>
+<td><a href="#message">Message</a></td>
+<td><em>Optional</em>. New version of a channel post that is known to the bot and was edited</td>
+</tr>
+<tr>
+<td>inline_query</td>
+<td><a href="#inlinequery">InlineQuery</a></td>
+<td><em>Optional</em>. New incoming <a href="#inline-mode">inline</a> query</td>
+</tr>
+<tr>
+<td>chosen_inline_result</td>
+<td><a href="#choseninlineresult">ChosenInlineResult</a></td>
+<td><em>Optional</em>. The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.</td>
+</tr>
+<tr>
+<td>callback_query</td>
+<td><a href="#callbackquery">CallbackQuery</a></td>
+<td><em>Optional</em>. New incoming callback query</td>
+</tr>
+<tr>
+<td>shipping_query</td>
+<td><a href="#shippingquery">ShippingQuery</a></td>
+<td><em>Optional</em>. New incoming shipping query. Only for invoices with flexible price</td>
+</tr>
+<tr>
+<td>pre_checkout_query</td>
+<td><a href="#precheckoutquery">PreCheckoutQuery</a></td>
+<td><em>Optional</em>. New incoming pre-checkout query. Contains full information about checkout</td>
+</tr>
+<tr>
+<td>poll</td>
+<td><a href="#poll">Poll</a></td>
+<td><em>Optional</em>. New poll state. Bots receive only updates about polls, which are sent or stopped by the bot</td>
+</tr>
+</tbody>
+</table>
+<h4><a class="anchor" name="webhookinfo" href="#webhookinfo"><i class="anchor-icon"></i></a>WebhookInfo</h4>
+<p>Contains information about the current status of a webhook.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>url</td>
+        <td>String</td>
+        <td>Webhook URL, may be empty if webhook is not set up</td>
+    </tr>
+    <tr>
+        <td>has_custom_certificate</td>
+        <td>Boolean</td>
+        <td>True, if a custom certificate was provided for webhook certificate checks</td>
+    </tr>
+    <tr>
+        <td>pending_update_count</td>
+        <td>Integer</td>
+        <td>Number of updates awaiting delivery</td>
+    </tr>
+    <tr>
+        <td>last_error_date</td>
+        <td>Integer</td>
+        <td><em>Optional</em>. Unix time for the most recent error that happened when trying to deliver an update via
+            webhook
+        </td>
+    </tr>
+    <tr>
+        <td>last_error_message</td>
+        <td>String</td>
+        <td><em>Optional</em>. Error message in human-readable format for the most recent error that happened when
+            trying to deliver an update via webhook
+        </td>
+    </tr>
+    <tr>
+        <td>max_connections</td>
+        <td>Integer</td>
+        <td><em>Optional</em>. Maximum allowed number of simultaneous HTTPS connections to the webhook for update
+            delivery
+        </td>
+    </tr>
+    <tr>
+        <td>allowed_updates</td>
+        <td>Array of String</td>
+        <td><em>Optional</em>. A list of update types the bot is subscribed to. Defaults to all update types</td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,150 @@
+<h4><a class="anchor" name="answerinlinequery" href="#answerinlinequery"><i class="anchor-icon"></i></a>answerInlineQuery
+</h4>
+<p>Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than
+    <strong>50</strong> results per query are allowed.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>inline_query_id</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>Unique identifier for the answered query</td>
+    </tr>
+    <tr>
+        <td>results</td>
+        <td>Array of <a href="#inlinequeryresult">InlineQueryResult</a></td>
+        <td>Yes</td>
+        <td>A JSON-serialized array of results for the inline query</td>
+    </tr>
+    <tr>
+        <td>cache_time</td>
+        <td>Integer</td>
+        <td>Optional</td>
+        <td>The maximum amount of time in seconds that the result of the inline query may be cached on the server.
+            Defaults to 300.
+        </td>
+    </tr>
+    <tr>
+        <td>is_personal</td>
+        <td>Boolean</td>
+        <td>Optional</td>
+        <td>Pass <em>True</em>, if results may be cached on the server side only for the user that sent the query. By
+            default, results may be returned to any user who sends the same query
+        </td>
+    </tr>
+    <tr>
+        <td>next_offset</td>
+        <td>String</td>
+        <td>Optional</td>
+        <td>Pass the offset that a client should send in the next query with the same text to receive more results. Pass
+            an empty string if there are no more results or if you don‘t support pagination. Offset length can’t exceed
+            64 bytes.
+        </td>
+    </tr>
+    <tr>
+        <td>switch_pm_text</td>
+        <td>String</td>
+        <td>Optional</td>
+        <td>If passed, clients will display a button with specified text that switches the user to a private chat with
+            the bot and sends the bot a start message with the parameter <em>switch_pm_parameter</em></td>
+    </tr>
+    <tr>
+        <td>switch_pm_parameter</td>
+        <td>String</td>
+        <td>Optional</td>
+        <td><a href="/bots#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when user
+            presses the switch button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>,
+            <code>_</code> and <code>-</code> are allowed.<br><br><em>Example:</em> An inline bot that sends YouTube
+            videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To
+            do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any.
+            The user presses the button, switches to a private chat with the bot and, in doing so, passes a start
+            parameter that instructs the bot to return an oauth link. Once done, the bot can offer a <a
+                    href="#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the user can easily return to
+            the chat where they wanted to use the bot&#39;s inline capabilities.
+        </td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="answerinlinequery" href="#answerinlinequery"><i class="anchor-icon"></i></a>answerInlineQuery
+</h4>
+<p>Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than
+    <strong>50</strong> results per query are allowed.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>inline_query_id</td>
+        <td>String</td>
+        <td>Yes</td>
+        <td>Unique identifier for the answered query</td>
+    </tr>
+    <tr>
+        <td>results</td>
+        <td>Array of <a href="#inlinequeryresult">InlineQueryResult</a></td>
+        <td>Yes</td>
+        <td>A JSON-serialized array of results for the inline query</td>
+    </tr>
+    <tr>
+        <td>cache_time</td>
+        <td>Integer</td>
+        <td>Optional</td>
+        <td>The maximum amount of time in seconds that the result of the inline query may be cached on the server.
+            Defaults to 300.
+        </td>
+    </tr>
+    <tr>
+        <td>is_personal</td>
+        <td>Boolean</td>
+        <td>Optional</td>
+        <td>Pass <em>True</em>, if results may be cached on the server side only for the user that sent the query. By
+            default, results may be returned to any user who sends the same query
+        </td>
+    </tr>
+    <tr>
+        <td>next_offset</td>
+        <td>String</td>
+        <td>Optional</td>
+        <td>Pass the offset that a client should send in the next query with the same text to receive more results. Pass
+            an empty string if there are no more results or if you don‘t support pagination. Offset length can’t exceed
+            64 bytes.
+        </td>
+    </tr>
+    <tr>
+        <td>switch_pm_text</td>
+        <td>String</td>
+        <td>Optional</td>
+        <td>If passed, clients will display a button with specified text that switches the user to a private chat with
+            the bot and sends the bot a start message with the parameter <em>switch_pm_parameter</em></td>
+    </tr>
+    <tr>
+        <td>switch_pm_parameter</td>
+        <td>String</td>
+        <td>Optional</td>
+        <td><a href="/bots#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when user
+            presses the switch button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>,
+            <code>_</code> and <code>-</code> are allowed.<br><br><em>Example:</em> An inline bot that sends YouTube
+            videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To
+            do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any.
+            The user presses the button, switches to a private chat with the bot and, in doing so, passes a start
+            parameter that instructs the bot to return an oauth link. Once done, the bot can offer a <a
+                    href="#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the user can easily return to
+            the chat where they wanted to use the bot&#39;s inline capabilities.
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,125 @@
+<h4><a class="anchor" name="sticker" href="#sticker"><i class="anchor-icon"></i></a>Sticker</h4>
+<p>This object represents a sticker.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>file_id</td>
+        <td>String</td>
+        <td>Unique identifier for this file</td>
+    </tr>
+    <tr>
+        <td>width</td>
+        <td>Integer</td>
+        <td>Sticker width</td>
+    </tr>
+    <tr>
+        <td>height</td>
+        <td>Integer</td>
+        <td>Sticker height</td>
+    </tr>
+    <tr>
+        <td>thumb</td>
+        <td><a href="#photosize">PhotoSize</a></td>
+        <td><em>Optional</em>. Sticker thumbnail in the .webp or .jpg format</td>
+    </tr>
+    <tr>
+        <td>emoji</td>
+        <td>String</td>
+        <td><em>Optional</em>. Emoji associated with the sticker</td>
+    </tr>
+    <tr>
+        <td>set_name</td>
+        <td>String</td>
+        <td><em>Optional</em>. Name of the sticker set to which the sticker belongs</td>
+    </tr>
+    <tr>
+        <td>mask_position</td>
+        <td><a href="#maskposition">MaskPosition</a></td>
+        <td><em>Optional</em>. For mask stickers, the position where the mask should be placed</td>
+    </tr>
+    <tr>
+        <td>file_size</td>
+        <td>Integer</td>
+        <td><em>Optional</em>. File size</td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="stickerset" href="#stickerset"><i class="anchor-icon"></i></a>StickerSet</h4>
+<p>This object represents a sticker set.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>name</td>
+        <td>String</td>
+        <td>Sticker set name</td>
+    </tr>
+    <tr>
+        <td>title</td>
+        <td>String</td>
+        <td>Sticker set title</td>
+    </tr>
+    <tr>
+        <td>contains_masks</td>
+        <td>Boolean</td>
+        <td><em>True</em>, if the sticker set contains masks</td>
+    </tr>
+    <tr>
+        <td>stickers</td>
+        <td>Array of <a href="#sticker">Sticker</a></td>
+        <td>List of all set stickers</td>
+    </tr>
+    </tbody>
+</table>
+<h4><a class="anchor" name="maskposition" href="#maskposition"><i class="anchor-icon"></i></a>MaskPosition</h4>
+<p>This object describes the position on faces where a mask should be placed by default.</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>point</td>
+        <td>String</td>
+        <td>The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or
+            “chin”.
+        </td>
+    </tr>
+    <tr>
+        <td>x_shift</td>
+        <td>Float number</td>
+        <td>Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example,
+            choosing -1.0 will place mask just to the left of the default mask position.
+        </td>
+    </tr>
+    <tr>
+        <td>y_shift</td>
+        <td>Float number</td>
+        <td>Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. For example,
+            1.0 will place the mask just below the default mask position.
+        </td>
+    </tr>
+    <tr>
+        <td>scale</td>
+        <td>Float number</td>
+        <td>Mask scaling coefficient. For example, 2.0 means double size.</td>
+    </tr>
+    </tbody>
+</table>
