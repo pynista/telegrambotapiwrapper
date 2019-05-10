@@ -3,6 +3,13 @@ from telegrambotapiwrapper.api.types import *
 
 
 def json_payload(args: dict) -> str:
+    """Получить строку, содержащую объект для отправки к Telegram Bot Api.
+
+    Args:
+        args(dict): словарь с данными для отправки
+    Returns:
+        (строка): json-строка, содержащая объект который будет отправлен к Telegram Bot Api.
+    """
     def remove_none_values(d: dict):
         """Delete None values,"""
         if not isinstance(d, (dict, list)):

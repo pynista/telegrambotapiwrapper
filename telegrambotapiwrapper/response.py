@@ -6,7 +6,8 @@ from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.api.types import *
 
 
-def dataclass_fields_to_d(fields: dict):
+def dataclass_fields_to_d(fields: dict) -> dict:
+    """Получить из полей dataclass, определяющего тип объекта, json-подобный словарь."""
     jstr =  json_payload(fields)
     res =  jsonpickle.decode(jstr)
     return res
@@ -20,8 +21,67 @@ def to_api_type(obj, tp: Union[AnnotationWrapper, str]):
         tp: аннотация получаемого типа
     """
 
+    # for convenience
     if isinstance(tp, str):
         tp = AnnotationWrapper(tp)
+
+
+
+    def optional_to_api_type(obj, tp):
+        optional_inner_part = tp.inner_part_of_optional
+        return not_optional_to_api_type(obj, optional_inner_part)
+
+    def union_to_api_type():
+        pass
+
+    def list_to_api_type():
+        pass
+
+    def list_of_list_to_api_type():
+        pass
+
+    def not_optional_to_api_type(obj, tp):
+        pass
+
+    if tp.is_optional:
+        result = optional_to_api_type(obj, tp)
+
+    else:
+        result = not_optional_to_api_type(obj, tp)
+
+
+
+
+
+
+
+
+
+
+
+        opt_inner_part = tp.inner_part_of_optional
+
+        if opt_inner_part.is_list_of_list:
+            list_of_list_inner_part = opt_inner_part.inner_part_of_list_of_list
+        elif opt_inner_part.is_list:
+            list_inner_part = opt_inner_part.inner_part_of_list
+            if list_inner_part.is_union:
+                types_in_union = list_inner_part.types_in_union
+            else:
+                pass
+        elif opt_inner_part.is_union:
+            pass
+        else:
+            inner_part = tp.inner_part_of_optional
+
+
+
+
+
+
+
+
+
 
     if isinstance(obj, (int, float, str, bool)):  # переделать на более красивое
         return obj
@@ -35,6 +95,10 @@ def to_api_type(obj, tp: Union[AnnotationWrapper, str]):
 
         else:
             raise NotImplementedError("Bot API 4.2 uses only `Union[Message, bool]`- union")
+
+
+    if tp.is_optional:
+        pass
 
     if tp.is_list:
         raise Exception
@@ -104,8 +168,12 @@ if __name__ == '__main__':
         all_members_are_administrators=True,
         photo=chat_photo
     )
+    to_convert = chat1_with_chat_photo._fields_items
+    to_type = dataclass_fields_to_d(to_convert)
+    print(to_type)
 
-    a = dataclass_fields_to_d(chat1_with_chat_photo._fields_items)
+    a = to_api_type(to_type, tp='Chat')
+    b = chat1_with_chat_photo
     print(a)
-    print(to_api_type(a, 'Chat'))
+
 

@@ -74,31 +74,31 @@ class AnnotationWrapper(UserString):
         return AnnotationWrapper(re.search(AnnotationWrapper.inner_part_of_opt_re, self.data).group(1))
 
     @property
-    def inner_part_of_list_of_list(self) -> str:
+    def inner_part_of_list_of_list(self) -> AnnotationWrapper:
         """Внутренняя часть union поля.
 
         Union[User] -> 'User'
         Union[User, bool] -> 'User, bool'
         """
-        return re.search(AnnotationWrapper.inner_part_of_list_of_list_re, self.data).group(1)
+        return AnnotationWrapper(re.search(AnnotationWrapper.inner_part_of_list_of_list_re, self.data).group(1))
 
     @property
-    def inner_part_of_union(self) -> str:
+    def inner_part_of_union(self) -> AnnotationWrapper:
         """Внутренняя часть union поля.
 
         Union[User] -> 'User'
         Union[User, bool] -> 'User, bool'
         """
-        return re.search(AnnotationWrapper.inner_part_of_union_re, self.data).group(1)
+        return AnnotationWrapper(re.search(AnnotationWrapper.inner_part_of_union_re, self.data).group(1))
 
     @property
-    def inner_part_of_list(self) -> str:
+    def inner_part_of_list(self) -> AnnotationWrapper:
         """Внутренняя часть union поля.
 
         List[User] -> 'User'
         List[User, bool] -> 'User, bool'
         """
-        return re.search(AnnotationWrapper.inner_part_of_list_re, self.data).group(1)
+        return AnnotationWrapper(re.search(AnnotationWrapper.inner_part_of_list_re, self.data).group(1))
 
 
 
@@ -121,10 +121,13 @@ class AnnotationWrapper(UserString):
 
     @property
     def is_list(self) -> bool:
-        """Проверить, есть ли атрибут `data` строкой вида 'List[xxx]'.
+        """Проверить, есть ли атрибут `data` строкой вида 'List[xxx], где xxx не строка вида List[yyy]'.
 
         'List[ChatMember]' -> True
+        'List[List[ChatMember]]' -> False
         """
+        if self.is_list_of_list:
+            return False
         if AnnotationWrapper.list_field_re.match(self.data):
             return True
         else:

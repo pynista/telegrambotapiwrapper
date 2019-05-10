@@ -49,6 +49,7 @@ class TestToApiTypeFunction(unittest.TestCase):
 
         a = to_api_type(dataclass_fields_to_d(to_convert), tp='Chat')
         b = chat1_with_chat_photo
+        print(a)
 
         self.assertEqual(a, b)
 
