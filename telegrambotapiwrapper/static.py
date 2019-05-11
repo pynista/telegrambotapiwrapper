@@ -179,7 +179,7 @@ ALL_TYPES = {
     'WebhookInfo'
 }
 
-ALL_RETURNS_TYPES = {
+ALL_METHODS_RETURNS_TYPES = {
     'Chat',
     'ChatMember',
     'File',
@@ -263,3 +263,84 @@ METHODS_RETURN_TYPES = {
     "stopPoll": "Pool",
     "deleteMessage": "bool",
 }
+
+UNION_ANNOTATIONS_IN_TYPES_MODULE = {
+    'Optional[Union[InputFile, str]]',
+}
+
+
+
+ALL_USED_ANNOTATIONS_IN_TYPES = {
+    'Chat',
+    'EncryptedCredentials',
+    'InputMessageContent',
+    'List[EncryptedPassportElement]',
+    'List[LabeledPrice]',
+    'List[List[InlineKeyboardButton]]',
+    'List[List[KeyboardButton]]',
+    'List[List[PhotoSize]]',
+    'List[PhotoSize]',
+    'List[PollOption]',
+    'List[Sticker]',
+    'List[str]',
+    'Location',
+    'Optional[Animation]',
+    'Optional[Audio]',
+    'Optional[CallbackGame]',
+    'Optional[CallbackQuery]',
+    'Optional[ChatPhoto]',
+    'Optional[Chat]',
+    'Optional[ChosenInlineResult]',
+    'Optional[Contact]',
+    'Optional[Document]',
+    'Optional[Game]',
+    'Optional[InlineKeyboardMarkup]',
+    'Optional[InlineQuery]',
+    'Optional[InputMessageContent]',
+    'Optional[Invoice]',
+    'Optional[List[MessageEntity]]',
+    'Optional[List[PassportFile]]',
+    'Optional[List[PhotoSize]]',
+    'Optional[List[User]]',
+    'Optional[List[str]]',
+    'Optional[Location]',
+    'Optional[MaskPosition]',
+    'Optional[Message]',
+    'Optional[OrderInfo]',
+    'Optional[PassportData]',
+    'Optional[PassportFile]',
+    'Optional[PhotoSize]',
+    'Optional[Poll]',
+    'Optional[PreCheckoutQuery]',
+    'Optional[ShippingAddress]',
+    'Optional[ShippingQuery]',
+    'Optional[Sticker]',
+    'Optional[SuccessfulPayment]',
+    'Optional[Union[InputFile, str]]',
+    'Optional[User]',
+    'Optional[Venue]',
+    'Optional[VideoNote]',
+    'Optional[Video]',
+    'Optional[Voice]',
+    'Optional[bool]',
+    'Optional[int]',
+    'Optional[str]',
+    'ShippingAddress',
+    'User',
+    'bool',
+    'float',
+    'int',
+    'str',
+
+}
+UNION_ANNOTATIONS_IN_METHODS_MODULE = {
+    'List[Union[InputMediaPhoto, InputMediaVideo]]',
+    'Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]]',
+    'Optional[Union[InputFile, str]]',
+    'Optional[Union[int, str]]',
+    'Union[InputFile, str]',
+    'Union[int, str]',
+}
+
+
+

@@ -4,6 +4,7 @@ from telegrambotapiwrapper.request import json_payload
 from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.api.types import *
+from telegrambotapiwrapper.utils import is_str_int_float_bool
 
 
 def dataclass_fields_to_d(fields: dict) -> dict:
@@ -12,99 +13,88 @@ def dataclass_fields_to_d(fields: dict) -> dict:
     res =  jsonpickle.decode(jstr)
     return res
 
-def to_api_type(obj, tp: Union[AnnotationWrapper, str]):
-    """Преобразовать объект, полученный от Bot Api в воответствующий тип.
 
-    Args:
-        obj: объект, который требуется преобразовать. Этим объектом является объект извлеченный по ключу 'result'
-            из ответа телеграмма
-        tp: аннотация получаемого типа
+
+def to_api_type(obj, tp: AnnotationWrapper):
+    """Преобразовать результат запроса к Telegram Bot API в соответствующий тип.
+
+    Notes:
+        1)
+            В текущей версий Telegram Bot Api (4.2) могут возвращаться следующие значения:
+                'Chat',
+                'ChatMember',
+                'File',
+                'List[ChatMember]',
+                'List[GameHighScore]',
+                'List[Update]',
+                'Message',
+                'Pool',
+                'StickerSet',
+                'Union[Message, bool]',
+                'User',
+                'UserProfilePhotos',
+                'WebhookInfo',
+                'bool',
+                'int',
+                'str'
+            Для текущей версии Telegram Bot Api (4.2) для создания типов используются следующие `union`- аннотации:
+                'Optional[Union[InputFile, str]]'
+            Для текущей версии Telegram Bot Api (4.2) для создания типов используются следующие `List`- аннотации:
+                    'List[EncryptedPassportElement]',
+                    'List[LabeledPrice]',
+                    'List[PhotoSize]',
+                    'List[PollOption]',
+                    'List[Sticker]',
+                    'List[str]',
+            Для текущей версии Telegram Bot Api (4.2) для создания типов используются следующие `List[List[`- аннотации:
+                    'List[List[InlineKeyboardButton]]',
+                    'List[List[KeyboardButton]]',
+                    'List[List[PhotoSize]]',
+            Для текущей версии Telegram Bot Api (4.2) у возвращаемых значений могут быть следующие `union`- аннотации:
+                'Union[Message, bool]'
+        2)
     """
 
-    # for convenience
-    if isinstance(tp, str):
-        tp = AnnotationWrapper(tp)
+    def list_to_api_type(obj: list, tp: AnnotationWrapper) -> list:
+        inner_part = tp.inner_part_of_list
+        api_type = globals()[inner_part]
+
+        res = []
+        for item in obj:
+            to_type = {}
+            for field_name, field_type in api_type._annotations().items():
+                try:
+                    to_type[field_name] = to_api_type(item[field_name], AnnotationWrapper(field_type))
+                except KeyError:
+                    continue
+            res.append(api_type(**to_type))
+        return res
+
+    def list_of_list_to_api_type(obj: list, tp: AnnotationWrapper):
+        res = []
+        for lst in obj:
+            res.append(list_to_api_type(lst, tp.inner_part_of_list))
+        return res
+
+    def union_to_api_type(obj, tp: AnnotationWrapper):
+        if tp == 'Union[Message, bool]':
+            return to_api_type(obj, AnnotationWrapper('Message'))
+        elif tp == 'Union[InputFile, str]]':
+            return to_api_type(obj, AnnotationWrapper('InputFile'))
 
 
-
-    def optional_to_api_type(obj, tp):
-        optional_inner_part = tp.inner_part_of_optional
-        return not_optional_to_api_type(obj, optional_inner_part)
-
-    def union_to_api_type():
-        pass
-
-    def list_to_api_type():
-        pass
-
-    def list_of_list_to_api_type():
-        pass
-
-    def not_optional_to_api_type(obj, tp):
-        pass
-
-    if tp.is_optional:
-        result = optional_to_api_type(obj, tp)
-
-    else:
-        result = not_optional_to_api_type(obj, tp)
-
-
-
-
-
-
-
-
-
-
-
-        opt_inner_part = tp.inner_part_of_optional
-
-        if opt_inner_part.is_list_of_list:
-            list_of_list_inner_part = opt_inner_part.inner_part_of_list_of_list
-        elif opt_inner_part.is_list:
-            list_inner_part = opt_inner_part.inner_part_of_list
-            if list_inner_part.is_union:
-                types_in_union = list_inner_part.types_in_union
-            else:
-                pass
-        elif opt_inner_part.is_union:
-            pass
-        else:
-            inner_part = tp.inner_part_of_optional
-
-
-
-
-
-
-
-
-
-
-    if isinstance(obj, (int, float, str, bool)):  # переделать на более красивое
+    if is_str_int_float_bool(obj):
         return obj
 
-    if tp.is_union:
-        if tp == 'Union[Message, bool]':
-            if isinstance(obj, bool):
-                return obj
-            else:
-                return to_api_type(obj, AnnotationWrapper("Message"))
-
-        else:
-            raise NotImplementedError("Bot API 4.2 uses only `Union[Message, bool]`- union")
-
-
     if tp.is_optional:
-        pass
+        tp = tp.inner_part_of_optional
 
     if tp.is_list:
-        raise Exception
-
-    if tp.is_list_of_list:
-        raise Exception
+        return list_to_api_type(obj, tp)
+    elif tp.is_list_of_list:
+        return list_of_list_to_api_type(obj, tp)
+    elif tp.is_union:
+        return union_to_api_type(obj, tp)
 
     if isinstance(obj, dict):
         to_type = {}
@@ -172,7 +162,7 @@ if __name__ == '__main__':
     to_type = dataclass_fields_to_d(to_convert)
     print(to_type)
 
-    a = to_api_type(to_type, tp='Chat')
+    a = to_api_type(to_type, tp=AnnotationWrapper('Chat'))
     b = chat1_with_chat_photo
     print(a)
 

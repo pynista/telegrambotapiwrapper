@@ -103,11 +103,11 @@ class AnnotationWrapper(UserString):
 
 
     @property
-    def types_in_union(self) -> List[str]:
+    def types_in_union(self) -> List[AnnotationWrapper]:
         """
         'Union[Message, bool]' -> ['Message', 'bool']
         """
-        return list([word.strip() for word in self.inner_part_of_union.split(',')])
+        return list([AnnotationWrapper(word.strip()) for word in self.inner_part_of_union.split(',')])
 
     @property
     def sanitized(self) -> AnnotationWrapper:
