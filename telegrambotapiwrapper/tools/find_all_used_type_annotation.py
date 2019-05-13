@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 import inspect
 import pprint
 from telegrambotapiwrapper.static import METHODS_RETURN_TYPES

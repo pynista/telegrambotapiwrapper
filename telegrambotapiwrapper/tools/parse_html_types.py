@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 """Модуль для парсинга Telegram Bot Api с сайта."""
 from __future__ import annotations
 

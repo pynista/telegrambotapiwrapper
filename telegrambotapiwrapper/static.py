@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 BOT_API_VERSION = '4.2'
 
 

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 TYPES_MODULES = {
     'telegrambotapiwrapper.api.available.types': 'types_mod1',
     'telegrambotapiwrapper.api.games.types': 'types_mod2',

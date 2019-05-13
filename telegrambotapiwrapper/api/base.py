@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 import dataclasses
 import json
 from typing import List
@@ -7,44 +10,46 @@ from telegrambotapiwrapper.errors import *
 
 
 class Base:
-
     @classmethod
     def _get_classname(cls):
         return cls.__name__
-    
+
     @classmethod
     def _get_simple_fields(cls) -> dict:
         return {
-            name: tp for name, tp in cls._annotations().items() if AnnotationWrapper(tp).is_simple_in_opt_and_not_opt
+            name: tp
+            for name, tp in cls._annotations().items()
+            if AnnotationWrapper(tp).is_simple_in_opt_and_not_opt
         }
 
     @classmethod
     def _get_not_simple_fields(cls):
         return {
-            name: tp for name, tp in cls._annotations().items() if not AnnotationWrapper(tp).is_simple_in_opt_and_not_opt
+            name: tp
+            for name, tp in cls._annotations().items()
+            if not AnnotationWrapper(tp).is_simple_in_opt_and_not_opt
         }
 
     @classmethod
     def _is_simple_type(cls):
-        return all(
-            [
-                AnnotationWrapper(anno).is_simple_in_opt_and_not_opt
-                for anno in cls._used_annotations()
-            ]
-        )
+        return all([
+            AnnotationWrapper(anno).is_simple_in_opt_and_not_opt
+            for anno in cls._used_annotations()
+        ])
 
     def __post_init__(self):
         if self._get_classname() == 'InlineKeyboardButton':
-            optional_fields = [self.url,
-                               self.callback_data,
-                               self.switch_inline_query,
-                               self.switch_inline_query_current_chat,
-                               self.callback_game,
-                               self.pay]
+            optional_fields = [
+                self.url, self.callback_data, self.switch_inline_query,
+                self.switch_inline_query_current_chat, self.callback_game,
+                self.pay
+            ]
             if all(field is None for field in optional_fields):
-                raise NotExactlyOneOptionalFieldError('You must use exactly one of the optional fields for '
-                                                      'InlineKeyboardButton. '
-                                                      'See https://core.telegram.org/bots/api#inlinekeyboardbutton') from InlineKeyboardButtonError
+                raise NotExactlyOneOptionalFieldError(
+                    'You must use exactly one of the optional fields for '
+                    'InlineKeyboardButton. '
+                    'See https://core.telegram.org/bots/api#inlinekeyboardbutton'
+                ) from InlineKeyboardButtonError
 
     @classmethod
     def _fields_names(cls) -> List:
