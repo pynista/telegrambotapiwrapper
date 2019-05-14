@@ -4,7 +4,8 @@
 Python Telegram Bot API wrapper
 
 ## Why telegrambotapiwrapper?
-_stub_
+
+`telegramapiwrapper` is the simplest Telegram Bot Api wrapper for Python among existing wrappers.
 
 ## Installation
 _stub_
@@ -16,5 +17,8 @@ _stub_
 _stub_
 
 ## License
-_Demo_: Licensed under the BSD License. See COPYING for details.
+MIT License
+Copyright (c) 2019 Dzmitry Maliuzhenets
+
+See LICENSE for details.
 

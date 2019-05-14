@@ -10,10 +10,10 @@ from telegrambotapiwrapper.api.types import *
 from telegrambotapiwrapper.utils import is_str_int_float_bool
 
 
-def dataclass_fields_to_d(fields: dict) -> dict:
+def dataclass_fields_to_jdict(fields: dict) -> dict:
     """Получить из полей dataclass, определяющего тип объекта, json-подобный словарь."""
-    jstr =  json_payload(fields)
-    res =  jsonpickle.decode(jstr)
+    jstr = json_payload(fields)
+    res = jsonpickle.decode(jstr)
     return res
 
 
@@ -153,20 +153,23 @@ def handle_response(raw_response: str, method_response_type: AnnotationWrapper):
 
 
 if __name__ == '__main__':
-    chat_photo = ChatPhoto(small_file_id='1fdf235643', big_file_id='3454sdfds56546')
-    chat1_with_chat_photo = Chat(
-        id=123,
-        type='group',
-        title='dsdvfvdvxfve',
-        all_members_are_administrators=True,
-        photo=chat_photo
-    )
-    to_convert = chat1_with_chat_photo._fields_items
-    to_type = dataclass_fields_to_d(to_convert)
-    print(to_type)
-
-    a = to_api_type(to_type, tp=AnnotationWrapper('Chat'))
-    b = chat1_with_chat_photo
-    print(a)
+    user = User(12243, False, "djshfjksdhfjkhskjd")
+    a = InlineQuery(2345345, from_=user, query="asdasdsad", offset="123213213")
+    print(dir(a))
+    # chat_photo = ChatPhoto(small_file_id='1fdf235643', big_file_id='3454sdfds56546')
+    # chat1_with_chat_photo = Chat(
+    #     id=123,
+    #     type='group',
+    #     title='dsdvfvdvxfve',
+    #     all_members_are_administrators=True,
+    #     photo=chat_photo
+    # )
+    # to_convert = chat1_with_chat_photo._fields_items
+    # to_type = dataclass_fields_to_jdict(to_convert)
+    # print(to_type)
+    #
+    # a = to_api_type(to_type, tp=AnnotationWrapper('Chat'))
+    # b = chat1_with_chat_photo
+    # print(a)
 
 

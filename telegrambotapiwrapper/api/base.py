@@ -2,12 +2,10 @@
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 
 import dataclasses
-import json
 from typing import List
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
-from telegrambotapiwrapper.errors import *
-
+from telegrambotapiwrapper.utils import is_ends_with_underscore
 
 class Base:
     @classmethod
@@ -38,18 +36,13 @@ class Base:
         ])
 
     def __post_init__(self):
-        if self._get_classname() == 'InlineKeyboardButton':
-            optional_fields = [
-                self.url, self.callback_data, self.switch_inline_query,
-                self.switch_inline_query_current_chat, self.callback_game,
-                self.pay
-            ]
-            if all(field is None for field in optional_fields):
-                raise NotExactlyOneOptionalFieldError(
-                    'You must use exactly one of the optional fields for '
-                    'InlineKeyboardButton. '
-                    'See https://core.telegram.org/bots/api#inlinekeyboardbutton'
-                ) from InlineKeyboardButtonError
+        for field_name in self.__class__._fields_names():
+            if is_ends_with_underscore(field_name):
+                field_value = getattr(self, field_name)
+                setattr(self, field_name[0:-1], field_value)
+                delattr(self, field_name)
+
+
 
     @classmethod
     def _fields_names(cls) -> List:
@@ -83,24 +76,24 @@ class Base:
         """
         return dataclasses.asdict(self)
 
-    @staticmethod
-    def _serialize(self):
-        return json.dumps(self._fields_items, cls=EnhancedJSONEncoder)
-
-
-class ApiJSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        res = {}
-        for field_name, field_value in o._fields_items():
-            if isinstance(field_value, (int, float, bool, str)):
-                res[field_name] = field_value
-            else:
-                res[field_name] = json.dumps(field_value, cls=ApiJSONEncoder)
-        return res
-
-
-class EnhancedJSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if dataclasses.is_dataclass(o):
-            return dataclasses.asdict(o)
-        return super().default(o)
+#     @staticmethod
+#     def _serialize(self):
+#         return json.dumps(self._fields_items, cls=EnhancedJSONEncoder)
+#
+#
+# class ApiJSONEncoder(json.JSONEncoder):
+#     def default(self, o):
+#         res = {}
+#         for field_name, field_value in o._fields_items():
+#             if isinstance(field_value, (int, float, bool, str)):
+#                 res[field_name] = field_value
+#             else:
+#                 res[field_name] = json.dumps(field_value, cls=ApiJSONEncoder)
+#         return res
+#
+#
+# class EnhancedJSONEncoder(json.JSONEncoder):
+#     def default(self, o):
+#         if dataclasses.is_dataclass(o):
+#             return dataclasses.asdict(o)
+#         return super().default(o)
