@@ -8,6 +8,7 @@ from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.api.types import *
 from telegrambotapiwrapper.utils import is_str_int_float_bool
+from telegrambotapiwrapper import utils
 
 
 def dataclass_fields_to_jdict(fields: dict) -> dict:
@@ -15,7 +16,6 @@ def dataclass_fields_to_jdict(fields: dict) -> dict:
     jstr = json_payload(fields)
     res = jsonpickle.decode(jstr)
     return res
-
 
 
 def to_api_type(obj, tp: AnnotationWrapper):
@@ -137,6 +137,7 @@ def get_result(raw_response: str):
                                                                             response['description']))
 
 
+
 def handle_response(raw_response: str, method_response_type: AnnotationWrapper):
     """Распарсить строку, являющуюся ответом от Bot API телеграмма.
 
@@ -147,7 +148,9 @@ def handle_response(raw_response: str, method_response_type: AnnotationWrapper):
     Raises:
         RequestResultIsNotOk: если ответ не содержит результата
     """
-    return to_api_type(get_result(raw_response), method_response_type)
+    res = get_result(raw_response)
+    res = utils.replace_from_word(res)
+    return to_api_type(res, method_response_type)
 
 
 

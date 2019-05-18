@@ -13,10 +13,10 @@ class RequestResultIsNotOk(ResponseError): pass
 class KeyboardError(Error): pass
 
 
-class InlineKeyboardMarkup(KeyboardError): pass
+class InlineKeyboardMarkupError(KeyboardError): pass
 
 
-class InlineKeyboardButtonError(InlineKeyboardMarkup): pass
+class InlineKeyboardButtonError(InlineKeyboardMarkupError): pass
 
 
 class NotExactlyOneOptionalFieldError(InlineKeyboardButtonError): pass

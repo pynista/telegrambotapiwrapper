@@ -7,6 +7,7 @@ from typing import List
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.utils import is_ends_with_underscore
 
+
 class Base:
     @classmethod
     def _get_classname(cls):
@@ -34,15 +35,6 @@ class Base:
             AnnotationWrapper(anno).is_simple_in_opt_and_not_opt
             for anno in cls._used_annotations()
         ])
-
-    def __post_init__(self):
-        for field_name in self.__class__._fields_names():
-            if is_ends_with_underscore(field_name):
-                field_value = getattr(self, field_name)
-                setattr(self, field_name[0:-1], field_value)
-                delattr(self, field_name)
-
-
 
     @classmethod
     def _fields_names(cls) -> List:
@@ -75,6 +67,9 @@ class Base:
             Use only for instances.
         """
         return dataclasses.asdict(self)
+
+
+
 
 #     @staticmethod
 #     def _serialize(self):

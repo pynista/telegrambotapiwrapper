@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
-
-import jsonpickle
 from telegrambotapiwrapper.api.types import *
+from telegrambotapiwrapper import utils
+import jsonpickle
 
 
 def json_payload(args: dict) -> str:
@@ -13,7 +13,8 @@ def json_payload(args: dict) -> str:
     Returns:
         (строка): json-строка, содержащая объект который будет отправлен к Telegram Bot Api.
     """
-    def remove_none_values(d: dict):
+
+    def remove_none_values(d):
         """Delete None values,"""
         if not isinstance(d, (dict, list)):
             return d
@@ -26,8 +27,10 @@ def json_payload(args: dict) -> str:
     jstr = jsonpickle.encode(args, unpicklable=False)
     py_obj = jsonpickle.decode(jstr)
     py_obj = remove_none_values(py_obj)
+    py_obj = utils.replace_from__word(py_obj)
     jstr = jsonpickle.dumps(py_obj)
     return jstr
+
 
 if __name__ == '__main__':
     btn1 = InlineKeyboardButton(text='add', url='http://lenta.ru')
@@ -35,7 +38,6 @@ if __name__ == '__main__':
     btn3 = InlineKeyboardButton(text='mul', url='http://waralbum.ru')
     btn4 = InlineKeyboardButton(text='div', url='http://antio.ru')
     inline_kb = InlineKeyboardMarkup([[btn1, btn2], [btn3, btn4]])
-
-    payload = json_payload({'chat_id':-1912345677, 'text':'test',  'reply_markup':inline_kb})
+    payload = json_payload(inline_kb)
     print(payload)
 

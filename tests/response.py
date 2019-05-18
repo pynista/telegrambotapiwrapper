@@ -3,9 +3,17 @@ import unittest
 from telegrambotapiwrapper import AnnotationWrapper
 from telegrambotapiwrapper.api.types import *
 from telegrambotapiwrapper.response import to_api_type, dataclass_fields_to_jdict
+from telegrambotapiwrapper import utils
+
+
+def dataclass_fields_to_jdict_for_testing(obj: dict):
+    return utils.replace_from_word(dataclass_fields_to_jdict(obj))
+
+
 
 class TestToApiTypeFunction(unittest.TestCase):
     """Тестирование работы функции to_api_type."""
+
     def test_to_user(self):
         user1 = User(
             id=1234566,
@@ -29,7 +37,7 @@ class TestToApiTypeFunction(unittest.TestCase):
             language_code='en'
         )
         for user_obj in [user1, user2, user3]:
-            g_type = to_api_type(dataclass_fields_to_jdict(user_obj._fields_items), AnnotationWrapper("User"))
+            g_type = to_api_type(dataclass_fields_to_jdict_for_testing(user_obj._fields_items), AnnotationWrapper("User"))
             self.assertEqual(g_type, user_obj)
 
 
@@ -78,7 +86,7 @@ class TestToApiTypeFunction(unittest.TestCase):
             to_convert = chat._fields_items
             self.assertEqual(
                 chat,
-                to_api_type(dataclass_fields_to_jdict(to_convert), tp=AnnotationWrapper('Chat'))
+                to_api_type(dataclass_fields_to_jdict_for_testing(to_convert), tp=AnnotationWrapper('Chat'))
             )
 
     def test_to_message(self):
@@ -118,10 +126,36 @@ class TestToApiTypeFunction(unittest.TestCase):
             from_=user,
         )
 
+
+
         for message in [message1,]:
             to_convert = message._fields_items
             self.assertEqual(
                 message,
-                to_api_type(dataclass_fields_to_jdict(to_convert), tp=AnnotationWrapper('Message'))
+                to_api_type(dataclass_fields_to_jdict_for_testing(to_convert), tp=AnnotationWrapper('Message'))
             )
+
+    # @unittest.skip
+    def test_to_callback_query(self):
+
+        user = User(
+            id=12323432,
+            is_bot=True,
+            first_name="dsfvdfdgf",
+        )
+
+
+        callback_query = CallbackQuery(
+            id="dfgrewregfrewfgd",
+            from_=user,
+            chat_instance="3243543",
+        )
+
+        to_convert = callback_query._fields_items
+
+        self.assertEqual(
+            callback_query,
+            to_api_type(dataclass_fields_to_jdict_for_testing(to_convert), tp=AnnotationWrapper('CallbackQuery'))
+        )
+
 
