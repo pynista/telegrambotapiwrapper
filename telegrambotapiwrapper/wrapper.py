@@ -124,21 +124,303 @@ class ApiBase:
     def _get_caller_caller_func_name(self):
         return inspect.stack()[2][3]
 
+    # def _make_request(self):
+    #     result_type = self._get_caller_caller_func_return_type()
+    #     caller_caller_args = self._get_caller_of_caller_func_args()
+    #     payload = json_payload(caller_caller_args)
+    #     caller_caller_name = self._get_caller_caller_func_name()
+    #     tg_method_name = self._get_tg_api_method_name(caller_caller_name)
+    #     url = self._get_tg_api_method_url(tg_method_name)
+    #     r = requests.post(
+    #         url, data=payload, headers={'Content-Type': 'application/json'})
+    #     return handle_response(r.content.decode('utf-8'), result_type)
+
     def _make_request(self):
+        args = self._get_caller_of_caller_func_args()
         result_type = self._get_caller_caller_func_return_type()
-        caller_caller_args = self._get_caller_of_caller_func_args()
-        payload = json_payload(caller_caller_args)
         caller_caller_name = self._get_caller_caller_func_name()
         tg_method_name = self._get_tg_api_method_name(caller_caller_name)
+
+        return self._make_request_with_args(args,
+                                            result_type,
+                                            tg_method_name)
+
+    def _make_request_with_args(self,
+                                args: dict,
+                                result_type: AnnotationWrapper,
+                                tg_method_name: str
+                                ):
+
+        payload = json_payload(args)
         url = self._get_tg_api_method_url(tg_method_name)
         r = requests.post(
             url, data=payload, headers={'Content-Type': 'application/json'})
         return handle_response(r.content.decode('utf-8'), result_type)
 
+    def _make_request_with_one_required_file_field(self,
+                                                   all_args: dict,
+                                                   tg_method_name: str,
+                                                   result_type: str,
+                                                   required_file_field_name: str
+                                                   ):
+
+        url = self._get_tg_api_method_url(tg_method_name)
+
+        files = {}
+        files[required_file_field_name] = all_args[required_file_field_name]
+        del all_args[required_file_field_name]
+
+        r = requests.post(url, files=files, data=all_args)
+        return handle_response(
+            r.content.decode('utf-8'), AnnotationWrapper(result_type))
+
+
+
+
+        url = self._get_tg_api_method_url('sendSticker')
+        values = self._get_caller_func_args()
+        del values['sticker']
+
+        if isinstance(sticker, str):
+            return self._make_request()
+        else:
+            # assert isinstance(png_sticker, io.BytesIO):
+            files = {'sticker': sticker}
+
+            r = requests.post(url, files=files, data=values)
+            return handle_response(
+                r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
 
 class Api(ApiBase):
     def __init__(self, token: str):
         super().__init__(token=token)
+
+
+    def set_chat_photo(
+            self,
+            chat_id: Union[int, str],
+            photo: InputFile,
+    ) -> bool:
+        """Use this method to set a new profile photo for the chat. Photos can't
+           be changed for private chats. The bot must be an administrator in
+           the chat for this to work and must have the appropriate admin rights.
+           Returns True on success."""
+
+        url = self._get_tg_api_method_url('setChatPhoto')
+        values = self._get_caller_func_args()
+
+        del values['photo']
+        files = {'photo': photo}
+
+        r = requests.post(url, files=files, data=values)
+        return handle_response(
+            r.content.decode('utf-8'), AnnotationWrapper('bool'))
+
+
+    def send_sticker(
+            self,
+            chat_id: Union[int, str],
+            sticker: Union[InputFile, str],
+            disable_notification: Optional[bool]=None,
+            reply_to_message_id: Optional[int]=None,
+            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]]=None,
+    ) -> Message:
+        """Use this method to send .webp stickers. On success, the sent Message
+           is returned."""
+
+        url = self._get_tg_api_method_url('sendSticker')
+        values = self._get_caller_func_args()
+        del values['sticker']
+
+        if isinstance(sticker, str):
+            return self._make_request()
+        else:
+            # assert isinstance(png_sticker, io.BytesIO):
+            files = {'sticker': sticker}
+
+            r = requests.post(url, files=files, data=values)
+            return handle_response(
+                r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+
+    def add_sticker_to_set(
+            self,
+            user_id: int,
+            name: str,
+            png_sticker: Union[InputFile, str],
+            emojis: str,
+            mask_position: Optional[MaskPosition]=None,
+    ) -> bool:
+        """Use this method to add a new sticker to a set created by the bot.
+           Returns True on success."""
+
+        url = self._get_tg_api_method_url('addStickerToSet')
+        values = self._get_caller_func_args()
+        del values['png_sticker']
+
+        if isinstance(png_sticker, str):
+            return self._make_request()
+        else:
+            # assert isinstance(png_sticker, io.BytesIO):
+            files = {'png_sticker': png_sticker}
+
+            r = requests.post(url, files=files, data=values)
+            return handle_response(
+                r.content.decode('utf-8'), AnnotationWrapper('bool'))
+
+
+    def create_new_sticker_set(
+            self,
+            user_id: int,
+            name: str,
+            title: str,
+            png_sticker: Union[InputFile, str],
+            emojis: str,
+            contains_masks: Optional[bool]=None,
+            mask_position: Optional[MaskPosition]=None,
+    ) -> bool:
+        """Use this method to create new sticker set owned by a user. The bot
+           will be able to edit the created sticker set. Returns True on
+           success."""
+
+        url = self._get_tg_api_method_url('createNewStickerSet')
+        values = self._get_caller_func_args()
+        del values['png_sticker']
+
+        if isinstance(png_sticker, str):
+            return self._make_request()
+        else:
+            # assert isinstance(png_sticker, io.BytesIO):
+            files = {'png_sticker': png_sticker}
+
+            r = requests.post(url, files=files, data=values)
+            return handle_response(
+                r.content.decode('utf-8'), AnnotationWrapper('bool'))
+
+
+    def upload_sticker_file(
+            self,
+            user_id: int,
+            png_sticker: InputFile,
+    ) -> File:
+        """Use this method to upload a .png file with a sticker for later use in
+           createNewStickerSet and addStickerToSet methods (can be used
+           multiple times). Returns the uploaded File on success."""
+
+        url = self._get_tg_api_method_url('uploadStickerFile')
+        values = self._get_caller_func_args()
+
+        del values['png_sticker']
+        files = {'png_sticker': png_sticker}
+
+        r = requests.post(url, files=files, data=values)
+        return handle_response(
+            r.content.decode('utf-8'), AnnotationWrapper('File'))
+        #
+        # all_args = self._get_caller_func_args()
+        # print(all_args)
+        # tg_method_name = 'uploadStickerFile'
+        # result_type = 'File'
+        # required_file_field_name = 'png_sticker'
+        # return self._make_request_with_one_required_file_field(all_args=all_args,
+        #                                                        tg_method_name=tg_method_name,
+        #                                                        result_type=result_type,
+        #                                                        required_file_field_name=required_file_field_name)
+
+
+    def set_webhook(
+            self,
+            url: str,
+            certificate: Optional[InputFile]=None,
+            max_connections: Optional[int]=None,
+            allowed_updates: Optional[List[str]]=None,
+    ) -> bool:
+        """Use this method to specify a url and receive incoming updates via an
+           outgoing webhook. Whenever there is an update for the bot, we will
+           send an HTTPS POST request to the specified url, containing a JSON-
+           serialized Update. In case of an unsuccessful request, we will give up
+           after a reasonable amount of attempts. Returns True on success."""
+        if certificate is not None:
+            url = self._get_tg_api_method_url('setWebhook')
+            values = self._get_caller_func_args()
+
+            del values['certificate']
+            files = {'certificate': certificate}
+
+            r = requests.post(url, files=files, data=values)
+            return handle_response(
+                r.content.decode('utf-8'), AnnotationWrapper('bool'))
+        else:
+            return self._make_request()
+
+    def send_audio(
+            self,
+            chat_id: Union[int, str],
+            audio: Union[InputFile, str],
+            caption: Optional[str]=None,
+            parse_mode: Optional[str]=None,
+            duration: Optional[int]=None,
+            performer: Optional[str]=None,
+            title: Optional[str]=None,
+            thumb: Optional[Union[InputFile, str]]=None,
+            disable_notification: Optional[bool]=None,
+            reply_to_message_id: Optional[int]=None,
+            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]]=None,
+    ) -> Message:
+        """Use this method to send audio files, if you want Telegram clients to
+           display them in the music player. Your audio must be in the .mp3
+           format. On success, the sent Message is returned. Bots can currently
+           send audio files of up to 50 MB in size, this limit may be changed
+           in the future."""
+
+        url = self._get_tg_api_method_url('sendAudio')
+        values = self._get_caller_func_args()
+
+        if thumb is not None:
+            if isinstance(audio, str) and isinstance(thumb, str):
+                return self._make_request()
+
+            elif isinstance(audio, io.BytesIO) and isinstance(thumb, str):
+                del values['audio']
+                files = {'audio': audio}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            elif isinstance(audio, str) and isinstance(thumb, io.BytesIO):
+                del values['thumb']
+                files = {'thumb': thumb}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            else:
+                # assert isinstance(audio, io.BytesIO) and isinstance(thumb, io.BytesIO)
+                del values['audio']
+                del values['thumb']
+                files = {'audio': audio, 'thumb': thumb}
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+        else:
+
+            if isinstance(audio, str):
+                return self._make_request()
+
+            else:
+                # assert isinstance(audio, io.BytesIO)
+                del values['audio']
+                files = {'audio': audio}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+
+
 
     def send_photo(
             self,
@@ -160,30 +442,15 @@ class Api(ApiBase):
 
         if isinstance(photo, str):
             return self._make_request()
-        elif isinstance(photo, io.BytesIO):
+        else:
+            # assert isinstance(photo, io.BytesIO):
             files = {'photo': photo}
 
             r = requests.post(url, files=files, data=values)
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('Message'))
-        else:
-            # file or file-like object
-            raise SendingFileError(
-                "Вы должны передать либо файл изображения, открытый в бинарном режиме, "
-                "или file_id на серверах Telegram,")
 
-    def add_sticker_to_set(
-            self,
-            user_id: int,
-            name: str,
-            png_sticker: Union[InputFile, str],
-            emojis: str,
-            mask_position: Optional[MaskPosition]=None,
-    ) -> bool:
-        """Use this method to add a new sticker to a set created by the bot.
-           Returns True on success."""
 
-        return self._make_request()
 
     def answer_callback_query(
             self,
@@ -244,21 +511,7 @@ class Api(ApiBase):
 
         return self._make_request()
 
-    def create_new_sticker_set(
-            self,
-            user_id: int,
-            name: str,
-            title: str,
-            png_sticker: Union[InputFile, str],
-            emojis: str,
-            contains_masks: Optional[bool]=None,
-            mask_position: Optional[MaskPosition]=None,
-    ) -> bool:
-        """Use this method to create new sticker set owned by a user. The bot
-           will be able to edit the created sticker set. Returns True on
-           success."""
 
-        return self._make_request()
 
     def delete_chat_photo(
             self,
@@ -632,29 +885,50 @@ class Api(ApiBase):
            currently send animation files of up to 50 MB in size, this limit
            may be changed in the future."""
 
-        return self._make_request()
+        url = self._get_tg_api_method_url('sendAnimation')
+        values = self._get_caller_func_args()
 
-    def send_audio(
-            self,
-            chat_id: Union[int, str],
-            audio: Union[InputFile, str],
-            caption: Optional[str]=None,
-            parse_mode: Optional[str]=None,
-            duration: Optional[int]=None,
-            performer: Optional[str]=None,
-            title: Optional[str]=None,
-            thumb: Optional[Union[InputFile, str]]=None,
-            disable_notification: Optional[bool]=None,
-            reply_to_message_id: Optional[int]=None,
-            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]]=None,
-    ) -> Message:
-        """Use this method to send audio files, if you want Telegram clients to
-           display them in the music player. Your audio must be in the .mp3
-           format. On success, the sent Message is returned. Bots can currently
-           send audio files of up to 50 MB in size, this limit may be changed
-           in the future."""
+        if thumb is not None:
+            if isinstance(animation, str) and isinstance(thumb, str):
+                return self._make_request()
 
-        return self._make_request()
+            elif isinstance(animation, io.BytesIO) and isinstance(thumb, str):
+                del values['animation']
+                files = {'animation': animation}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            elif isinstance(animation, str) and isinstance(thumb, io.BytesIO):
+                del values['thumb']
+                files = {'thumb': thumb}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            else:
+                # assert isinstance(audio, io.BytesIO) and isinstance(thumb, io.BytesIO)
+                del values['animation']
+                del values['thumb']
+                files = {'animation': animation, 'thumb': thumb}
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+        else:
+
+            if isinstance(animation, str):
+                return self._make_request()
+
+            else:
+                # assert isinstance(animation, io.BytesIO)
+                del values['animation']
+                files = {'animation': animation}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
     def send_chat_action(
             self,
@@ -699,7 +973,50 @@ class Api(ApiBase):
            is returned. Bots can currently send files of any type of up to 50
            MB in size, this limit may be changed in the future."""
 
-        return self._make_request()
+        url = self._get_tg_api_method_url('sendDocument')
+        values = self._get_caller_func_args()
+
+        if thumb is not None:
+            if isinstance(document, str) and isinstance(thumb, str):
+                return self._make_request()
+
+            elif isinstance(document, io.BytesIO) and isinstance(thumb, str):
+                del values['document']
+                files = {'document': document}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            elif isinstance(document, str) and isinstance(thumb, io.BytesIO):
+                del values['thumb']
+                files = {'thumb': thumb}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            else:
+                # assert isinstance(audio, io.BytesIO) and isinstance(thumb, io.BytesIO)
+                del values['document']
+                del values['thumb']
+                files = {'document': document, 'thumb': thumb}
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+        else:
+
+            if isinstance(document, str):
+                return self._make_request()
+
+            else:
+                # assert isinstance(document, io.BytesIO)
+                del values['document']
+                files = {'document': document}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
     def send_game(
             self,
@@ -802,18 +1119,7 @@ class Api(ApiBase):
 
         return self._make_request()
 
-    def send_sticker(
-            self,
-            chat_id: Union[int, str],
-            sticker: Union[InputFile, str],
-            disable_notification: Optional[bool]=None,
-            reply_to_message_id: Optional[int]=None,
-            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]]=None,
-    ) -> Message:
-        """Use this method to send .webp stickers. On success, the sent Message
-           is returned."""
 
-        return self._make_request()
 
     def send_venue(
             self,
@@ -853,7 +1159,50 @@ class Api(ApiBase):
            Message is returned. Bots can currently send video files of up to 50
            MB in size, this limit may be changed in the future."""
 
-        return self._make_request()
+        url = self._get_tg_api_method_url('sendVideo')
+        values = self._get_caller_func_args()
+
+        if thumb is not None:
+            if isinstance(video, str) and isinstance(thumb, str):
+                return self._make_request()
+
+            elif isinstance(video, io.BytesIO) and isinstance(thumb, str):
+                del values['video']
+                files = {'video': video}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            elif isinstance(video, str) and isinstance(thumb, io.BytesIO):
+                del values['thumb']
+                files = {'thumb': thumb}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            else:
+                # assert isinstance(audio, io.BytesIO) and isinstance(thumb, io.BytesIO)
+                del values['video']
+                del values['thumb']
+                files = {'video': video, 'thumb': thumb}
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+        else:
+
+            if isinstance(video, str):
+                return self._make_request()
+
+            else:
+                # assert isinstance(document, io.BytesIO)
+                del values['video']
+                files = {'video': video}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
     def send_video_note(
             self,
@@ -867,10 +1216,53 @@ class Api(ApiBase):
             reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]]=None,
     ) -> Message:
         """As of v.4.0, Telegram clients support rounded square mp4 videos
-           of        up to 1 minute long. Use this method to send video messages.
-           On success,        the sent Message is returned."""
+           of up to 1 minute long. Use this method to send video messages.
+           On success, the sent Message is returned."""
 
-        return self._make_request()
+        url = self._get_tg_api_method_url('sendVideoNote')
+        values = self._get_caller_func_args()
+
+        if thumb is not None:
+            if isinstance(video_note, str) and isinstance(thumb, str):
+                return self._make_request()
+
+            elif isinstance(video_note, io.BytesIO) and isinstance(thumb, str):
+                del values['video_note']
+                files = {'video_note': video_note}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            elif isinstance(video_note, str) and isinstance(thumb, io.BytesIO):
+                del values['thumb']
+                files = {'thumb': thumb}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+
+            else:
+                # assert isinstance(audio, io.BytesIO) and isinstance(thumb, io.BytesIO)
+                del values['video_note']
+                del values['thumb']
+                files = {'video_note': video_note, 'thumb': thumb}
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
+        else:
+
+            if isinstance(video_note, str):
+                return self._make_request()
+
+            else:
+                # assert isinstance(document, io.BytesIO)
+                del values['video_note']
+                files = {'video_note': video_note}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
     def send_voice(
             self,
@@ -890,7 +1282,19 @@ class Api(ApiBase):
            returned. Bots can currently send voice messages of up to 50 MB in size,
            this limit may be changed in the future."""
 
-        return self._make_request()
+        url = self._get_tg_api_method_url('sendVoice')
+        values = self._get_caller_func_args()
+        del values['voice']
+
+        if isinstance(voice, str):
+            return self._make_request()
+        else:
+            # assert isinstance(photo, io.BytesIO):
+            files = {'voice': voice}
+
+            r = requests.post(url, files=files, data=values)
+            return handle_response(
+                r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
     def set_chat_description(
             self,
@@ -904,17 +1308,7 @@ class Api(ApiBase):
 
         return self._make_request()
 
-    def set_chat_photo(
-            self,
-            chat_id: Union[int, str],
-            photo: InputFile,
-    ) -> bool:
-        """Use this method to set a new profile photo for the chat. Photos can't
-           be changed for private chats. The bot must be an administrator in
-           the chat for this to work and must have the appropriate admin rights.
-           Returns True on success."""
 
-        return self._make_request()
 
     def set_chat_sticker_set(
             self,
@@ -982,20 +1376,9 @@ class Api(ApiBase):
 
         return self._make_request()
 
-    def set_webhook(
-            self,
-            url: str,
-            certificate: Optional[InputFile]=None,
-            max_connections: Optional[int]=None,
-            allowed_updates: Optional[List[str]]=None,
-    ) -> bool:
-        """Use this method to specify a url and receive incoming updates via an
-           outgoing webhook. Whenever there is an update for the bot, we will
-           send an HTTPS POST request to the specified url, containing a JSON-
-           serialized Update. In case of an unsuccessful request, we will give up
-           after a reasonable amount of attempts. Returns True on success."""
 
-        return self._make_request()
+
+
 
     def stop_message_live_location(
             self,
@@ -1045,27 +1428,32 @@ class Api(ApiBase):
 
         return self._make_request()
 
-    def upload_sticker_file(
-            self,
-            user_id: int,
-            png_sticker: InputFile,
-    ) -> File:
-        """Use this method to upload a .png file with a sticker for later use in
-           createNewStickerSet and addStickerToSet methods (can be used
-           multiple times). Returns the uploaded File on success."""
 
-        return self._make_request()
+
 
 if __name__ == '__main__':
-    bot_api = Api(token="432916128:AAG-rZvzYDzZCUr2psOlBrYeJa0_is7LR9o")
+    pass
 
-    with open('/home/dzmitry/Pictures/3.jpg', 'rb') as f:
-        result = bot_api.send_photo(
-            chat_id=-1001373939377,
-            photo='AgADAgADLKsxG_gqCUspeQh3qX5jAAFsZF8PAASNEvi3tVrQIRwBBQABAg',
-            caption="Блаблабла"
-        )
-        print(result)
+    bot_api = Api(token="432916128:AAG-rZvzYDzZCUr2psOlBrYeJa0_is7LR9o")
+    with open("/home/dzmitry/Downloads/johnnysinsbrazzers_1.png", 'rb') as photo:
+        bot_api.send_poll(chat_id=-1001373939377,
+                          question="какие телочки больше всего тебе нравятся?",
+                          options=["молоденькие телочки",
+                                   "больше нравятся зрелые красотки",
+                                   "горячие бабульки"],
+                          disable_notification=True)
+
+
+
+    # with open('/home/dzmitry/Downloads/3.mp3', 'rb') as audio:
+    #     with open("/home/dzmitry/Pictures/download.jpeg", 'rb') as thumb:
+    #         result = bot_api.send_audio(
+    #             chat_id=-1001373939377,
+    #             audio=audio,
+    #             caption="hello world",
+    #             thumb=thumb,
+    #         )
+    #         print(result)
 
     # btn1 = InlineKeyboardButton(text='add', url='http://lenta.ru')
     # btn2 = InlineKeyboardButton(text='sub', url='http://topwar.ru')

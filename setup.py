@@ -8,7 +8,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 about = {}
 with open(
-        os.path.join(here, 'telegrambotapiwrapper', '__version__.py'), 'r',
+        os.path.join(here, 'telegrambotapiwrapper', '__init__.py'), 'r',
         'utf-8') as f:
     exec(f.read(), about)
 

@@ -152,27 +152,3 @@ def handle_response(raw_response: str, method_response_type: AnnotationWrapper):
     res = utils.replace_from_word(res)
     return to_api_type(res, method_response_type)
 
-
-
-
-if __name__ == '__main__':
-    user = User(12243, False, "djshfjksdhfjkhskjd")
-    a = InlineQuery(2345345, from_=user, query="asdasdsad", offset="123213213")
-    print(dir(a))
-    # chat_photo = ChatPhoto(small_file_id='1fdf235643', big_file_id='3454sdfds56546')
-    # chat1_with_chat_photo = Chat(
-    #     id=123,
-    #     type='group',
-    #     title='dsdvfvdvxfve',
-    #     all_members_are_administrators=True,
-    #     photo=chat_photo
-    # )
-    # to_convert = chat1_with_chat_photo._fields_items
-    # to_type = dataclass_fields_to_jdict(to_convert)
-    # print(to_type)
-    #
-    # a = to_api_type(to_type, tp=AnnotationWrapper('Chat'))
-    # b = chat1_with_chat_photo
-    # print(a)
-
-

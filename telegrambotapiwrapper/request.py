@@ -30,14 +30,3 @@ def json_payload(args: dict) -> str:
     py_obj = utils.replace_from__word(py_obj)
     jstr = jsonpickle.dumps(py_obj)
     return jstr
-
-
-if __name__ == '__main__':
-    btn1 = InlineKeyboardButton(text='add', url='http://lenta.ru')
-    btn2 = InlineKeyboardButton(text='sub', url='http://topwar.ru')
-    btn3 = InlineKeyboardButton(text='mul', url='http://waralbum.ru')
-    btn4 = InlineKeyboardButton(text='div', url='http://antio.ru')
-    inline_kb = InlineKeyboardMarkup([[btn1, btn2], [btn3, btn4]])
-    payload = json_payload(inline_kb)
-    print(payload)
-
