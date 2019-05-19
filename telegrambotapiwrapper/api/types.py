@@ -17,7 +17,6 @@ class User(Base):
     username: Optional[str] = None
     language_code: Optional[str] = None
 
-
 @dataclass
 class Chat(Base):
     """This object represents a chat."""

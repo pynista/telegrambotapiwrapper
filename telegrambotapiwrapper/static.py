@@ -263,7 +263,7 @@ METHODS_RETURN_TYPES = {
     "editMessageCaption": "Union[Message, bool]",
     "editMessageMedia": "Union[Message, bool]",
     "editMessageReplyMarkup": "Union[Message, bool]",
-    "stopPoll": "Pool",
+    "stopPoll": "Poll",
     "deleteMessage": "bool",
 }
 

@@ -2,7 +2,7 @@
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 
 import dataclasses
-from typing import List
+from typing import List, OrderedDict
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.utils import is_ends_with_underscore
@@ -12,6 +12,7 @@ class Base:
     @classmethod
     def _get_classname(cls):
         return cls.__name__
+
 
     @classmethod
     def _get_simple_fields(cls) -> dict:
@@ -52,6 +53,7 @@ class Base:
         {'int', 'str', 'bool', 'Optional[str]'}
         """
         return set(field.type for field in dataclasses.fields(cls))
+
 
     @classmethod
     def _field_type(cls, field_name) -> str:

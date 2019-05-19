@@ -57,7 +57,6 @@ PassportElementError = Union[
     PassportElementErrorTranslationFiles,
     PassportElementErrorUnspecified
 ]
-
 InputMedia = Union[
     InputMediaAnimation,
     InputMediaDocument,
@@ -91,7 +90,7 @@ InlineQueryResult = Union[
 @dataclass
 class GetMe(Base):
     """A simple method for testing your bot's auth token. Requires no
-       parameters. Returns basic information about the     bot in form of a
+       parameters. Returns basic information about the bot in form of a
        User object."""
 
 
@@ -138,9 +137,9 @@ class SendPhoto(Base):
 @dataclass
 class SendAudio(Base):
     """Use this method to send audio files, if you want Telegram clients to
-       display them in the music player. Your audio     must be in the .mp3
+       display them in the music player. Your audio must be in the .mp3
        format. On success, the sent Message is returned. Bots can currently
-       send     audio files of up to 50 MB in size, this limit may be changed
+       send audio files of up to 50 MB in size, this limit may be changed
        in the future."""
 
     chat_id: Union[int, str]
@@ -159,7 +158,7 @@ class SendAudio(Base):
 @dataclass
 class SendDocument(Base):
     """Use this method to send general files. On success, the sent Message
-       is returned. Bots can     currently send files of any type of up to 50
+       is returned. Bots can currently send files of any type of up to 50
        MB in size, this limit may be changed in the future."""
 
     chat_id: Union[int, str]
@@ -176,7 +175,7 @@ class SendDocument(Base):
 class SendVideo(Base):
     """Use this method to send video files, Telegram clients support mp4
        videos (other formats may be sent as Document). On success, the sent
-       Message is returned. Bots can     currently send video files of up to 50
+       Message is returned. Bots can currently send video files of up to 50
        MB in size, this limit may be changed in the future."""
 
     chat_id: Union[int, str]
@@ -197,7 +196,7 @@ class SendVideo(Base):
 class SendAnimation(Base):
     """Use this method to send animation files (GIF or H.264/MPEG-4 AVC
        video without sound). On success, the sent Message is returned. Bots can
-       currently send animation files of up to 50 MB in size, this     limit
+       currently send animation files of up to 50 MB in size, this limit
        may be changed in the future."""
 
     chat_id: Union[int, str]
@@ -216,9 +215,9 @@ class SendAnimation(Base):
 @dataclass
 class SendVoice(Base):
     """Use this method to send audio files, if you want Telegram clients to
-       display the file as a playable voice message.     For this to work, your
+       display the file as a playable voice message. For this to work, your
        audio must be in an .ogg file encoded with OPUS (other formats may be
-       sent as Audio or Document). On success, the sent Message     is
+       sent as Audio or Document). On success, the sent Message is
        returned. Bots can currently send voice messages of up to 50 MB in size,
        this limit may be changed in the future."""
 
@@ -234,8 +233,8 @@ class SendVoice(Base):
 
 @dataclass
 class SendVideoNote(Base):
-    """As of v.4.0, Telegram clients support rounded     square mp4 videos
-       As of v.4.0, Telegram clients support rounded     square mp4 videos of
+    """As of v.4.0, Telegram clients support rounded square mp4 videos
+       As of v.4.0, Telegram clients support rounded square mp4 videos of
        up to 1 minute long. Use this method to send video messages. On success,
        the sent Message is returned."""
 
@@ -252,7 +251,7 @@ class SendVideoNote(Base):
 @dataclass
 class SendMediaGroup(Base):
     """Use this method to send a group of photos or videos as an album. On
-       success, an array of the sent Messages     is returned."""
+       success, an array of the sent Messages is returned."""
 
     chat_id: Union[int, str]
     media: List[Union[InputMediaPhoto, InputMediaVideo]]
@@ -277,8 +276,8 @@ class SendLocation(Base):
 @dataclass
 class EditMessageLiveLocation(Base):
     """Use this method to edit live location messages sent by the bot or via
-       the bot (for inline     bots). A location can be edited until its
-       live_period expires or editing is explicitly disabled by a     call to
+       the bot (for inline bots). A location can be edited until its
+       live_period expires or editing is explicitly disabled by a call to
        stopMessageLiveLocation. On success, if the edited message was sent
        by the bot, the edited Message is returned, otherwise True is returned."""
 
@@ -293,7 +292,7 @@ class EditMessageLiveLocation(Base):
 @dataclass
 class StopMessageLiveLocation(Base):
     """Use this method to stop updating a live location message sent by the
-       bot or via the bot (for inline     bots) before live_period expires. On
+       bot or via the bot (for inline bots) before live_period expires. On
        success, if the message was sent by the bot, the sent Message is
        returned, otherwise True is returned."""
 
@@ -351,9 +350,9 @@ class SendPoll(Base):
 @dataclass
 class SendChatAction(Base):
     """Use this method when you need to tell the user that something is
-       happening on the bot's side. The status is set     for 5 seconds or less
+       happening on the bot's side. The status is set for 5 seconds or less
        (when a message arrives from your bot, Telegram clients clear its typing
-       status). Returns True     on success."""
+       status). Returns True on success."""
 
     chat_id: Union[int, str]
     action: str
@@ -362,7 +361,7 @@ class SendChatAction(Base):
 @dataclass
 class GetUserProfilePhotos(Base):
     """Use this method to get a list of profile pictures for a user. Returns
-       a UserProfilePhotos     object."""
+       a UserProfilePhotos object."""
 
     user_id: int
     offset: Optional[int] = None
@@ -372,12 +371,12 @@ class GetUserProfilePhotos(Base):
 @dataclass
 class GetFile(Base):
     """Use this method to get basic info about a file and prepare it for
-       downloading. For the moment, bots can download     files of up to 20MB
+       downloading. For the moment, bots can download files of up to 20MB
        in size. On success, a File object is returned. The file can then be
        downloaded via the link
        https://api.telegram.org/file/bot<token>/<file_path>, where <file_path>
        is taken from the response. It is guaranteed that the link will be valid
-       for at least 1 hour. When the link expires,     a new one can be
+       for at least 1 hour. When the link expires, a new one can be
        requested by calling getFile again."""
 
     file_id: str
@@ -386,10 +385,10 @@ class GetFile(Base):
 @dataclass
 class KickChatMember(Base):
     """Use this method to kick a user from a group, a supergroup or a
-       channel. In the case of supergroups and channels, the     user will not
+       channel. In the case of supergroups and channels, the user will not
        be able to return to the group on their own using invite links, etc.,
        unless unbanned first. The bot must be an administrator in the chat for
-       this to work     and must have the appropriate admin rights. Returns
+       this to work and must have the appropriate admin rights. Returns
        True on success."""
 
     chat_id: Union[int, str]
@@ -400,9 +399,9 @@ class KickChatMember(Base):
 @dataclass
 class UnbanChatMember(Base):
     """Use this method to unban a previously kicked user in a supergroup or
-       channel. The user will not     return to the group or channel
+       channel. The user will not return to the group or channel
        automatically, but will be able to join via link, etc. The bot must be
-       an     administrator for this to work. Returns True on success."""
+       an administrator for this to work. Returns True on success."""
 
     chat_id: Union[int, str]
     user_id: int
@@ -411,9 +410,9 @@ class UnbanChatMember(Base):
 @dataclass
 class RestrictChatMember(Base):
     """Use this method to restrict a user in a supergroup. The bot must be
-       an administrator in the supergroup for this to     work and must have
+       an administrator in the supergroup for this to work and must have
        the appropriate admin rights. Pass True for all boolean parameters to
-       lift restrictions     from a user. Returns True on success."""
+       lift restrictions from a user. Returns True on success."""
 
     chat_id: Union[int, str]
     user_id: int
@@ -427,9 +426,9 @@ class RestrictChatMember(Base):
 @dataclass
 class PromoteChatMember(Base):
     """Use this method to promote or demote a user in a supergroup or a
-       channel. The bot must be an administrator in the     chat for this to
+       channel. The bot must be an administrator in the chat for this to
        work and must have the appropriate admin rights. Pass False for all
-       boolean parameters to     demote a user. Returns True on success."""
+       boolean parameters to demote a user. Returns True on success."""
 
     chat_id: Union[int, str]
     user_id: int
@@ -448,7 +447,7 @@ class ExportChatInviteLink(Base):
     """Use this method to generate a new invite link for a chat; any
        previously generated link is revoked. The bot must be     an
        administrator in the chat for this to work and must have the appropriate
-       admin rights. Returns the new invite     link as String on success."""
+       admin rights. Returns the new invite link as String on success."""
 
     chat_id: Union[int, str]
 
@@ -456,9 +455,9 @@ class ExportChatInviteLink(Base):
 @dataclass
 class SetChatPhoto(Base):
     """Use this method to set a new profile photo for the chat. Photos can't
-       be changed for private chats. The bot must     be an administrator in
+       be changed for private chats. The bot must be an administrator in
        the chat for this to work and must have the appropriate admin rights.
-       Returns True     on success."""
+       Returns True on success."""
 
     chat_id: Union[int, str]
     photo: InputFile
@@ -467,7 +466,7 @@ class SetChatPhoto(Base):
 @dataclass
 class DeleteChatPhoto(Base):
     """Use this method to delete a chat photo. Photos can't be changed for
-       private chats. The bot must be an     administrator in the chat for this
+       private chats. The bot must be an administrator in the chat for this
        to work and must have the appropriate admin rights. Returns True on
        success."""
 
@@ -477,9 +476,9 @@ class DeleteChatPhoto(Base):
 @dataclass
 class SetChatTitle(Base):
     """Use this method to change the title of a chat. Titles can't be
-       changed for private chats. The bot must be an     administrator in the
+       changed for private chats. The bot must be an administrator in the
        chat for this to work and must have the appropriate admin rights.
-       Returns True on     success."""
+       Returns True on success."""
 
     chat_id: Union[int, str]
     title: str
@@ -488,7 +487,7 @@ class SetChatTitle(Base):
 @dataclass
 class SetChatDescription(Base):
     """Use this method to change the description of a supergroup or a
-       channel. The bot must be an administrator in the chat     for this to
+       channel. The bot must be an administrator in the chat for this to
        work and must have the appropriate admin rights. Returns True on
        success."""
 
@@ -529,7 +528,7 @@ class LeaveChat(Base):
 @dataclass
 class GetChat(Base):
     """Use this method to get up to date information about the chat (current
-       name of the user for one-on-one conversations,     current username of a
+       name of the user for one-on-one conversations, current username of a
        user, group or channel, etc.). Returns a Chat object on success."""
 
     chat_id: Union[int, str]
@@ -538,9 +537,9 @@ class GetChat(Base):
 @dataclass
 class GetChatAdministrators(Base):
     """Use this method to get a list of administrators in a chat. On
-       success, returns an Array of ChatMember     objects that contains
+       success, returns an Array of ChatMember objects that contains
        information about all chat administrators except other bots. If the chat
-       is a group or a     supergroup and no administrators were appointed,
+       is a group or a supergroup and no administrators were appointed,
        only the creator will be returned."""
 
     chat_id: Union[int, str]
@@ -557,7 +556,7 @@ class GetChatMembersCount(Base):
 @dataclass
 class GetChatMember(Base):
     """Use this method to get information about a member of a chat. Returns
-       a ChatMember object on     success."""
+       a ChatMember object on success."""
 
     chat_id: Union[int, str]
     user_id: int
@@ -566,10 +565,10 @@ class GetChatMember(Base):
 @dataclass
 class SetChatStickerSet(Base):
     """Use this method to set a new group sticker set for a supergroup. The
-       bot must be an administrator in the chat for     this to work and must
+       bot must be an administrator in the chat for this to work and must
        have the appropriate admin rights. Use the field can_set_sticker_set
-       optionally     returned in getChat requests to check if the bot can use
-       this method. Returns True     on success."""
+       optionally returned in getChat requests to check if the bot can use
+       this method. Returns True on success."""
 
     chat_id: Union[int, str]
     sticker_set_name: str
@@ -578,10 +577,10 @@ class SetChatStickerSet(Base):
 @dataclass
 class DeleteChatStickerSet(Base):
     """Use this method to delete a group sticker set from a supergroup. The
-       bot must be an administrator in the chat for     this to work and must
+       bot must be an administrator in the chat for this to work and must
        have the appropriate admin rights. Use the field can_set_sticker_set
-       optionally     returned in getChat requests to check if the bot can use
-       this method. Returns True     on success."""
+       optionally returned in getChat requests to check if the bot can use
+       this method. Returns True on success."""
 
     chat_id: Union[int, str]
 
@@ -589,7 +588,7 @@ class DeleteChatStickerSet(Base):
 @dataclass
 class AnswerCallbackQuery(Base):
     """Use this method to send answers to callback queries sent from inline
-       keyboards. The answer will be displayed to the     user as a
+       keyboards. The answer will be displayed to the user as a
        notification at the top of the chat screen or as an alert. On success,
        True is returned."""
 
@@ -616,8 +615,8 @@ class SendGame(Base):
 @dataclass
 class SetGameScore(Base):
     """Use this method to set the score of the specified user in a game. On
-       success, if the message was sent by the bot,     returns the edited
-       Message, otherwise returns True. Returns an error, if the new     score
+       success, if the message was sent by the bot, returns the edited
+       Message, otherwise returns True. Returns an error, if the new score
        is not greater than the user's current score in the chat and force is
        False."""
 
@@ -633,7 +632,7 @@ class SetGameScore(Base):
 @dataclass
 class GetGameHighScores(Base):
     """Use this method to get data for high score tables. Will return the
-       score of the specified user and several of his     neighbors in a game.
+       score of the specified user and several of his neighbors in a game.
        On success, returns an Array of GameHighScore objects."""
 
     user_id: int
@@ -645,8 +644,8 @@ class GetGameHighScores(Base):
 
 @dataclass
 class GetUpdates(Base):
-    """Use this method to receive incoming updates using long polling
-       (wiki). An Array of Update objects is returned."""
+    """Use this method to receive incoming updates using long polling.
+       An Array of Update objects is returned."""
 
     offset: Optional[int] = None
     limit: Optional[int] = None
@@ -657,10 +656,10 @@ class GetUpdates(Base):
 @dataclass
 class SetWebhook(Base):
     """Use this method to specify a url and receive incoming updates via an
-       outgoing webhook. Whenever there is an update     for the bot, we will
+       outgoing webhook. Whenever there is an update for the bot, we will
        send an HTTPS POST request to the specified url, containing a JSON-
        serialized Update. In case of an unsuccessful request, we will give up
-       after a reasonable amount of     attempts. Returns True on success."""
+       after a reasonable amount of attempts. Returns True on success."""
 
     url: str
     certificate: Optional[InputFile] = None
@@ -671,15 +670,15 @@ class SetWebhook(Base):
 @dataclass
 class DeleteWebhook(Base):
     """Use this method to remove webhook integration if you decide to switch
-       back to getUpdates.     Returns True on success."""
+       back to getUpdates. Returns True on success."""
 
 
 
 @dataclass
 class GetWebhookInfo(Base):
     """Use this method to get current webhook status. Requires no
-       parameters. On success, returns a WebhookInfo     object. If the bot is
-       using getUpdates, will return an object with the url field     empty."""
+       parameters. On success, returns a WebhookInfo object. If the bot is
+       using getUpdates, will return an object with the url field empty."""
 
 
 
@@ -687,7 +686,7 @@ class GetWebhookInfo(Base):
 @dataclass
 class AnswerInlineQuery(Base):
     """Use this method to send answers to an inline query. On success, True
-       is returned.No more than     50 results per query are allowed."""
+       is returned.No more than 50 results per query are allowed."""
 
     inline_query_id: str
     results: List[InlineQueryResult]
@@ -701,7 +700,7 @@ class AnswerInlineQuery(Base):
 @dataclass
 class AnswerInlineQuery(Base):
     """Use this method to send answers to an inline query. On success, True
-       is returned.No more than     50 results per query are allowed."""
+       is returned.No more than 50 results per query are allowed."""
 
     inline_query_id: str
     results: List[InlineQueryResult]
@@ -716,9 +715,9 @@ class AnswerInlineQuery(Base):
 @dataclass
 class SetPassportDataErrors(Base):
     """Informs a user that some of the Telegram Passport elements they
-       provided contains errors. The user will not be able     to re-submit
+       provided contains errors. The user will not be able to re-submit
        their Passport to you until the errors are fixed (the contents of the
-       field for which you returned the     error must change). Returns True on
+       field for which you returned the error must change). Returns True on
        success."""
 
     user_id: int
@@ -759,8 +758,8 @@ class SendInvoice(Base):
 @dataclass
 class AnswerShippingQuery(Base):
     """If you sent an invoice requesting a shipping address and the
-       parameter is_flexible was specified, the Bot     API will send an Update
-       with a shipping_query field to the bot. Use this method to     reply to
+       parameter is_flexible was specified, the Bot API will send an Update
+       with a shipping_query field to the bot. Use this method to reply to
        shipping queries. On success, True is returned."""
 
     shipping_query_id: str
@@ -775,7 +774,7 @@ class AnswerPreCheckoutQuery(Base):
        Bot API sends the final confirmation in the form     of an Update with
        the field pre_checkout_query. Use this method to respond to such
        pre-checkout queries. On success, True is returned. Note: The Bot API
-       must receive an answer within     10 seconds after the pre-checkout
+       must receive an answer within 10 seconds after the pre-checkout
        query was sent."""
 
     pre_checkout_query_id: str
@@ -807,7 +806,7 @@ class GetStickerSet(Base):
 @dataclass
 class UploadStickerFile(Base):
     """Use this method to upload a .png file with a sticker for later use in
-       createNewStickerSet and addStickerToSet     methods (can be used
+       createNewStickerSet and addStickerToSet methods (can be used
        multiple times). Returns the uploaded File on success."""
 
     user_id: int
@@ -817,7 +816,7 @@ class UploadStickerFile(Base):
 @dataclass
 class CreateNewStickerSet(Base):
     """Use this method to create new sticker set owned by a user. The bot
-       will be able to edit the created sticker set.     Returns True on
+       will be able to edit the created sticker set. Returns True on
        success."""
 
     user_id: int
@@ -844,7 +843,7 @@ class AddStickerToSet(Base):
 @dataclass
 class SetStickerPositionInSet(Base):
     """Use this method to move a sticker in a set created by the bot to a
-       specific position . Returns True on     success."""
+       specific position . Returns True on success."""
 
     sticker: str
     position: int
@@ -877,8 +876,8 @@ class EditMessageText(Base):
 @dataclass
 class EditMessageCaption(Base):
     """Use this method to edit captions of messages sent by the bot or via
-       the bot (for inline     bots). On success, if edited message is sent by
-       the bot, the edited Message is returned,     otherwise True is returned."""
+       the bot (for inline bots). On success, if edited message is sent by
+       the bot, the edited Message is returned, otherwise True is returned."""
 
     chat_id: Optional[Union[int, str]] = None
     message_id: Optional[int] = None
@@ -891,12 +890,12 @@ class EditMessageCaption(Base):
 @dataclass
 class EditMessageMedia(Base):
     """Use this method to edit animation, audio, document, photo, or video
-       messages. If a message is a part of a message     album, then it can be
+       messages. If a message is a part of a message album, then it can be
        edited only to a photo or a video. Otherwise, message type can be
-       changed arbitrarily. When     inline message is edited, new file can't
+       changed arbitrarily. When inline message is edited, new file can't
        be uploaded. Use previously uploaded file via its file_id or specify a
        URL. On success, if the edited message was sent by the bot, the edited
-       Message is returned,     otherwise True is returned."""
+       Message is returned, otherwise True is returned."""
 
     media: InputMedia
     chat_id: Optional[Union[int, str]] = None
@@ -908,8 +907,8 @@ class EditMessageMedia(Base):
 @dataclass
 class EditMessageReplyMarkup(Base):
     """Use this method to edit only the reply markup of messages sent by the
-       bot or via the bot (for inline     bots). On success, if edited message
-       is sent by the bot, the edited Message is returned,     otherwise True
+       bot or via the bot (for inline bots). On success, if edited message
+       is sent by the bot, the edited Message is returned, otherwise True
        is returned."""
 
     chat_id: Optional[Union[int, str]] = None
@@ -931,12 +930,12 @@ class StopPoll(Base):
 @dataclass
 class DeleteMessage(Base):
     """Use this method to delete a message, including service messages, with
-       the following limitations:- A message can     only be deleted if it was
+       the following limitations:- A message can only be deleted if it was
        sent less than 48 hours ago.- Bots can delete outgoing messages in
-       private chats,     groups, and supergroups.- Bots granted
+       private chats, groups, and supergroups.- Bots granted
        can_post_messages permissions can delete outgoing messages in
        channels.- If the bot is an administrator of a group, it can delete any
-       message there.- If the bot has can_delete_messages     permission in a
+       message there.- If the bot has can_delete_messages permission in a
        supergroup or a channel, it can delete any message there.Returns True on
        success."""
 
