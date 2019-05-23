@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
-
 import inspect
 import io
 from typing import BinaryIO

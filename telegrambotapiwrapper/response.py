@@ -8,6 +8,7 @@ from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.request import json_payload
 from telegrambotapiwrapper.utils import is_str_int_float_bool
+from telegrambotapiwrapper.api.types import *
 
 
 def dataclass_fields_to_jdict(fields: dict) -> dict:
