@@ -17,23 +17,27 @@ _stub_
 ```python
 # firstbot.py
 from telegrambotapiwrapper.wrapper import Api
+from telegrambotapiwrapper.api.types import User
 
 TOKEN = "<past_your_bot_api_token>"
 
 bot_api = Api(token=TOKEN)
 me = bot_api.get_me()
 print("me: {}".format(me))
-print("type of `me`: {}".format(type(me))) # see type of result
+print("isinstance(me, User): {}".format(isinstance(me, User)))  # see type of result
 ```
 Result:
 ```
 (venv) dzmitry@mycomp:~$ python3 firstbot.py 
 me: User(id=432916128, is_bot=True, first_name='myrudatingposterbot', last_name=None, username='myrudatingposterbot', language_code=None)
-type of `me`:<class 'telegrambotapiwrapper.api.types.User'>
+isinstance(me, User): True
 (venv) dzmitry@mycomp:~$
 ```
-## Documentation
-_stub_
+## Examples
+###Sending message
+###Sending file
+
+## Using proxies
 
 ## License
 MIT License
