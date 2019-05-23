@@ -18,7 +18,6 @@ def replace_from__word(d: dict):
     return res
 
 
-
 def replace_from_word(d: dict):
     """Заменить рекурсивно ключи в объекте from на from_."""
     res = {}

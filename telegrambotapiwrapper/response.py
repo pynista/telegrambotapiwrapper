@@ -2,13 +2,12 @@
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 
 import jsonpickle
-from telegrambotapiwrapper.request import json_payload
 
-from telegrambotapiwrapper.errors import RequestResultIsNotOk
-from telegrambotapiwrapper.annotation import AnnotationWrapper
-from telegrambotapiwrapper.api.types import *
-from telegrambotapiwrapper.utils import is_str_int_float_bool
 from telegrambotapiwrapper import utils
+from telegrambotapiwrapper.annotation import AnnotationWrapper
+from telegrambotapiwrapper.errors import RequestResultIsNotOk
+from telegrambotapiwrapper.request import json_payload
+from telegrambotapiwrapper.utils import is_str_int_float_bool
 
 
 def dataclass_fields_to_jdict(fields: dict) -> dict:
@@ -85,7 +84,6 @@ def to_api_type(obj, tp: AnnotationWrapper):
         elif tp == 'Union[InputFile, str]]':
             return to_api_type(obj, AnnotationWrapper('InputFile'))
 
-
     if is_str_int_float_bool(obj):
         return obj
 
@@ -137,7 +135,6 @@ def get_result(raw_response: str):
                                                                             response['description']))
 
 
-
 def handle_response(raw_response: str, method_response_type: AnnotationWrapper):
     """Распарсить строку, являющуюся ответом от Bot API телеграмма.
 
@@ -151,4 +148,3 @@ def handle_response(raw_response: str, method_response_type: AnnotationWrapper):
     res = get_result(raw_response)
     res = utils.replace_from_word(res)
     return to_api_type(res, method_response_type)
-

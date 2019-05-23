@@ -1,4 +1,4 @@
-<h4><a class="anchor" name="getupdates" href="#getupdates"><i class="anchor-icon"></i></a>getUpdates</h4>
+<h4><a class="anchor" href="#getupdates" name="getupdates"><i class="anchor-icon"></i></a>getUpdates</h4>
 <p>Use this method to receive incoming updates using long polling (<a
         href="http://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). An Array of <a
         href="#update">Update</a> objects is returned.</p>
@@ -52,7 +52,7 @@
     </tr>
     </tbody>
 </table>
-<h4><a class="anchor" name="setwebhook" href="#setwebhook"><i class="anchor-icon"></i></a>setWebhook</h4>
+<h4><a class="anchor" href="#setwebhook" name="setwebhook"><i class="anchor-icon"></i></a>setWebhook</h4>
 <p>Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update
     for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized <a
             href="#update">Update</a>. In case of an unsuccessful request, we will give up after a reasonable amount of
@@ -104,7 +104,7 @@
     </tr>
     </tbody>
 </table>
-<h4><a class="anchor" name="deletewebhook" href="#deletewebhook"><i class="anchor-icon"></i></a>deleteWebhook</h4>
+<h4><a class="anchor" href="#deletewebhook" name="deletewebhook"><i class="anchor-icon"></i></a>deleteWebhook</h4>
 <p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>.
     Returns <em>True</em> on success.</p>
 <table class="table">
@@ -125,7 +125,7 @@
     </tr>
     </tbody>
 </table>
-<h4><a class="anchor" name="getwebhookinfo" href="#getwebhookinfo"><i class="anchor-icon"></i></a>getWebhookInfo</h4>
+<h4><a class="anchor" href="#getwebhookinfo" name="getwebhookinfo"><i class="anchor-icon"></i></a>getWebhookInfo</h4>
 <p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a>
     object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the <em>url</em> field
     empty.</p>

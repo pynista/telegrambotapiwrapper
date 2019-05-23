@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
-from telegrambotapiwrapper.api.types import *
-from telegrambotapiwrapper import utils
 import jsonpickle
+
+from telegrambotapiwrapper import utils
 
 
 def json_payload(args: dict) -> str:
@@ -24,6 +24,7 @@ def json_payload(args: dict) -> str:
             k: remove_none_values(v)
             for k, v in d.items() if v is not None
         }
+
     jstr = jsonpickle.encode(args, unpicklable=False)
     py_obj = jsonpickle.decode(jstr)
     py_obj = remove_none_values(py_obj)

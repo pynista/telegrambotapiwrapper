@@ -15,6 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 from bs4 import BeautifulSoup
 
+
 # ALL_TYPES_FILES = (
 #     '/home/dzmitry/PycharmProjects/bots/tgbotapi/for_parser/avaliable/types.html',
 #     '/home/dzmitry/PycharmProjects/bots/tgbotapi/for_parser/games/types.html',
@@ -166,14 +167,14 @@ def parse_available_types(html_file):
     return res
 
 
-
 def generate_file_text(types: List[ApiType], add_base_class=True):
     """Сгенерировать py файл."""
     imports = \
-"""\n
-"""
+        """\n
+        """
     res = ''
     res += imports
+
     # if add_base_class:
     #     res += """class Base: pass\n\n"""
 
@@ -250,7 +251,6 @@ def is_html_file_corrrect(html_file: str) -> bool:
 
 
 def run():
-
     dest_file = os.path.join(BASE_DIR, 'api', 'types.py')
     os.remove(dest_file)
 

@@ -17,6 +17,7 @@ class User(Base):
     username: Optional[str] = None
     language_code: Optional[str] = None
 
+
 @dataclass
 class Chat(Base):
     """This object represents a chat."""
@@ -457,9 +458,6 @@ class InputFile(Base):
        uploaded via the browser."""
 
 
-
-
-
 @dataclass
 class Game(Base):
     """This object represents a game. Use BotFather to create and edit
@@ -479,7 +477,6 @@ class CallbackGame(Base):
        up your     game."""
 
 
-
 @dataclass
 class GameHighScore(Base):
     """This object represents one row of the high scores table for a game."""
@@ -487,8 +484,6 @@ class GameHighScore(Base):
     position: int
     user: User
     score: int
-
-
 
 
 @dataclass
@@ -520,8 +515,6 @@ class WebhookInfo(Base):
     last_error_message: Optional[str] = None
     max_connections: Optional[int] = None
     allowed_updates: Optional[List[str]] = None
-
-
 
 
 @dataclass
@@ -916,7 +909,6 @@ class InputMessageContent(Base):
        following 4 types:"""
 
 
-
 @dataclass
 class InputTextMessageContent(Base):
     """Represents the content of a text message to be sent as the result of
@@ -971,8 +963,6 @@ class ChosenInlineResult(Base):
     query: str
     location: Optional[Location] = None
     inline_message_id: Optional[str] = None
-
-
 
 
 @dataclass
@@ -1129,8 +1119,6 @@ class PassportElementErrorUnspecified(Base):
     message: str
 
 
-
-
 @dataclass
 class LabeledPrice(Base):
     """This object represents a portion of the price for goods or services."""
@@ -1218,8 +1206,6 @@ class PreCheckoutQuery(Base):
     order_info: Optional[OrderInfo] = None
 
 
-
-
 @dataclass
 class Sticker(Base):
     """This object represents a sticker."""
@@ -1253,5 +1239,3 @@ class MaskPosition(Base):
     x_shift: float
     y_shift: float
     scale: float
-
-

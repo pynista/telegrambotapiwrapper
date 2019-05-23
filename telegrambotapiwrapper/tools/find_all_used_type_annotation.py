@@ -2,14 +2,14 @@
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 
 import inspect
-import pprint
-from telegrambotapiwrapper.static import METHODS_RETURN_TYPES
+import re
 
 import telegrambotapiwrapper.api.methods as methods_module
-import re
 import telegrambotapiwrapper.api.types as types_module
+from telegrambotapiwrapper.static import METHODS_RETURN_TYPES
 
 CLASS_FROM_TYPES_REGEXP = re.compile(r"^<class '(.+)'>$")
+
 
 def get_all_used_types():
     res = []
@@ -23,6 +23,7 @@ def get_all_used_types():
 
     return res
 
+
 def get_all_used_methods():
     res = []
     for name, obj in inspect.getmembers(methods_module):
@@ -34,7 +35,6 @@ def get_all_used_methods():
     res = set(tp.split('.')[-1] for tp in res)
 
     return res
-
 
 
 def union_anotations_in_methods_module():
@@ -54,6 +54,7 @@ def types_annos():
         res.update(type_._used_annotations())
     return sorted(res)
 
+
 def methods_annos():
     """Получить все используемые аннотации для методов."""
     res = set()
@@ -63,6 +64,7 @@ def methods_annos():
         type_ = getattr(methods_module, tp)
         res.update(type_._used_annotations())
     return res
+
 
 def get_all_used_annotations():
     """Получить абсолютно все используемые аннотации."""
@@ -79,9 +81,9 @@ def get_annotations_of_returned_values_all_methods():
     return res
 
 
-
 def lower_first_letter(word: str):
-    return  word[0].lower() + word[1:]
+    return word[0].lower() + word[1:]
+
 
 if __name__ == '__main__':
     print('{')

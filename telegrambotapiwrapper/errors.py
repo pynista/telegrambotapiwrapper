@@ -8,8 +8,10 @@ class Error(Exception):
 class ResponseError(Error):
     pass
 
+
 class RequestError(Error):
     pass
+
 
 class SendingFileError(Error):
     pass
@@ -17,6 +19,7 @@ class SendingFileError(Error):
 
 class RequestResultIsNotOk(ResponseError):
     pass
+
 
 class KeyboardError(Error):
     pass

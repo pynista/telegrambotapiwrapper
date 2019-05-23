@@ -1,13 +1,13 @@
 import inspect
+import re
 import textwrap
 
 import telegrambotapiwrapper.api.methods as methods_module
 from telegrambotapiwrapper import AnnotationWrapper
-from telegrambotapiwrapper.api.methods import SendMessage
 from telegrambotapiwrapper.static import METHODS_RETURN_TYPES
-import re
 
 CLASS_FROM_TYPES_REGEXP = re.compile(r"^<class '(.+)'>$")
+
 
 def run():
     gen = generator_methods()
@@ -16,6 +16,7 @@ def run():
         result += get_method_code_text(method)
         result += "\n"
     return result
+
 
 def generator_methods():
     res = []
@@ -56,6 +57,7 @@ def get_method_code_text(method_info):
     result += (" " * 8 + "return self._make_request()\n")
     return result
 
+
 def get_args_code_text(method_info):
     fields_names = method_info._fields_names()
     fields_annos = method_info._annotations()
@@ -68,15 +70,10 @@ def get_args_code_text(method_info):
     return res
 
 
-
-
-
-
-
-
 def get_method_return_type(method_info) -> str:
     mt = method_info.__name__[0].lower() + method_info.__name__[1:]
     return METHODS_RETURN_TYPES[mt]
+
 
 def gen_method_first_line(method_info):
     result = """\
@@ -92,14 +89,7 @@ def py_api_method_name_from_method_info(method_info):
     return "_".join([word.lower() for word in upper_words])
 
 
-
 if __name__ == '__main__':
     # for m in generator_methods():
     #     print(m)
     print(run())
-
-
-
-
-
-

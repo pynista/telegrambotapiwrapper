@@ -31,12 +31,11 @@
 <table>...</table>
 ...
 """
-import os
+import subprocess
 import textwrap
 from dataclasses import dataclass
 from operator import attrgetter
 from typing import List, Optional
-import subprocess
 
 from bs4 import BeautifulSoup
 
@@ -55,110 +54,110 @@ ALL_METHODS_FILES = (
 
 RETURNED_VALUES = {
     ' Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future':
-    'Optional[Message]',
+        'Optional[Message]',
     ' Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future':
-    'Optional[Message]',
+        'Optional[Message]',
     ' Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future':
-    'Optional[Message]',
+        'Optional[Message]',
     ' Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future':
-    'Optional[Message]',
+        'Optional[Message]',
     ' Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future':
-    'Optional[Message]',
+        'Optional[Message]',
     ' If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned':
-    'Optional[List[ChatMember]]',
+        'Optional[List[ChatMember]]',
     ' On success, True is returned':
-    'Optional[bool]',
+        'Optional[bool]',
     ' On success, an array of the sent Messages is returned':
-    'Optional[List[Message]]',
+        'Optional[List[Message]]',
     ' On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned':
-    'Optional[Union[Message, bool]]',
+        'Optional[Union[Message, bool]]',
     ' On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned':
-    'Optional[Union[Message, bool]]',
+        'Optional[Union[Message, bool]]',
     ' On success, the sent Message is returned':
-    'Optional[Message]',
+        'Optional[Message]',
     ' Returns Int on success':
-    'Optional[int]',
+        'Optional[int]',
     ' Returns True on success':
-    'Optional[bool]',
+        'Optional[bool]',
     ' Returns a Chat object on success':
-    'Optional[Chat]',
+        'Optional[Chat]',
     ' Returns a ChatMember object on success':
-    'Optional[ChatMember]',
+        'Optional[ChatMember]',
     ' Returns a UserProfilePhotos object':
-    'UserProfilePhotos',
+        'UserProfilePhotos',
     ' Returns basic information about the bot in form of a User object':
-    'User',
+        'User',
     ' Returns the new invite link as String on success':
-    'Optional[str]',
+        'Optional[str]',
     ' When the link expires, a new one can be requested by calling getFile again':
-    'Optional[File]',
+        'Optional[File]',
     ' An Array of Update objects is returned':
-    'List[Update]',
+        'List[Update]',
     'Array of String':
-    'List[str]',
+        'List[str]',
 }
 
 import os
 
 ESPECIAL_ANNOTATIONS = {
     'Array of Array of InlineKeyboardButton':
-    'List[List[InlineKeyboardButton]]',
+        'List[List[InlineKeyboardButton]]',
     'Array of Array of KeyboardButton':
-    'List[List[KeyboardButton]]',
+        'List[List[KeyboardButton]]',
     'Array of Array of PhotoSize':
-    'List[List[PhotoSize]]',
+        'List[List[PhotoSize]]',
     'Array of MessageEntity':
-    'List[MessageEntity]',
+        'List[MessageEntity]',
     'Array of PhotoSize':
-    'List[PhotoSize]',
+        'List[PhotoSize]',
     'Array of User':
-    'List[User]',
+        'List[User]',
     'Array of String':
-    'List[str]',
+        'List[str]',
     'Boolean':
-    'bool',
+        'bool',
     'InputFile or String':
-    'Union[InputFile, str]',
+        'Union[InputFile, str]',
     'Integer':
-    'int',
+        'int',
     'String':
-    'str',
+        'str',
     'Array of InlineQueryResult':
-    'List[InlineQueryResult]',
+        'List[InlineQueryResult]',
     'Array of PassportElementError':
-    'List[PassportElementError]',
+        'List[PassportElementError]',
     'Array of LabeledPrice':
-    'List[LabeledPrice]',
+        'List[LabeledPrice]',
     'Array of ShippingOption':
-    'List[LabeledPrice]',
+        'List[LabeledPrice]',
     'InputFile':
-    'InputFile',
+        'InputFile',
     'MaskPosition':
-    'MaskPosition',
+        'MaskPosition',
     'Float':
-    'float',
+        'float',
     'Array of InputMediaPhoto and InputMediaVideo':
-    'List[Union[InputMediaPhoto, InputMediaVideo]]',
+        'List[Union[InputMediaPhoto, InputMediaVideo]]',
     'Array of InputMediaPhoto and InputMediaVideo\n':
-    'List[Union[InputMediaPhoto, InputMediaVideo]]',
+        'List[Union[InputMediaPhoto, InputMediaVideo]]',
     'Float number':
-    'float',
+        'float',
     'InlineKeyboardMarkup':
-    'InlineKeyboardMarkup',
+        'InlineKeyboardMarkup',
     'InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply':
-    'Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]',
+        'Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]',
     'InlineKeyboardMarkup or ReplyKeyboardMarkup\n            or ReplyKeyboardRemove or ForceReply':
-    'Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]',
+        'Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]',
     'ForceReply':
-    'ForceReply',
+        'ForceReply',
     'Integer or String':
-    'Union[int, str]',
+        'Union[int, str]',
     'InputMedia':
-    'InputMedia',
+        'InputMedia',
     'PassportElementError':
-    "PassportElementError",
+        "PassportElementError",
     'InlineQueryResult':
-    'InlineQueryResult',
+        'InlineQueryResult',
 }
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -248,7 +247,7 @@ def parse_available_methods(html_file: str):
 def generate_file_text(methods: List[Method], add_base_class=True) -> str:
     """Сгенерировать py файл."""
     imports = \
-"""\n"""
+        """\n"""
     res = ''
     res += imports
 
@@ -328,23 +327,23 @@ def is_html_file_correct(html_file: str) -> bool:
             if item.next_sibling.next_sibling.name != 'p':
                 print(
                     'Файл {}\nСлед тэг после <h4> не <p>, а <{}>. ({})\n***************'
-                    .format(
+                        .format(
                         html_file,
                         item.next_sibling.next_sibling.next_sibling.
-                        next_sibling.name,
+                            next_sibling.name,
                         item.next_sibling.next_sibling.next_sibling.
-                        next_sibling,
+                            next_sibling,
                     ))
                 errors = True
             if item.next_sibling.next_sibling.next_sibling.next_sibling.name != 'table':
                 print(
                     'Файл {}\nСлед тэг после <p> не <table>, а <{}>. ({})\n***************'
-                    .format(
+                        .format(
                         html_file,
                         item.next_sibling.next_sibling.next_sibling.
-                        next_sibling.name,
+                            next_sibling.name,
                         item.next_sibling.next_sibling.next_sibling.
-                        next_sibling,
+                            next_sibling,
                     ))
                 errors = True
     if not errors:
@@ -355,11 +354,10 @@ def is_html_file_correct(html_file: str) -> bool:
 
 
 def run():
-
     dest_file = os.path.join(BASE_DIR, 'api', 'methods.py')
     os.remove(dest_file)
 
-    methods_html_files =  (
+    methods_html_files = (
         os.path.join(BASE_DIR, 'tools', 'htmls', 'available', 'methods.html'),
         os.path.join(BASE_DIR, 'tools', 'htmls', 'games', 'methods.html'),
         os.path.join(BASE_DIR, 'tools', 'htmls', 'getting_updates', 'methods.html'),

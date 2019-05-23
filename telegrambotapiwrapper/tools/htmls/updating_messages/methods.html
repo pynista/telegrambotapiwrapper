@@ -1,4 +1,4 @@
-<h4><a class="anchor" name="editmessagetext" href="#editmessagetext"><i class="anchor-icon"></i></a>editMessageText</h4>
+<h4><a class="anchor" href="#editmessagetext" name="editmessagetext"><i class="anchor-icon"></i></a>editMessageText</h4>
 <p>Use this method to edit text and <a href="#games">game</a> messages sent by the bot or via the bot (for <a
         href="#inline-mode">inline bots</a>). On success, if edited message is sent by the bot, the edited <a
         href="#message">Message</a> is returned, otherwise <em>True</em> is returned.</p>
@@ -64,7 +64,7 @@
     </tr>
     </tbody>
 </table>
-<h4><a class="anchor" name="editmessagecaption" href="#editmessagecaption"><i class="anchor-icon"></i></a>editMessageCaption
+<h4><a class="anchor" href="#editmessagecaption" name="editmessagecaption"><i class="anchor-icon"></i></a>editMessageCaption
 </h4>
 <p>Use this method to edit captions of messages sent by the bot or via the bot (for <a href="#inline-mode">inline
     bots</a>). On success, if edited message is sent by the bot, the edited <a href="#message">Message</a> is returned,
@@ -125,7 +125,7 @@
     </tr>
     </tbody>
 </table>
-<h4><a class="anchor" name="editmessagemedia" href="#editmessagemedia"><i class="anchor-icon"></i></a>editMessageMedia
+<h4><a class="anchor" href="#editmessagemedia" name="editmessagemedia"><i class="anchor-icon"></i></a>editMessageMedia
 </h4>
 <p>Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message
     album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When
@@ -179,7 +179,7 @@
     </tr>
     </tbody>
 </table>
-<h4><a class="anchor" name="editmessagereplymarkup" href="#editmessagereplymarkup"><i class="anchor-icon"></i></a>editMessageReplyMarkup
+<h4><a class="anchor" href="#editmessagereplymarkup" name="editmessagereplymarkup"><i class="anchor-icon"></i></a>editMessageReplyMarkup
 </h4>
 <p>Use this method to edit only the reply markup of messages sent by the bot or via the bot (for <a href="#inline-mode">inline
     bots</a>). On success, if edited message is sent by the bot, the edited <a href="#message">Message</a> is returned,
@@ -225,39 +225,43 @@
     </tr>
     </tbody>
 </table>
-<h4><a class="anchor" name="stoppoll" href="#stoppoll"><i class="anchor-icon"></i></a>stopPoll</h4>
-<p>Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> with the final results is returned.</p>
+<h4><a class="anchor" href="#stoppoll" name="stoppoll"><i class="anchor-icon"></i></a>stopPoll</h4>
+<p>Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> with the
+    final results is returned.</p>
 <table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
-</tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the original message with the poll</td>
-</tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for a new message <a href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.</td>
-</tr>
-</tbody>
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>chat_id</td>
+        <td>Integer or String</td>
+        <td>Yes</td>
+        <td>Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)
+        </td>
+    </tr>
+    <tr>
+        <td>message_id</td>
+        <td>Integer</td>
+        <td>Yes</td>
+        <td>Identifier of the original message with the poll</td>
+    </tr>
+    <tr>
+        <td>reply_markup</td>
+        <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
+        <td>Optional</td>
+        <td>A JSON-serialized object for a new message <a
+                href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+        </td>
+    </tr>
+    </tbody>
 </table>
-<h4><a class="anchor" name="deletemessage" href="#deletemessage"><i class="anchor-icon"></i></a>deleteMessage</h4>
+<h4><a class="anchor" href="#deletemessage" name="deletemessage"><i class="anchor-icon"></i></a>deleteMessage</h4>
 <p>Use this method to delete a message, including service messages, with the following limitations:<br>- A message can
     only be deleted if it was sent less than 48 hours ago.<br>- Bots can delete outgoing messages in private chats,
     groups, and supergroups.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in

@@ -2,9 +2,11 @@
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 
 from __future__ import annotations
-from collections import UserString
+
 import re
+from collections import UserString
 from typing import List
+
 
 # def is_anno_of_simple_type()
 
@@ -47,9 +49,6 @@ class AnnotationWrapper(UserString):
                 return True
             else:
                 return False
-
-
-
 
     @property
     def is_list_of_list(self) -> bool:
@@ -103,8 +102,6 @@ class AnnotationWrapper(UserString):
         """
         return AnnotationWrapper(re.search(AnnotationWrapper.inner_part_of_list_re, self.data).group(1))
 
-
-
     @property
     def types_in_union(self) -> List[AnnotationWrapper]:
         """
@@ -114,13 +111,12 @@ class AnnotationWrapper(UserString):
 
     @property
     def sanitized(self) -> AnnotationWrapper:
-        res = self.replace('typing.', '').\
-            replace('telegrambotapiwrapper.api.types.', '').\
-            replace('telegrambotapiwrapper.api.methods.', '').\
-            replace("<class '", "").\
+        res = self.replace('typing.', ''). \
+            replace('telegrambotapiwrapper.api.types.', ''). \
+            replace('telegrambotapiwrapper.api.methods.', ''). \
+            replace("<class '", ""). \
             replace("'>", "")
         return AnnotationWrapper(res)
-
 
     @property
     def is_list(self) -> bool:
@@ -146,9 +142,3 @@ class AnnotationWrapper(UserString):
             return True
         else:
             return False
-
-
-
-
-
-

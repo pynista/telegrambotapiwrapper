@@ -3,7 +3,6 @@
 
 BOT_API_VERSION = '4.2'
 
-
 ALL_USED_ANNOTATIONS = {'Chat',
                         'ChatMember',
                         'EncryptedCredentials',
@@ -271,8 +270,6 @@ UNION_ANNOTATIONS_IN_TYPES_MODULE = {
     'Optional[Union[InputFile, str]]',
 }
 
-
-
 ALL_USED_ANNOTATIONS_IN_TYPES = {
     'Chat',
     'EncryptedCredentials',
@@ -344,6 +341,3 @@ UNION_ANNOTATIONS_IN_METHODS_MODULE = {
     'Union[InputFile, str]',
     'Union[int, str]',
 }
-
-
-

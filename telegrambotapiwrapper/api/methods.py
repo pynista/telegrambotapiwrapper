@@ -87,12 +87,13 @@ InlineQueryResult = Union[
     InlineQueryResultVideo,
     InlineQueryResultVoice,
 ]
+
+
 @dataclass
 class GetMe(Base):
     """A simple method for testing your bot's auth token. Requires no
        parameters. Returns basic information about the bot in form of a
        User object."""
-
 
 
 @dataclass
@@ -599,7 +600,6 @@ class AnswerCallbackQuery(Base):
     cache_time: Optional[int] = None
 
 
-
 @dataclass
 class SendGame(Base):
     """Use this method to send a game. On success, the sent Message is
@@ -641,7 +641,6 @@ class GetGameHighScores(Base):
     inline_message_id: Optional[str] = None
 
 
-
 @dataclass
 class GetUpdates(Base):
     """Use this method to receive incoming updates using long polling.
@@ -673,7 +672,6 @@ class DeleteWebhook(Base):
        back to getUpdates. Returns True on success."""
 
 
-
 @dataclass
 class GetWebhookInfo(Base):
     """Use this method to get current webhook status. Requires no
@@ -681,8 +679,6 @@ class GetWebhookInfo(Base):
        using getUpdates, will return an object with the url field empty."""
 
 
-
-
 @dataclass
 class AnswerInlineQuery(Base):
     """Use this method to send answers to an inline query. On success, True
@@ -709,7 +705,6 @@ class AnswerInlineQuery(Base):
     next_offset: Optional[str] = None
     switch_pm_text: Optional[str] = None
     switch_pm_parameter: Optional[str] = None
-
 
 
 @dataclass
@@ -722,7 +717,6 @@ class SetPassportDataErrors(Base):
 
     user_id: int
     errors: List[PassportElementError]
-
 
 
 @dataclass
@@ -780,7 +774,6 @@ class AnswerPreCheckoutQuery(Base):
     pre_checkout_query_id: str
     ok: bool
     error_message: Optional[str] = None
-
 
 
 @dataclass
@@ -855,7 +848,6 @@ class DeleteStickerFromSet(Base):
        Returns True on success."""
 
     sticker: str
-
 
 
 @dataclass
@@ -941,5 +933,3 @@ class DeleteMessage(Base):
 
     chat_id: Union[int, str]
     message_id: int
-
-
