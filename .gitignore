@@ -1,3 +1,6 @@
 __pycache__
 venv/
 .idea/
+build/
+dist/
+telegrambotapiwrapper.egg-info/
