@@ -1,4 +1,3 @@
-# IN DEVELOPING
 
 ## telegrambotapiwrapper
 Python Telegram Bot API wrapper
@@ -11,7 +10,13 @@ Python Telegram Bot API wrapper
 Python 3.7
 
 ## Installation
-_stub_
+```
+pip install telegrambotapiwrapper
+```
+
+## Getting started.
+
+## Getting token
 
 ## Writing first bot
 ```python
@@ -29,13 +34,14 @@ print("isinstance(me, User): {}".format(isinstance(me, User)))  # see type of re
 Result:
 ```
 (venv) dzmitry@mycomp:~$ python3 firstbot.py 
-me: User(id=432916128, is_bot=True, first_name='myrudatingposterbot', last_name=None, username='myrudatingposterbot', language_code=None)
+me: User(id=123456789, is_bot=True, first_name='myrfffrbot', last_name=None, username='myrfffrbot', language_code=None)
 isinstance(me, User): True
 (venv) dzmitry@mycomp:~$
 ```
 ## Examples
-###Sending message
-###Sending file
+### Setting webhook
+### Sending message
+### Sending file
 
 ## Using proxies
 

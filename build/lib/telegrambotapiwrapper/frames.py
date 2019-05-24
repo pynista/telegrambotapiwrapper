@@ -46,6 +46,19 @@ def outer3_args(skip_self=True):
     else:
         return {key: value for key, value in values.items() if key in args}
 
+
+def outer_return_type() -> str:
+    return inspect.stack()[0]
+
+
+def outer2_return_type():
+    pass
+
+
+def outer3_return_type():
+    pass
+
+
 def outer_name():
     outer_name = inspect.stack()[1][3]
     return outer_name
