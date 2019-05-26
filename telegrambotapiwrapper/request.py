@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 import jsonpickle
 
 from telegrambotapiwrapper import utils
@@ -11,7 +12,8 @@ def json_payload(args: dict) -> str:
     Args:
         args(dict): словарь с данными для отправки
     Returns:
-        (строка): json-строка, содержащая объект который будет отправлен к Telegram Bot Api.
+        (строка): json-строка, содержащая объект который будет отправлен к
+        Telegram Bot Api.
     """
 
     def remove_none_values(d):

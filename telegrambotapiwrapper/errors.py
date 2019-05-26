@@ -1,37 +1,19 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+"""Application еxceptions."""
+
 
 class Error(Exception):
-    pass
+    """Base exception class."""
 
 
 class ResponseError(Error):
-    pass
+    """Errors related to responses from the API."""
 
 
 class RequestError(Error):
-    pass
-
-
-class SendingFileError(Error):
-    pass
+    """Errors related to API requests."""
 
 
 class RequestResultIsNotOk(ResponseError):
-    pass
-
-
-class KeyboardError(Error):
-    pass
-
-
-class InlineKeyboardMarkupError(KeyboardError):
-    pass
-
-
-class InlineKeyboardButtonError(InlineKeyboardMarkupError):
-    pass
-
-
-class NotExactlyOneOptionalFieldError(InlineKeyboardButtonError):
-    pass
+    """Exception thrown when API response is not OK."""
