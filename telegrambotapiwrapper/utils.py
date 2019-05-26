@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+"""The module contains various utilities."""
 
 
 def replace_from__word(d: dict):
-    """Заменить рекурсивно ключи в объекте from_ на from."""
+    """Replace recursive keys in the object from_ to from."""
     res = {}
     if not isinstance(d, (dict, list)):
         return d
@@ -18,8 +19,8 @@ def replace_from__word(d: dict):
     return res
 
 
-def replace_from_word(d: dict):
-    """Заменить рекурсивно ключи в объекте from на from_."""
+def replace_from_word(d: dict) -> dict:
+    """Replace recursive keys in the object from to from_."""
     res = {}
     if not isinstance(d, (dict, list)):
         return d
@@ -31,21 +32,17 @@ def replace_from_word(d: dict):
             res['from_'] = replace_from_word(d['from'])
         else:
             res[key] = replace_from_word(d[key])
-
     return res
 
 
 def is_str_int_float_bool(value):
-    if isinstance(value, (int, str, float)):
-        return True
-    else:
-        return False
+    """Is value str, int, float, bool."""
+    return isinstance(value, (int, str, float))
 
 
 def is_ends_with_underscore(value: str):
+    """Does value end with underscore."""
     if value == "":
         return False
-    if value[-1] == '_':
-        return True
     else:
-        return False
+        return value[-1] == '_'

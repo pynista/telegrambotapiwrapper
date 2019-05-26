@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+"""The module contains data types Telegram Bot Api."""
 
 from __future__ import annotations
 
