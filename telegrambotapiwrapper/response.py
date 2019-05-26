@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+"""Response functionality from Telegram Bot Api."""
 
 import jsonpickle
 
@@ -8,22 +9,23 @@ from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.request import json_payload
 from telegrambotapiwrapper.utils import is_str_int_float_bool
-from telegrambotapiwrapper.typelib import *
+from telegrambotapiwrapper.typelib import * # save this
 
 
 def dataclass_fields_to_jdict(fields: dict) -> dict:
-    """Получить из полей dataclass, определяющего тип объекта, json-подобный словарь."""
+    """Get a json-like dict from the dataclass fields."""
     jstr = json_payload(fields)
     res = jsonpickle.decode(jstr)
     return res
 
 
-def to_api_type(obj, tp: AnnotationWrapper):
+def to_api_type(obj, anno: AnnotationWrapper):
     """Преобразовать результат запроса к Telegram Bot API в соответствующий тип.
 
     Notes:
         1)
-            В текущей версий Telegram Bot Api (4.2) могут возвращаться следующие значения:
+            В текущей версий Telegram Bot Api (4.2) могут возвращаться следующие
+            значения:
                 'Chat',
                 'ChatMember',
                 'File',
@@ -40,26 +42,30 @@ def to_api_type(obj, tp: AnnotationWrapper):
                 'bool',
                 'int',
                 'str'
-            Для текущей версии Telegram Bot Api (4.2) для создания типов используются следующие `union`- аннотации:
+            Для текущей версии Telegram Bot Api (4.2) для создания типов
+            используются следующие `union`- аннотации:
                 'Optional[Union[InputFile, str]]'
-            Для текущей версии Telegram Bot Api (4.2) для создания типов используются следующие `List`- аннотации:
+            Для текущей версии Telegram Bot Api (4.2) для создания типов
+            используются следующие `List`- аннотации:
                     'List[EncryptedPassportElement]',
                     'List[LabeledPrice]',
                     'List[PhotoSize]',
                     'List[PollOption]',
                     'List[Sticker]',
                     'List[str]',
-            Для текущей версии Telegram Bot Api (4.2) для создания типов используются следующие `List[List[`- аннотации:
+            Для текущей версии Telegram Bot Api (4.2) для создания типов
+            используются следующие `List[List[`- аннотации:
                     'List[List[InlineKeyboardButton]]',
                     'List[List[KeyboardButton]]',
                     'List[List[PhotoSize]]',
-            Для текущей версии Telegram Bot Api (4.2) у возвращаемых значений могут быть следующие `union`- аннотации:
+            Для текущей версии Telegram Bot Api (4.2) у возвращаемых значений
+            могут быть следующие `union`- аннотации:
                 'Union[Message, bool]'
         2)
     """
 
-    def list_to_api_type(obj: list, tp: AnnotationWrapper) -> list:
-        inner_part = tp.inner_part_of_list
+    def list_to_api_type(obj: list, anno: AnnotationWrapper) -> list:
+        inner_part = anno.inner_part_of_list
         api_type = globals()[inner_part]
 
         res = []
@@ -67,44 +73,46 @@ def to_api_type(obj, tp: AnnotationWrapper):
             to_type = {}
             for field_name, field_type in api_type._annotations().items():
                 try:
-                    to_type[field_name] = to_api_type(item[field_name], AnnotationWrapper(field_type))
+                    to_type[field_name] = to_api_type(
+                        item[field_name], AnnotationWrapper(field_type))
                 except KeyError:
                     continue
             res.append(api_type(**to_type))
         return res
 
-    def list_of_list_to_api_type(obj: list, tp: AnnotationWrapper):
+    def list_of_list_to_api_type(obj: list, anno: AnnotationWrapper):
         res = []
         for lst in obj:
-            res.append(list_to_api_type(lst, tp.inner_part_of_list))
+            res.append(list_to_api_type(lst, anno.inner_part_of_list))
         return res
 
-    def union_to_api_type(obj, tp: AnnotationWrapper):
-        if tp == 'Union[Message, bool]':
+    def union_to_api_type(obj, anno: AnnotationWrapper):
+        if anno == 'Union[Message, bool]':
             return to_api_type(obj, AnnotationWrapper('Message'))
-        elif tp == 'Union[InputFile, str]]':
+        elif anno == 'Union[InputFile, str]]':
             return to_api_type(obj, AnnotationWrapper('InputFile'))
 
     if is_str_int_float_bool(obj):
         return obj
 
-    if tp.is_optional:
-        tp = tp.inner_part_of_optional
+    if anno.is_optional:
+        anno = anno.inner_part_of_optional
 
-    if tp.is_list:
-        return list_to_api_type(obj, tp)
-    elif tp.is_list_of_list:
-        return list_of_list_to_api_type(obj, tp)
-    elif tp.is_union:
-        return union_to_api_type(obj, tp)
+    if anno.is_list:
+        return list_to_api_type(obj, anno)
+    elif anno.is_list_of_list:
+        return list_of_list_to_api_type(obj, anno)
+    elif anno.is_union:
+        return union_to_api_type(obj, anno)
 
     if isinstance(obj, dict):
         to_type = {}
-        api_type = globals()[tp]
+        api_type = globals()[anno]
 
         for field_name, field_type in api_type._annotations().items():
             try:
-                to_type[field_name] = to_api_type(obj[field_name], AnnotationWrapper(field_type))
+                to_type[field_name] = to_api_type(
+                    obj[field_name], AnnotationWrapper(field_type))
             except KeyError:
                 continue
         return api_type(**to_type)
@@ -120,8 +128,8 @@ def get_result(raw_response: str):
         RequestResultIsNotOk: если ответ не содержит результата
 
     Note:
-        если raw_response не содержит поля `ok`, то считаем что это уже извлеченный результат, например
-        для целей тестирования
+        если raw_response не содержит поля `ok`, то считаем что это уже
+        извлеченный результат, например для целей тестирования
     """
     response = jsonpickle.loads(raw_response)
     try:
@@ -132,11 +140,12 @@ def get_result(raw_response: str):
         return response['result']
 
     else:
-        raise RequestResultIsNotOk("error_code: {}, description: {}".format(response['error_code'],
-                                                                            response['description']))
+        raise RequestResultIsNotOk("error_code: {}, description: {}".format(
+            response['error_code'], response['description']))
 
 
-def handle_response(raw_response: str, method_response_type: AnnotationWrapper):
+def handle_response(raw_response: str,
+                    method_response_type: AnnotationWrapper):
     """Распарсить строку, являющуюся ответом от Bot API телеграмма.
 
     Args:

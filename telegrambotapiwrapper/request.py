@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 
+"""The functionality associated with requests to Telegram Bot Api."""
+
 import jsonpickle
 
 from telegrambotapiwrapper import utils
 
 
 def json_payload(args: dict) -> str:
-    """Получить строку, содержащую объект для отправки к Telegram Bot Api.
+    """Get the string containing the object to send to Telegram Bot Api.
 
     Args:
-        args(dict): словарь с данными для отправки
+        args(dict): data dictionary to send
     Returns:
-        (строка): json-строка, содержащая объект который будет отправлен к
-        Telegram Bot Api.
+        (str): a json-string containing the object to be sent to Telegram Bot
+            Api.
     """
 
     def remove_none_values(d):
-        """Delete None values,"""
+        """Delete None values."""
         if not isinstance(d, (dict, list)):
             return d
         if isinstance(d, list):

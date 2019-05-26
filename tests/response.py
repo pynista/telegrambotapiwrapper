@@ -80,7 +80,7 @@ class TestToApiTypeFunction(unittest.TestCase):
                 chat,
                 to_api_type(
                     dataclass_fields_to_jdict_for_testing(to_convert),
-                    tp=AnnotationWrapper('Chat')))
+                    anno=AnnotationWrapper('Chat')))
 
     def test_to_message(self):
 
@@ -123,9 +123,8 @@ class TestToApiTypeFunction(unittest.TestCase):
                 message,
                 to_api_type(
                     dataclass_fields_to_jdict_for_testing(to_convert),
-                    tp=AnnotationWrapper('Message')))
+                    anno=AnnotationWrapper('Message')))
 
-    # @unittest.skip
     def test_to_callback_query(self):
 
         user = User(
@@ -146,4 +145,4 @@ class TestToApiTypeFunction(unittest.TestCase):
             callback_query,
             to_api_type(
                 dataclass_fields_to_jdict_for_testing(to_convert),
-                tp=AnnotationWrapper('CallbackQuery')))
+                anno=AnnotationWrapper('CallbackQuery')))

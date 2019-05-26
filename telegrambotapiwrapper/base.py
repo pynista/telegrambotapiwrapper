@@ -30,8 +30,8 @@ class Base:  # pylint: disable=R0903
         }
 
     @classmethod
-    def _get_not_simple_fields(cls) -> Dict[str]:
-        """ Get fields that are not int, bool, str, float.
+    def _get_not_simple_fields(cls) -> Dict[str, str]:
+        """Get fields that are not int, bool, str, float.
 
         Notes:
             Optional or non-optional does not matter
@@ -48,12 +48,13 @@ class Base:  # pylint: disable=R0903
 
                 Returns:
                     {'thumb': 'Optional[PhotoSize]'}
-            """
+        """
+
 
         return {
-            name: tp
-            for name, tp in cls._annotations().items()
-            if not AnnotationWrapper(tp).is_simple_in_opt_and_not_opt
+            name: anno
+            for name, anno in cls._annotations().items()
+            if not AnnotationWrapper(anno).is_simple_in_opt_and_not_opt
         }
 
     @classmethod
