@@ -15,7 +15,7 @@ Example:
     'InlineKeyboardButton'
 """
 
-from __future__ import annotations  # pylint: disable=E0611
+from __future__ import annotations
 
 import re
 from collections import UserString
