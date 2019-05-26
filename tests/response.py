@@ -1,9 +1,10 @@
 import unittest
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
-from telegrambotapiwrapper.api.types import *
+from telegrambotapiwrapper.types import *
 from telegrambotapiwrapper.response import to_api_type, dataclass_fields_to_jdict
 from telegrambotapiwrapper import utils
+
 
 
 def dataclass_fields_to_jdict_for_testing(obj: dict):

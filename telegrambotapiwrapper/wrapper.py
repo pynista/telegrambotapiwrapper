@@ -8,8 +8,8 @@ import requests
 
 import telegrambotapiwrapper.frames as frames
 from telegrambotapiwrapper.annotation import AnnotationWrapper
-from telegrambotapiwrapper.api.types import *
-from telegrambotapiwrapper.api.types import (
+from telegrambotapiwrapper.types import *
+from telegrambotapiwrapper.types import (
     PassportElementErrorDataField, PassportElementErrorFrontSide,
     PassportElementErrorReverseSide, PassportElementErrorSelfie,
     PassportElementErrorFile, PassportElementErrorFiles,

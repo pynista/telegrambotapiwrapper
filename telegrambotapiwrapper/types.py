@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional, List, Union
 
-from telegrambotapiwrapper.api.base import Base
+from telegrambotapiwrapper.base import Base
 
 
 @dataclass

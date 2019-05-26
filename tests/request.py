@@ -1,11 +1,9 @@
 import unittest
 
 import jsonpickle
-from deepdiff import DeepDiff
 
-from telegrambotapiwrapper.api.types import *
+from telegrambotapiwrapper.types import *
 from telegrambotapiwrapper.request import json_payload
-import deepdiff
 
 
 class TestRequest(unittest.TestCase):
