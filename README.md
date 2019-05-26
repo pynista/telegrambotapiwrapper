@@ -22,7 +22,7 @@ pip install telegrambotapiwrapper
 ```python
 # firstbot.py
 from telegrambotapiwrapper.wrapper import Api
-from telegrambotapiwrapper.api.types import User
+from telegrambotapiwrapper.typelib import User
 
 TOKEN = "<past_your_bot_api_token>"
 
