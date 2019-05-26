@@ -2,7 +2,7 @@ import unittest
 
 import jsonpickle
 
-from telegrambotapiwrapper.types import *
+from telegrambotapiwrapper.typelib import *
 from telegrambotapiwrapper.request import json_payload
 
 
