@@ -50,6 +50,10 @@ Message(message_id=299, date=1558966491, chat=Chat(id=--12345678912345, type='ch
 
 ```
 >  Note the open file mode.
+## Method and types
+* Implemented all methods Telegram Bot Api
+* Implemented all types Telegram Bot Api
+* All types of Telegram Bot Api are imported from the typelib module.
 ## License
 MIT License
 Copyright (c) 2019 Dzmitry Maliuzhenets
