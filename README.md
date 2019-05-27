@@ -2,22 +2,38 @@
 # telegrambotapiwrapper
 Python Telegram Bot API wrapper
 
-## What is telegrambotapiwrapper?
+### What is telegrambotapiwrapper?
 `telegramapiwrapper` is the simplest Telegram Bot Api wrapper for Python among existing wrappers.
-## Requirements
+### Requirements
 Python 3.7
-## Installation
+### Installation
 ```
 pip install telegrambotapiwrapper
 ```
 
-## Getting started.
+# Getting started.
+### Создание бота
+Вы должны [создать бота и получить токен](https://core.telegram.org/bots#6-botfather)
 
-## Getting token
+### Testing your bot's auth token
+Воспользуемся методом [getMe](https://core.telegram.org/bots/api#getme)
+```python
+>>> from telegrambotapiwrapper.wrapper import Api
+>>> bot_api = Api(token="<insert bot's auth token>")
+>>> me = bot_api.get_me()
+>>> print("me: {}".format(me)
+me: User(id=123456789, is_bot=True, first_name='myrfffrbot', last_name=None, username='myrfffrbot', language_code=None)
+>>> print("isinstance(me, User): {}".format(isinstance(me, User)))
+isinstance(me, User): True
+```
+### Sending text message
 
-## Files
+### Sending audio file
 
-## Writing first bot
+### Sending 
+
+
+### Writing first bot
 ```python
 # firstbot.py
 from telegrambotapiwrapper.wrapper import Api
