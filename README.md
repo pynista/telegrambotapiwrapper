@@ -43,7 +43,7 @@ Message(message_id=299, date=1558966491, chat=Chat(id=--12345678912345, type='ch
 ### Sending a photo to channel
 ```python
 >>> with open('/home/dzmitry/Pictures/500800998.jpg', 'rb') as image:
-...    first_bot_api.send_photo(chat_id=-1001373939377, photo=image,
+...    first_bot_api.send_photo(chat_id=-12345678912345, photo=image,
 ...                             caption="hello world")
 
 >>>
@@ -53,7 +53,7 @@ Message(message_id=299, date=1558966491, chat=Chat(id=--12345678912345, type='ch
 ## Method and types
 * Implemented all methods Telegram Bot Api
 * Implemented all types Telegram Bot Api
-* All types of Telegram Bot Api are imported from the typelib module.
+* All types of Telegram Bot Api are imported from the `typelib` module.
 ## License
 MIT License
 Copyright (c) 2019 Dzmitry Maliuzhenets
