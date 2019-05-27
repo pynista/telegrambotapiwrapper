@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+"""Module containing wrapper around Telegram Bot Api methods."""
 import inspect
 import io
 from typing import BinaryIO
@@ -47,10 +48,12 @@ InlineQueryResult = Union[
     InlineQueryResultGame, InlineQueryResultDocument, InlineQueryResultGif,
     InlineQueryResultLocation, InlineQueryResultMpeg4Gif,
     InlineQueryResultPhoto, InlineQueryResultVenue, InlineQueryResultVideo,
-    InlineQueryResultVoice,]
+    InlineQueryResultVoice, ]
 
 
-class ApiBase:
+class ApiBase: # pylint: disable=too-few-public-methods
+    """This class contains methods that are not methods Telegram Bot Api."""
+
     def __init__(self, token: str):
         self.token = token
 
@@ -67,20 +70,28 @@ class ApiBase:
             self.token, api_method_name)
 
     @classmethod
-    def _get_caller_func_return_type(cls):
-        """Получить возврашаемого значения функции из которой была вызвана данная функция."""
-        caller_method_name = inspect.stack()[1][3]
-        return inspect.signature(getattr(cls,
-                                         caller_method_name)).return_annotation
+    def _get_caller_method_return_type(cls) -> AnnotationWrapper:
+        """Get caller return value annotation.
 
-    @classmethod
-    def _get_caller_method_return_type(cls):
+        Get the annotation of the return value of the method within which this
+        method is called.
+
+        Notes:
+            The result contains only the name of the type without the path to
+            it.
+        """
         caller_method_name = inspect.stack()[1][3]
-        return inspect.signature(getattr(cls,
+        res = inspect.signature(getattr(cls,
                                          caller_method_name)).return_annotation
+        return AnnotationWrapper(res).sanitized
 
     def _get_caller2_return_type(self) -> AnnotationWrapper:
-        """Получить аннотацию возврашаемого значения функции из которой была вызвана данная функция."""
+        """Get caller caller return value annotation.
+
+        Notes:
+            The result contains only the name of the type without the path to
+            it.
+        """
         caller2_name = (inspect.stack()[2][3])
         signature = inspect.signature(getattr(self, caller2_name))
         annotation = signature.return_annotation
@@ -88,20 +99,32 @@ class ApiBase:
         return anno_wrapper.sanitized
 
     def _make_request(self):
-        # получаем аргументы функции, внутри которой вызван метод _make_request()
+        """Make a request to Telegram Bot Api."""
         args = frames.outer2_args()
 
         result_type = self._get_caller2_return_type()
         caller2_name = frames.outer2_name()
         tg_method_name = self._get_tg_api_method_name(caller2_name)
+
         payload = json_payload(args)
+
         url = self._get_tg_api_method_url(tg_method_name)
+
         r = requests.post(
             url, data=payload, headers={'Content-Type': 'application/json'})
         return handle_response(r.content.decode('utf-8'), result_type)
 
 
-class Api(ApiBase):
+class Api(ApiBase): # pylint: disable=too-many-public-methods
+    """Class containing methods Telegram Bot Api.
+
+    Args:
+        token (str): token
+
+    Attributes:
+        token (str): token
+    """
+
     def __init__(self, token: str):
         super().__init__(token=token)
 

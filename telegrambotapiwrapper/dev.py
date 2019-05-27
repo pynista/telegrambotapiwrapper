@@ -1,7 +1,23 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+"""The module contains information about the types used.
 
-BOT_API_VERSION = '4.2'
+The module is not intended for execution and should be used only for
+informational purposes during development.
+
+Attributes:
+    BOT_API_VERSION (float): current Telegram Bot Api version
+    ALL_USED_ANNOTATIONS (set): all used annotations
+    ALL_TYPES (set): all used types
+    ALL_METHODS_RETURNS_TYPES (set): method return types
+    METHODS_RETURN_TYPES (dict): method return types
+    UNION_ANNOTATIONS_IN_TYPELIB_MODULE (set): union annotation in typelib
+    ALL_USED_ANNOTATIONS_IN_TYPES (set): all annotations in  typelib
+    UNION_ANNOTATIONS_IN_METHODS (set): union annotation used by Telegram Bot
+        Api methods
+"""
+
+BOT_API_VERSION = 4.2
 
 ALL_USED_ANNOTATIONS = {'Chat',
                         'ChatMember',
@@ -61,7 +77,8 @@ ALL_USED_ANNOTATIONS = {'Chat',
                         'Optional[ShippingQuery]',
                         'Optional[Sticker]',
                         'Optional[SuccessfulPayment]',
-                        'Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, '
+                        ('Optional[Union[InlineKeyboardMarkup, '
+                         'ReplyKeyboardMarkup, '),
                         'ReplyKeyboardRemove, ForceReply]]',
                         'Optional[Union[InputFile, str]]',
                         'Optional[Union[int, str]]',
@@ -266,7 +283,7 @@ METHODS_RETURN_TYPES = {
     "deleteMessage": "bool",
 }
 
-UNION_ANNOTATIONS_IN_TYPES_MODULE = {
+UNION_ANNOTATIONS_IN_TYPELIB_MODULE = {
     'Optional[Union[InputFile, str]]',
 }
 
@@ -333,7 +350,7 @@ ALL_USED_ANNOTATIONS_IN_TYPES = {
     'str',
 
 }
-UNION_ANNOTATIONS_IN_METHODS_MODULE = {
+UNION_ANNOTATIONS_IN_METHODS = {
     'List[Union[InputMediaPhoto, InputMediaVideo]]',
     'Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]]',
     'Optional[Union[InputFile, str]]',
