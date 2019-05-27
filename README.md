@@ -1,14 +1,11 @@
 
-## telegrambotapiwrapper
+# telegrambotapiwrapper
 Python Telegram Bot API wrapper
 
-## Why telegrambotapiwrapper?
-
+## What is telegrambotapiwrapper?
 `telegramapiwrapper` is the simplest Telegram Bot Api wrapper for Python among existing wrappers.
-
 ## Requirements
 Python 3.7
-
 ## Installation
 ```
 pip install telegrambotapiwrapper
