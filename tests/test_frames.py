@@ -10,7 +10,7 @@ from telegrambotapiwrapper.frames import (
 
 
 class TestFrames(unittest.TestCase):
-    """Класс для тестирования функций модуля `frames.py`."""
+    """Класс для тестирования функций модуля `test_frames.py`."""
 
     def test_outer_args_skip_self_true(self_):
         """Протестировать функцию outer_args() c skip_self=True."""
