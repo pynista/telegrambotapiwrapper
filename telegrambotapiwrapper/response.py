@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 """Response functionality from Telegram Bot Api."""
+from pprint import pprint
 
 import jsonpickle
 
@@ -10,6 +11,7 @@ from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.request import json_payload
 from telegrambotapiwrapper.utils import is_str_int_float_bool
 from telegrambotapiwrapper.typelib import * # save this
+pprint(globals())
 
 
 def dataclass_fields_to_jdict(fields: dict) -> dict:
