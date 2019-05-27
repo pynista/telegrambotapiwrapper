@@ -20,12 +20,15 @@ def dataclass_fields_to_jdict(fields: dict) -> dict:
 
 
 def to_api_type(obj, anno: AnnotationWrapper):
-    """Преобразовать результат запроса к Telegram Bot API в соответствующий тип.
+    """Convert object to api type
+
+    Convert the result of the request to the Telegram Bot API into the
+    appropriate type.
 
     Notes:
         1)
-            В текущей версий Telegram Bot Api (4.2) могут возвращаться следующие
-            значения:
+            In the current versions of Telegram Bot Api (4.2), the following
+            values ​​can be returned:
                 'Chat',
                 'ChatMember',
                 'File',
@@ -42,29 +45,30 @@ def to_api_type(obj, anno: AnnotationWrapper):
                 'bool',
                 'int',
                 'str'
-            Для текущей версии Telegram Bot Api (4.2) для создания типов
-            используются следующие `union`- аннотации:
+            For the current version of Telegram Bot Api (4.2), the following
+            union-annotations are used to create types.:
                 'Optional[Union[InputFile, str]]'
-            Для текущей версии Telegram Bot Api (4.2) для создания типов
-            используются следующие `List`- аннотации:
-                    'List[EncryptedPassportElement]',
-                    'List[LabeledPrice]',
-                    'List[PhotoSize]',
-                    'List[PollOption]',
-                    'List[Sticker]',
-                    'List[str]',
-            Для текущей версии Telegram Bot Api (4.2) для создания типов
-            используются следующие `List[List[`- аннотации:
-                    'List[List[InlineKeyboardButton]]',
-                    'List[List[KeyboardButton]]',
-                    'List[List[PhotoSize]]',
-            Для текущей версии Telegram Bot Api (4.2) у возвращаемых значений
-            могут быть следующие `union`- аннотации:
-                'Union[Message, bool]'
+            For the current version of Telegram Bot Api (4.2), the following
+            `List`-annotations are used to create types:
+                'List[EncryptedPassportElement]',
+                'List[LabeledPrice]',
+                'List[PhotoSize]',
+                'List[PollOption]',
+                'List[Sticker]',
+                'List[str]',
+            For the current version of Telegram Bot Api (4.2), the following
+            `List [List [` - annotations are used to create types:
+                'List[List[InlineKeyboardButton]]',
+                'List[List[KeyboardButton]]',
+                'List[List[PhotoSize]]',
+            For the current version of Telegram Bot Api (4.2), return values ​​
+            may have the following `union`- annotations:
+                'Union [Message, bool]'
         2)
     """
 
     def list_to_api_type(obj: list, anno: AnnotationWrapper) -> list:
+        """Convert list to api type."""
         inner_part = anno.inner_part_of_list
         api_type = globals()[inner_part]
 
@@ -81,12 +85,14 @@ def to_api_type(obj, anno: AnnotationWrapper):
         return res
 
     def list_of_list_to_api_type(obj: list, anno: AnnotationWrapper):
+        """Convert list of list to api type."""
         res = []
         for lst in obj:
             res.append(list_to_api_type(lst, anno.inner_part_of_list))
         return res
 
     def union_to_api_type(obj, anno: AnnotationWrapper):
+        """Convert union to api type."""
         if anno == 'Union[Message, bool]':
             return to_api_type(obj, AnnotationWrapper('Message'))
         elif anno == 'Union[InputFile, str]]':
@@ -119,17 +125,17 @@ def to_api_type(obj, anno: AnnotationWrapper):
 
 
 def get_result(raw_response: str):
-    """Извлечь результат из сырого ответа от Bot API телеграмма.
+    """Extract the result from the raw response from the Bot API telegram.
 
     Args:
-        raw_response (str): `сырой` ответ от Bot API телеграмма
+        raw_response (str): `raw` response from Bot API telegram
 
     Raises:
-        RequestResultIsNotOk: если ответ не содержит результата
+        RequestResultIsNotOk: if the answer contains no result
 
     Note:
-        если raw_response не содержит поля `ok`, то считаем что это уже
-        извлеченный результат, например для целей тестирования
+        If raw_response does not contain an `ok` field, then we assume that this
+        is an extracted result, for example, for testing purposes.
     """
     response = jsonpickle.loads(raw_response)
     try:
@@ -146,14 +152,15 @@ def get_result(raw_response: str):
 
 def handle_response(raw_response: str,
                     method_response_type: AnnotationWrapper):
-    """Распарсить строку, являющуюся ответом от Bot API телеграмма.
+    """Parse a string that is a response from the Telegram Bot API.
 
     Args:
-        raw_response (str): ответ от Bot API телеграмма
-        method_response_type (AnnotationWrapper): аннотация ожидаемого ответа
+        raw_response (str): response from Telegram Bot API
+        method_response_type (AnnotationWrapper): annotation of the expected
+            response
 
     Raises:
-        RequestResultIsNotOk: если ответ не содержит результата
+        RequestResultIsNotOk: if the answer contains no result
     """
     res = get_result(raw_response)
     res = utils.replace_from_word(res)
