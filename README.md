@@ -19,12 +19,13 @@ pip install telegrambotapiwrapper
 Воспользуемся методом [getMe](https://core.telegram.org/bots/api#getme)
 ```python
 >>> from telegrambotapiwrapper.wrapper import Api
->>> bot_api = Api(token="<insert bot's auth token>")
+>>> bot_api = Api(token="<paste here your token>")
 >>> me = bot_api.get_me()
->>> print("me: {}".format(me)
-me: User(id=123456789, is_bot=True, first_name='myrfffrbot', last_name=None, username='myrfffrbot', language_code=None)
->>> print("isinstance(me, User): {}".format(isinstance(me, User)))
-isinstance(me, User): True
+>>> me
+User(id=123456679, is_bot=True, first_name='botbotbot', last_name=None, username='myrudatingposterbot', language_code=None)
+>>> from telegrambotapiwrapper.typelib import User
+>>> isinstance(me, User)
+True
 ```
 ### Sending text message
 

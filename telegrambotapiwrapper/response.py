@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 """Response functionality from Telegram Bot Api."""
-from pprint import pprint
+import pprint
 
 import jsonpickle
 
@@ -10,9 +10,7 @@ from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.request import json_payload
 from telegrambotapiwrapper.utils import is_str_int_float_bool
-from telegrambotapiwrapper.typelib import * # save this
-pprint(globals())
-
+import telegrambotapiwrapper.typelib as types_module
 
 def dataclass_fields_to_jdict(fields: dict) -> dict:
     """Get a json-like dict from the dataclass fields."""
@@ -71,8 +69,8 @@ def to_api_type(obj, anno: AnnotationWrapper):
 
     def list_to_api_type(obj: list, anno: AnnotationWrapper) -> list:
         """Convert list to api type."""
-        inner_part = anno.inner_part_of_list
-        api_type = globals()[inner_part]
+        inner_part = anno.inner_part_of_list.sanitized.data
+        api_type = getattr(types_module, inner_part)
 
         res = []
         for item in obj:
@@ -115,7 +113,7 @@ def to_api_type(obj, anno: AnnotationWrapper):
 
     if isinstance(obj, dict):
         to_type = {}
-        api_type = globals()[anno]
+        api_type = getattr(types_module, anno.sanitized.data)
 
         for field_name, field_type in api_type._annotations().items():
             try:

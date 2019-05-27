@@ -194,8 +194,7 @@ class AnnotationWrapper(UserString):  # pylint: disable=R0901
                 <class 'telegrambotapiwrapper.api.types.Message'> -> Message
         """
         res = self.replace('typing.', ''). \
-            replace('telegrambotapiwrapper.api.types.', ''). \
-            replace('telegrambotapiwrapper.api.methods.', ''). \
+            replace('telegrambotapiwrapper.typelib.', ''). \
             replace("<class '", ""). \
             replace("'>", "")
         return AnnotationWrapper(res)

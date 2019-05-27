@@ -10,8 +10,6 @@ from typing import Optional, List, Union
 
 from telegrambotapiwrapper.base import Base
 
-print("dfgdfgfdgfd")
-pprint(globals())
 @dataclass
 class User(Base):
     """This object represents a Telegram user or bot."""

@@ -246,8 +246,8 @@ class TestAnnotationWrapper(unittest.TestCase):
 
     def test_sanitized(self):
         data_to_test = {
-            "typing.Union[telegrambotapiwrapper.api.types.Message, bool]": 'Union[Message, bool]',
-            "<class 'telegrambotapiwrapper.api.types.Message'>": 'Message',
+            "typing.Union[telegrambotapiwrapper.typelib.Message, bool]": 'Union[Message, bool]',
+            "<class 'telegrambotapiwrapper.typelib.Message'>": 'Message',
         }
         for k, v in data_to_test.items():
             self.assertEqual(AnnotationWrapper(k).sanitized, v)
