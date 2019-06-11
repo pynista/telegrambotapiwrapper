@@ -14,3 +14,10 @@ def webhook_handler(request: str) -> Update:
         RequestResultIsNotOk: if the answer contains no result
     """
     return handle_response(request, AnnotationWrapper("Update"))
+
+
+def get_chat_id_from_update(update: Update) -> int:
+    return update.message.chat.id
+
+
+

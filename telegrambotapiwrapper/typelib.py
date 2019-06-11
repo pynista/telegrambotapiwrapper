@@ -10,6 +10,20 @@ from typing import Optional, List, Union
 
 from telegrambotapiwrapper.base import Base
 
+
+@dataclass
+class LoginUrl(Base):
+    """This object represents a parameter of the inline keyboard button used to
+    automatically authorize a user. Serves as a great replacement for the
+    Telegram Login Widget when the user is coming from Telegram. All the user
+    needs to do is tap/click a button and confirm that they want to log in."""
+
+    url: str
+    forward_text: Optional[str] = None
+    bot_username: Optional[str] = None
+    request_write_access: Optional[bool] = None
+
+
 @dataclass
 class User(Base):
     """This object represents a Telegram user or bot."""
@@ -91,6 +105,7 @@ class Message(Base):
     successful_payment: Optional[SuccessfulPayment] = None
     connected_website: Optional[str] = None
     passport_data: Optional[PassportData] = None
+    reply_markup: Optional[InlineKeyboardMarkup] = None
 
 
 @dataclass
@@ -319,6 +334,7 @@ class InlineKeyboardButton(Base):
     switch_inline_query_current_chat: Optional[str] = None
     callback_game: Optional[CallbackGame] = None
     pay: Optional[bool] = None
+    login_url: Optional[LoginUrl] = None
 
 
 @dataclass
@@ -478,7 +494,7 @@ class Game(Base):
 @dataclass
 class CallbackGame(Base):
     """A placeholder, currently holds no information. Use BotFather to set
-       up your     game."""
+       up your game."""
 
 
 @dataclass
