@@ -16,8 +16,9 @@ def webhook_handler(request: str) -> Update:
     return handle_response(request, AnnotationWrapper("Update"))
 
 
-def get_chat_id_from_update(update: Update) -> int:
-    return update.message.chat.id
+
+
+
 
 
 

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 """The module contains various utilities."""
+import filetype
+import requests
 
 
 def replace_from__word(d: dict):
@@ -46,3 +48,18 @@ def is_ends_with_underscore(value: str):
         return False
     else:
         return value[-1] == '_'
+
+
+def get_file(token, file_path) -> bytes:
+    """Get file."""
+    url = "https://api.telegram.org/file/bot{}/{}".format(
+        token,
+        file_path
+    )
+    u = requests.get(url)
+    return u.content
+
+def is_bytes_img(obj: bytes):
+    """Check whether bytes define an image."""
+    return 'image/' in filetype.guess(obj).MIME
+
