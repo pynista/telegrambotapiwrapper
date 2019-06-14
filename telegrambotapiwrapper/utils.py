@@ -4,8 +4,6 @@
 import filetype
 import requests
 from telegrambotapiwrapper.typelib import Update
-from telegrambotapiwrapper.wrapper import Api
-
 
 def replace_from__word(d: dict):
     """Replace recursive keys in the object from_ to from."""
@@ -52,10 +50,10 @@ def is_ends_with_underscore(value: str):
         return value[-1] == '_'
 
 
-def get_file(token, file_path) -> bytes:
+def get_file(bot, file_path) -> bytes:
     """Get file."""
     url = "https://api.telegram.org/file/bot{}/{}".format(
-        token,
+        bot.token,
         file_path
     )
     u = requests.get(url)
@@ -63,7 +61,11 @@ def get_file(token, file_path) -> bytes:
 
 def is_bytes_img(obj: bytes):
     """Check whether bytes define an image."""
-    return 'image/' in filetype.guess(obj).MIME
+    try:
+        return 'image/' in filetype.guess(obj).MIME
+    except AttributeError:
+        return False
+
 
 
 
@@ -74,6 +76,7 @@ class UpdateWrapper:
 
     def __init__(self, update: Update):
         self._update = update
+
 
     def __getattr__(self, name):
         return getattr(self._update, name)
@@ -99,25 +102,17 @@ class UpdateWrapper:
         """
         return self._update.message.document is not None
 
-
-    def is_image(self, token) -> bool:
-        """Проверить, является ли обновление изображением, переданным как
-        document или photo.
-
-        TODO: распостранить на большое количество фотографий
-        """
+    def is_img(self, bot) -> bool:
+        """Проверить, является ли обновление изображениям, переданным как
+        document или photo."""
         if self.has_msg_photo_field:
             return True
         elif self.is_file:
-            bot = Api(token=token)
             file_obj = bot.get_file(self._update.message.document.file_id)
 
             file_path = file_obj.file_path
-            f_bytes = get_file(token, file_path)
-            if is_bytes_img(f_bytes):
-                return True
-            else:
-                return False
+            f_bytes = get_file(bot, file_path)
+            return is_bytes_img(f_bytes)
         else:
             return False
 
