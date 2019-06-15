@@ -4,7 +4,6 @@
 import filetype
 import requests
 from telegrambotapiwrapper.typelib import Update
-from telegrambotapiwrapper.wrapper import Api
 
 
 def replace_from__word(d: dict):
@@ -62,7 +61,7 @@ def download_file(bot, file_path) -> bytes:
     return u.content
 
 
-def file_path(bot: Api, file_id: str):
+def file_path(bot, file_id: str):
     file_obj = bot.get_file(file_id)
     return file_obj.file_path
 
