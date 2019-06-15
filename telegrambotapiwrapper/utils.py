@@ -4,6 +4,8 @@
 import filetype
 import requests
 from telegrambotapiwrapper.typelib import Update
+from telegrambotapiwrapper.wrapper import Api
+
 
 def replace_from__word(d: dict):
     """Replace recursive keys in the object from_ to from."""
@@ -50,7 +52,7 @@ def is_ends_with_underscore(value: str):
         return value[-1] == '_'
 
 
-def get_file(bot, file_path) -> bytes:
+def download_file(bot, file_path) -> bytes:
     """Get file."""
     url = "https://api.telegram.org/file/bot{}/{}".format(
         bot.token,
@@ -58,6 +60,12 @@ def get_file(bot, file_path) -> bytes:
     )
     u = requests.get(url)
     return u.content
+
+
+def file_path(bot: Api, file_id: str):
+    file_obj = bot.get_file(file_id)
+    return file_obj.file_path
+
 
 def is_bytes_img(obj: bytes):
     """Check whether bytes define an image."""
@@ -76,7 +84,6 @@ class UpdateWrapper:
 
     def __init__(self, update: Update):
         self._update = update
-
 
     def __getattr__(self, name):
         return getattr(self._update, name)
@@ -108,10 +115,8 @@ class UpdateWrapper:
         if self.has_msg_photo_field:
             return True
         elif self.is_file:
-            file_obj = bot.get_file(self._update.message.document.file_id)
-
-            file_path = file_obj.file_path
-            f_bytes = get_file(bot, file_path)
+            fp = file_path(bot, self.img_id)
+            f_bytes = download_file(bot, fp)
             return is_bytes_img(f_bytes)
         else:
             return False
@@ -127,6 +132,15 @@ class UpdateWrapper:
     @property
     def msg_text(self) -> str:
         return self._update.message.text
+
+    @property
+    def img_id(self) -> str:
+        return self._update.message.photo[0].file_id
+
+    def download_img(self, bot) -> bytes:
+        fp = file_path(bot, self.img_id)
+        return download_file(bot, fp)
+
 
 
 
