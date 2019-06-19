@@ -19,14 +19,14 @@ with open('README.md', 'r', 'utf-8') as f:
 
 setup(
     python_requires='>=3.7',
-    name='__title__',
-    version='__version__',
-    author='__author__',
-    author_email='__author_email__',
-    description='__description__',
+    name=__title__,
+    version=__version__,
+    author=__author__,
+    author_email=__author_email__,
+    description=__description__,
     long_description=readme,
     long_description_content_type='text/markdown',
-    url='__url__',
+    url=__url__,
     packages=setuptools.find_packages(),
     keywords='telegram api bot wrapper',
     classifiers=[

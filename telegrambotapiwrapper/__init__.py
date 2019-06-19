@@ -1329,7 +1329,7 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
             chat_id: Union[int, str],
             user_id: int,
     ) -> bool:
-        """Use this method to unban a previously kicked user in a supergroup or
+        """Use this method to unban a previously kicked user iouter_argsn a supergroup or
            channel. The user will not return to the group or channel
            automatically, but will be able to join via link, etc. The bot must be
            an administrator for this to work. Returns True on success."""
