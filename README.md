@@ -16,7 +16,7 @@ You must [create a bot and get a token](https://core.telegram.org/bots#6-botfath
 ### Testing your bot's auth token
 We use the method [getMe](https://core.telegram.org/bots/api#getme):
 ```python
->>> from telegrambotapiwrapper.wrapper import Api
+>>> from telegrambotapiwrapper import Api
 >>> first_bot_api = Api(token="<paste your token here>")
 >>> me = first_bot_api.get_me()
 >>> me

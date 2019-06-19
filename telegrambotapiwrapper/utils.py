@@ -78,7 +78,6 @@ class UpdateWrapper:
     """Обертка вокруг типа Update API телеграмма."""
 
     def __init__(self, update: Update):
-        print('HQFHFHJGHJGHJGHJGJGHJGH')
         self._update = update
 
     def __getattr__(self, name):

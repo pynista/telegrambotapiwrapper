@@ -4,27 +4,29 @@ from codecs import open
 
 import setuptools
 from distutils.core import setup
-here = os.path.abspath(os.path.dirname(__file__))
 
-about = {}
-with open(
-        os.path.join(here, 'telegrambotapiwrapper', '__init__.py'), 'r',
-        'utf-8') as f:
-    exec(f.read(), about)
+__title__ = 'telegrambotapiwrapper'
+__description__ = 'Python Telegram Bot Api Wrapper.'
+__url__ = 'https://github.com/pynista/telegrambotapiwrapper'
+__version__ = '0.1.6'
+__author__ = 'Dzmitry Maliuzhenets'
+__author_email__ = 'dzmitrymaliuzhenets@gmail.com'
+__license__ = 'MIT'
+__copyright__ = 'Copyright 2019 Dzmitry Maliuzhenets'
 
 with open('README.md', 'r', 'utf-8') as f:
     readme = f.read()
 
 setup(
     python_requires='>=3.7',
-    name=about['__title__'],
-    version=about['__version__'],
-    author=about['__author__'],
-    author_email=about['__author_email__'],
-    description=about['__description__'],
+    name='__title__',
+    version='__version__',
+    author='__author__',
+    author_email='__author_email__',
+    description='__description__',
     long_description=readme,
     long_description_content_type='text/markdown',
-    url=about['__url__'],
+    url='__url__',
     packages=setuptools.find_packages(),
     keywords='telegram api bot wrapper',
     classifiers=[
