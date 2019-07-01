@@ -3,6 +3,7 @@
 """The module contains various utilities."""
 import filetype
 import requests
+
 from telegrambotapiwrapper.typelib import Update
 
 
@@ -105,7 +106,7 @@ class UpdateWrapper:
         return self._update.message.document is not None
 
     def is_img(self, bot) -> bool:
-        """Проверить, является ли обновление изображеjhjkниям, переданным как
+        """Проверить, является ли обновление изображениям, переданным как
         document или photo."""
         if self.has_msg_photo_field:
             return True
@@ -127,6 +128,19 @@ class UpdateWrapper:
     @property
     def msg_text(self) -> str:
         return self._update.message.text
+
+    @property
+    def is_text(self) -> bool:
+        return self._update.message.text is not None \
+               and not self.has_msg_document_field \
+               and not self.has_msg_photo_field
+
+    def is_number(self) -> bool:
+        """Представляет ли собой update текст, являющимся числом """
+        if self.is_text:
+            return self.msg_text.replace('.', '', 1).isdigit()
+        else:
+            return False
 
     @property
     def document_id(self) -> str:
