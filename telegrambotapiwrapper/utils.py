@@ -131,6 +131,8 @@ class UpdateWrapper:
 
     @property
     def is_text(self) -> bool:
+
+        """Представляет ли собой update текст."""
         return self._update.message.text is not None \
                and not self.has_msg_document_field \
                and not self.has_msg_photo_field
@@ -138,9 +140,18 @@ class UpdateWrapper:
     def is_number(self) -> bool:
         """Представляет ли собой update текст, являющимся числом """
         if self.is_text:
-            return self.msg_text.replace('.', '', 1).isdigit()
+            txt = self.msg_text.replace('.', '', 1)
+            txt = txt.replace(',', '', 1)
+            return txt.isdigit()
         else:
             return False
+
+    def number(self) -> float:
+        if self.is_number:
+            return float(self.msg_text)
+        else:
+            raise TypeError(
+                "update не представляет собой текст являющимся числом")
 
     @property
     def document_id(self) -> str:
