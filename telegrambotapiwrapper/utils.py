@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 """The module contains various utilities."""
+import pprint
+
 import filetype
 import requests
 
@@ -77,9 +79,11 @@ def download_file(bot, file_path) -> bytes:
 
 class UpdateWrapper:
     """Обертка вокруг типа Update API телеграмма."""
-
     def __init__(self, update: Update):
         self._update = update
+
+    def __str__(self):
+        return pprint.pformat(self._update)
 
     def __getattr__(self, name):
         return getattr(self._update, name)
