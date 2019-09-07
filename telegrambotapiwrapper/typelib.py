@@ -10,6 +10,20 @@ from typing import Optional, List, Union
 
 from telegrambotapiwrapper.base import Base
 
+@dataclass
+class ChatPermissions(Base):
+    """Describes actions that a non-administrator user is allowed to take in
+    a chat."""
+
+    can_send_messages: Optional[bool] = None
+    can_send_media_messages: Optional[bool] = None
+    can_send_polls: Optional[bool] = None
+    can_send_other_messages: Optional[bool] = None
+    can_add_web_page_previews: Optional[bool] = None
+    can_change_info: Optional[bool] = None
+    can_invite_users: Optional[bool] = None
+    can_pin_messages: Optional[bool] = None
+
 
 @dataclass
 class LoginUrl(Base):
@@ -46,11 +60,12 @@ class Chat(Base):
     username: Optional[str] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
-    all_members_are_administrators: Optional[bool] = None
+    # all_members_are_administrators: Optional[bool] = None
     photo: Optional[ChatPhoto] = None
     description: Optional[str] = None
     invite_link: Optional[str] = None
     pinned_message: Optional[Message] = None
+    permissions: Optional[ChatPermissions] = None
     sticker_set_name: Optional[str] = None
     can_set_sticker_set: Optional[bool] = None
 
@@ -396,6 +411,7 @@ class ChatMember(Base):
     can_send_media_messages: Optional[bool] = None
     can_send_other_messages: Optional[bool] = None
     can_add_web_page_previews: Optional[bool] = None
+    can_send_polls: Optional[bool] = None
 
 
 @dataclass
@@ -1233,6 +1249,7 @@ class Sticker(Base):
     file_id: str
     width: int
     height: int
+    is_animated: bool
     thumb: Optional[PhotoSize] = None
     emoji: Optional[str] = None
     set_name: Optional[str] = None
@@ -1246,6 +1263,7 @@ class StickerSet(Base):
 
     name: str
     title: str
+    is_animated: bool
     contains_masks: bool
     stickers: List[Sticker]
 

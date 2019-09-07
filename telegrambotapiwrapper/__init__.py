@@ -148,6 +148,17 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
         return handle_response(
             r.content.decode('utf-8'), AnnotationWrapper('bool'))
 
+    def set_chat_permissions(
+            self,
+            chat_id: Union[int, str],
+            permissions: ChatPermissions,
+    ) -> bool:
+        """Use this method to set default chat permissions for all members.
+        The bot must be an administrator in the group or a supergroup for this
+        to work and must have the can_restrict_members admin rights. Returns
+        True on success."""
+        return self._make_request()
+
     def send_sticker(
             self,
             chat_id: Union[int, str],
@@ -567,9 +578,9 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
             chat_id: Union[int, str],
     ) -> str:
         """Use this method to generate a new invite link for a chat; any
-           previously generated link is revoked. The bot must be     an
-           administrator in the chat for this to work and must have the appropriate
-           admin rights. Returns the new invite link as String on success."""
+        previously generated link is revoked. The bot must be an administrator
+        in the chat for this to work and must have the appropriate admin rights.
+        Returns the new invite link as String on success."""
 
         return self._make_request()
 
@@ -761,16 +772,13 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
             self,
             chat_id: Union[int, str],
             user_id: int,
+            permissions: ChatPermissions,
             until_date: Optional[int] = None,
-            can_send_messages: Optional[bool] = None,
-            can_send_media_messages: Optional[bool] = None,
-            can_send_other_messages: Optional[bool] = None,
-            can_add_web_page_previews: Optional[bool] = None,
     ) -> bool:
         """Use this method to restrict a user in a supergroup. The bot must be
-           an administrator in the supergroup for this to work and must have
-           the appropriate admin rights. Pass True for all boolean parameters to
-           lift restrictions from a user. Returns True on success."""
+        an administrator in the supergroup for this to work and must have the
+        appropriate admin rights. Pass True for all permissions to lift
+        restrictions from a user. Returns True on success."""
 
         return self._make_request()
 
@@ -1226,10 +1234,10 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
             chat_id: Union[int, str],
             description: Optional[str] = None,
     ) -> bool:
-        """Use this method to change the description of a supergroup or a
-           channel. The bot must be an administrator in the chat for this to
-           work and must have the appropriate admin rights. Returns True on
-           success."""
+        """Use this method to change the description of a group, a supergroup or
+         a channel. The bot must be an administrator in the chat for this to
+         work and must have the appropriate admin rights. Returns True on
+         success."""
 
         return self._make_request()
 
