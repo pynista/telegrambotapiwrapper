@@ -48,6 +48,9 @@ class User(Base):
     last_name: Optional[str] = None
     username: Optional[str] = None
     language_code: Optional[str] = None
+    can_join_groups: Optional[bool] = None
+    can_read_all_group_messages: Optional[bool] = None
+    supports_inline_queries: Optional[bool] = None
 
 
 @dataclass
@@ -66,6 +69,7 @@ class Chat(Base):
     invite_link: Optional[str] = None
     pinned_message: Optional[Message] = None
     permissions: Optional[ChatPermissions] = None
+    slow_mode_delay: Optional[int] = None
     sticker_set_name: Optional[str] = None
     can_set_sticker_set: Optional[bool] = None
 
@@ -133,6 +137,7 @@ class MessageEntity(Base):
     length: int
     url: Optional[str] = None
     user: Optional[User] = None
+    language: Optional[str] = None
 
 
 @dataclass
@@ -141,6 +146,7 @@ class PhotoSize(Base):
        thumbnail."""
 
     file_id: str
+    file_unique_id: str
     width: int
     height: int
     file_size: Optional[int] = None
@@ -152,6 +158,7 @@ class Audio(Base):
        Telegram clients."""
 
     file_id: str
+    file_unique_id: str
     duration: int
     performer: Optional[str] = None
     title: Optional[str] = None
@@ -166,6 +173,7 @@ class Document(Base):
        messages and audio files)."""
 
     file_id: str
+    file_unique_id: str
     thumb: Optional[PhotoSize] = None
     file_name: Optional[str] = None
     mime_type: Optional[str] = None
@@ -177,6 +185,7 @@ class Video(Base):
     """This object represents a video file."""
 
     file_id: str
+    file_unique_id: str
     width: int
     height: int
     duration: int
@@ -191,6 +200,7 @@ class Animation(Base):
        video without sound)."""
 
     file_id: str
+    file_unique_id: str
     width: int
     height: int
     duration: int
@@ -205,6 +215,7 @@ class Voice(Base):
     """This object represents a voice note."""
 
     file_id: str
+    file_unique_id: str
     duration: int
     mime_type: Optional[str] = None
     file_size: Optional[int] = None
@@ -217,6 +228,7 @@ class VideoNote(Base):
        as of v.4.0)."""
 
     file_id: str
+    file_unique_id: str
     length: int
     duration: int
     thumb: Optional[PhotoSize] = None
@@ -268,7 +280,12 @@ class Poll(Base):
     id: str
     question: str
     options: List[PollOption]
+    total_voter_count: int
     is_closed: bool
+    is_anonymous: bool
+    type: str
+    allows_multiple_answers: bool
+    correct_option_id: Optional[int] = None
 
 
 @dataclass
@@ -288,6 +305,7 @@ class File(Base):
        link expires, a new one can be requested     by calling getFile."""
 
     file_id: str
+    file_unique_id: str
     file_size: Optional[int] = None
     file_path: Optional[str] = None
 
@@ -313,6 +331,7 @@ class KeyboardButton(Base):
     text: str
     request_contact: Optional[bool] = None
     request_location: Optional[bool] = None
+    request_poll: Optional[KeyboardButtonPollType] = None
 
 
 @dataclass
@@ -396,6 +415,7 @@ class ChatMember(Base):
 
     user: User
     status: str
+    custom_title: Optional[str] = None
     until_date: Optional[int] = None
     can_be_edited: Optional[bool] = None
     can_change_info: Optional[bool] = None
@@ -538,6 +558,7 @@ class Update(Base):
     shipping_query: Optional[ShippingQuery] = None
     pre_checkout_query: Optional[PreCheckoutQuery] = None
     poll: Optional[Poll] = None
+    poll_answer: Optional[PollAnswer] = None
 
 
 @dataclass
@@ -1017,6 +1038,7 @@ class PassportFile(Base):
        decrypted and don't exceed 10MB."""
 
     file_id: str
+    file_unique_id: str
     file_size: int
     file_date: int
 
@@ -1247,6 +1269,7 @@ class Sticker(Base):
     """This object represents a sticker."""
 
     file_id: str
+    file_unique_id: str
     width: int
     height: int
     is_animated: bool
@@ -1277,3 +1300,19 @@ class MaskPosition(Base):
     x_shift: float
     y_shift: float
     scale: float
+
+
+@dataclass
+class KeyboardButtonPollType(Base):
+    """This object represents type of a poll, which is allowed to be created and
+    sent when the corresponding button is pressed."""
+    type: Optional[str] = None
+
+
+@dataclass
+class PollAnswer(Base):
+    """This object represents an answer of a user in a non-anonymous poll."""
+    poll_id: str
+    user: User
+    option_ids: List[int]
+

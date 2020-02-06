@@ -1035,6 +1035,11 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
             chat_id: Union[int, str],
             question: str,
             options: List[str],
+            is_anonymous: Optional[bool] = None,
+            type: Optional[str] = None,
+            allows_multiple_answers: Optional[bool] = None,
+            correct_option_id: Optional[int] = None,
+            is_closed: Optional[bool] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
             reply_markup: Optional[
@@ -1353,6 +1358,15 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
            and must have the ‘can_pin_messages’ admin right in the supergroup or
            ‘can_edit_messages’ admin right in the channel. Returns True on success."""
 
+        return self._make_request()
+
+    def set_chat_administrator_custom_title(self,
+                                            chat_id: Union[int, str],
+                                            user_id: int,
+                                            custom_title: str
+                                            ) -> bool:
+        """Use this method to set a custom title for an administrator in a
+        supergroup promoted by the bot. Returns True on success."""
         return self._make_request()
 
 

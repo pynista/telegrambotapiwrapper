@@ -168,3 +168,29 @@ class UpdateWrapper:
     def download_img(self, bot) -> bytes:
         fp = file_path(bot, self.img_id)
         return download_file(bot, fp)
+
+def is_right_type_message_entity(message_entity_type: str):
+    """Проверить, правильный ли тип message entity
+
+    Notes:
+        https://core.telegram.org/bots/api#messageentity
+    """
+    right_types = (
+        'mention',
+        'hashtag',
+        'cashtag',
+        'bot_command',
+        'url',
+        'email',
+        'phone_number',
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        'code',
+        'pre',
+        'text_link',
+        'text_mention',
+    )
+
+    return message_entity_type in right_types
