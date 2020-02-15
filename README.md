@@ -2,7 +2,7 @@
 
 `telegrambotapiwrapper` is Telegram Bot Api implementation for Python
 # Requirements
-Python 3.7
+Python 3.7 or Python 3.8
 # Installation
 ```
 pip install telegrambotapiwrapper
