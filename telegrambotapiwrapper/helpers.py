@@ -17,7 +17,8 @@ class UpdateWrapper:
     def __getattr__(self, name):
         return getattr(self._update, name)
 
-    def is_start_command(self):
+    @property
+    def is_start_command(self) -> bool:
         return self._update.message.text == '/start'
 
     @property
