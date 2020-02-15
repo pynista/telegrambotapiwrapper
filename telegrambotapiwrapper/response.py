@@ -2,12 +2,16 @@
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 """Response functionality from Telegram Bot Api."""
 import jsonpickle
-from telegrambotapiwrapper import utils
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.request import json_payload
-from telegrambotapiwrapper.utils import is_str_int_float_bool
 import telegrambotapiwrapper.typelib as types_module
+
+
+def is_str_int_float_bool(value):
+    """Is value str, int, float, bool."""
+    return isinstance(value, (int, str, float))
+
 
 def dataclass_fields_to_jdict(fields: dict) -> dict:
     """Get a json-like dict from the dataclass fields."""
@@ -15,6 +19,21 @@ def dataclass_fields_to_jdict(fields: dict) -> dict:
     res = jsonpickle.decode(jstr)
     return res
 
+
+def replace_from_word(d: dict):
+    """Replace recursive keys in the object from to from_."""
+    res = {}
+    if not isinstance(d, (dict, list)):
+        return d
+    if isinstance(d, list):
+        return [replace_from_word(v) for v in d]
+
+    for key, value in d.items():
+        if key == 'from':
+            res['from_'] = replace_from_word(d['from'])
+        else:
+            res[key] = replace_from_word(d[key])
+    return res
 
 def to_api_type(obj, anno: AnnotationWrapper):
     """Convert object to api type
@@ -160,5 +179,5 @@ def handle_response(raw_response: str,
         RequestResultIsNotOk: if the answer contains no result
     """
     res = get_result(raw_response)
-    res = utils.replace_from_word(res)
+    res = replace_from_word(res)
     return to_api_type(res, method_response_type)
