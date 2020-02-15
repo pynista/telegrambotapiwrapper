@@ -5,10 +5,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pprint import pprint
 from typing import Optional, List, Union
 
 from telegrambotapiwrapper.base import Base
+
 
 @dataclass
 class ChatPermissions(Base):
@@ -1315,4 +1315,3 @@ class PollAnswer(Base):
     poll_id: str
     user: User
     option_ids: List[int]
-

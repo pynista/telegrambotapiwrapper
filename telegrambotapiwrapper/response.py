@@ -2,10 +2,11 @@
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
 """Response functionality from Telegram Bot Api."""
 import jsonpickle
+
+import telegrambotapiwrapper.typelib as types_module
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.errors import RequestResultIsNotOk
 from telegrambotapiwrapper.request import json_payload
-import telegrambotapiwrapper.typelib as types_module
 
 
 def is_str_int_float_bool(value):
@@ -34,6 +35,7 @@ def replace_from_word(d: dict):
         else:
             res[key] = replace_from_word(d[key])
     return res
+
 
 def to_api_type(obj, anno: AnnotationWrapper):
     """Convert object to api type

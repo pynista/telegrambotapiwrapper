@@ -9,6 +9,8 @@ import requests
 
 import telegrambotapiwrapper.frames as frames
 from telegrambotapiwrapper.annotation import AnnotationWrapper
+from telegrambotapiwrapper.request import json_payload
+from telegrambotapiwrapper.response import handle_response
 from telegrambotapiwrapper.typelib import *
 from telegrambotapiwrapper.typelib import (
     PassportElementErrorDataField, PassportElementErrorFrontSide,
@@ -27,8 +29,6 @@ from telegrambotapiwrapper.typelib import (
     InlineQueryResultVideo, InlineQueryResultVoice, InlineKeyboardMarkup,
     ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply,
     InlineQueryResultLocation, MaskPosition, LabeledPrice)
-from telegrambotapiwrapper.request import json_payload
-from telegrambotapiwrapper.response import handle_response
 
 PassportElementError = Union[
     PassportElementErrorDataField, PassportElementErrorFrontSide,
@@ -48,10 +48,10 @@ InlineQueryResult = Union[
     InlineQueryResultGame, InlineQueryResultDocument, InlineQueryResultGif,
     InlineQueryResultLocation, InlineQueryResultMpeg4Gif,
     InlineQueryResultPhoto, InlineQueryResultVenue, InlineQueryResultVideo,
-    InlineQueryResultVoice, ]
+    InlineQueryResultVoice,]
 
 
-class ApiBase: # pylint: disable=too-few-public-methods
+class ApiBase:  # pylint: disable=too-few-public-methods
     """This class contains methods that are not methods Telegram Bot Api."""
 
     def __init__(self, token: str):
@@ -82,7 +82,7 @@ class ApiBase: # pylint: disable=too-few-public-methods
         """
         caller_method_name = inspect.stack()[1][3]
         res = inspect.signature(getattr(cls,
-                                         caller_method_name)).return_annotation
+                                        caller_method_name)).return_annotation
         return AnnotationWrapper(res).sanitized
 
     def _get_caller2_return_type(self) -> AnnotationWrapper:
@@ -115,7 +115,7 @@ class ApiBase: # pylint: disable=too-few-public-methods
         return handle_response(r.content.decode('utf-8'), result_type)
 
 
-class Api(ApiBase): # pylint: disable=too-many-public-methods
+class Api(ApiBase):  # pylint: disable=too-many-public-methods
     """Class containing methods Telegram Bot Api.
 
     Args:
@@ -1368,5 +1368,3 @@ class Api(ApiBase): # pylint: disable=too-many-public-methods
         """Use this method to set a custom title for an administrator in a
         supergroup promoted by the bot. Returns True on success."""
         return self._make_request()
-
-

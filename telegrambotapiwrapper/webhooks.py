@@ -1,6 +1,6 @@
-from telegrambotapiwrapper.typelib import Update
-from telegrambotapiwrapper.response import handle_response
 from telegrambotapiwrapper.annotation import AnnotationWrapper
+from telegrambotapiwrapper.response import handle_response
+from telegrambotapiwrapper.typelib import Update
 
 
 def webhook_handler(request: str) -> Update:
@@ -14,11 +14,3 @@ def webhook_handler(request: str) -> Update:
         RequestResultIsNotOk: if the answer contains no result
     """
     return handle_response(request, AnnotationWrapper("Update"))
-
-
-
-
-
-
-
-

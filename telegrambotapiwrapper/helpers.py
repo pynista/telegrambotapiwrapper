@@ -1,3 +1,5 @@
+"""Implements various helpers."""
+
 import pprint
 
 from telegrambotapiwrapper import Update
@@ -5,6 +7,7 @@ from telegrambotapiwrapper import Update
 
 class UpdateWrapper:
     """Обертка вокруг типа Update API телеграмма."""
+
     def __init__(self, update: Update):
         self._update = update
 

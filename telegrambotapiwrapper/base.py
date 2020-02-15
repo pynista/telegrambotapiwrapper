@@ -50,7 +50,6 @@ class Base:  # pylint: disable=R0903
                     {'thumb': 'Optional[PhotoSize]'}
         """
 
-
         return {
             name: anno
             for name, anno in cls._annotations().items()
