@@ -1,10 +1,17 @@
 import unittest
-from pprint import pprint
 
-from telegrambotapiwrapper.utils import is_str_int_float_bool
-from telegrambotapiwrapper.utils import is_ends_with_underscore
-from telegrambotapiwrapper.utils import replace_from_word
-from telegrambotapiwrapper.utils import replace_from__word
+from telegrambotapiwrapper.request import replace_from__word
+from telegrambotapiwrapper.response import replace_from_word
+from telegrambotapiwrapper.response import is_str_int_float_bool
+
+
+
+def is_ends_with_underscore(value: str):
+    """Does value end with underscore."""
+    if value == "":
+        return False
+    else:
+        return value[-1] == '_'
 
 
 class TestUtils(unittest.TestCase):

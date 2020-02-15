@@ -2,13 +2,13 @@ import unittest
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.typelib import *
-from telegrambotapiwrapper.response import to_api_type, dataclass_fields_to_jdict
-from telegrambotapiwrapper import utils
-
+from telegrambotapiwrapper.response import to_api_type
+from telegrambotapiwrapper.response import dataclass_fields_to_jdict
+from telegrambotapiwrapper.response import replace_from_word
 
 
 def dataclass_fields_to_jdict_for_testing(obj: dict):
-    return utils.replace_from_word(dataclass_fields_to_jdict(obj))
+    return replace_from_word(dataclass_fields_to_jdict(obj))
 
 
 class TestToApiTypeFunction(unittest.TestCase):
@@ -41,11 +41,32 @@ class TestToApiTypeFunction(unittest.TestCase):
         # 1
         chat_photo = ChatPhoto(
             small_file_id='1fdf235643', big_file_id='3454sdfds56546')
+
+        chat1_permissions = ChatPermissions(can_send_messages=True,
+                                            can_send_media_messages=False,
+                                            can_send_polls=True,
+                                            can_change_info=False,
+                                            can_invite_users=True,
+                                           )
+
+        chat2_permissions = ChatPermissions(can_send_messages=True,
+                                            can_send_media_messages=False,
+                                            can_send_polls=False,
+                                            can_change_info=True,
+                                            can_invite_users=True,
+                                            )
+
+        chat3_permissions = ChatPermissions(can_send_messages=False,
+                                            can_send_media_messages=False,
+                                            can_send_polls=True,
+                                            can_change_info=False,
+                                            can_invite_users=True,
+                                            )
         chat1 = Chat(
             id=123,
             type='group',
             title='dsdvfvdvxfve',
-            all_members_are_administrators=True,
+            permissions=chat1_permissions,
             photo=chat_photo)
         # 2
         chat2 = Chat(
@@ -55,7 +76,7 @@ class TestToApiTypeFunction(unittest.TestCase):
             username="regfrefre",
             first_name="regfrefre",
             last_name="regfrefre",
-            all_members_are_administrators=False,
+            permissions=chat2_permissions,
         )
         # 3
         pinned_message_chat = Chat(
@@ -71,7 +92,7 @@ class TestToApiTypeFunction(unittest.TestCase):
             title="fvgfgfd",
             username="regfrefre",
             first_name="regfrefre",
-            all_members_are_administrators=True,
+            permissions=chat3_permissions,
             pinned_message=pinned_message)
 
         for chat in [chat1, chat2, chat3]:
@@ -98,7 +119,8 @@ class TestToApiTypeFunction(unittest.TestCase):
             title="fvgfgfd",
             username="regfrefre",
             first_name="regfrefre",
-            all_members_are_administrators=True,
+            permissions=ChatPermissions(can_send_polls=False,
+                                        can_change_info=False),
             pinned_message=pinned_message)
 
         user = User(

@@ -8,11 +8,11 @@ from distutils.core import setup
 __title__ = 'telegrambotapiwrapper'
 __description__ = 'Python Telegram Bot Api Wrapper.'
 __url__ = 'https://github.com/pynista/telegrambotapiwrapper'
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 __author__ = 'Dzmitry Maliuzhenets'
 __author_email__ = 'dzmitrymaliuzhenets@gmail.com'
 __license__ = 'MIT'
-__copyright__ = 'Copyright 2019 Dzmitry Maliuzhenets'
+__copyright__ = 'Copyright 2019-2020 Dzmitry Maliuzhenets'
 
 with open('README.md', 'r', 'utf-8') as f:
     readme = f.read()
