@@ -28,6 +28,7 @@ setup(
     long_description_content_type='text/markdown',
     url=__url__,
     packages=setuptools.find_packages(),
+    setup_requires=['wheel'],
     keywords='telegram api bot wrapper',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
