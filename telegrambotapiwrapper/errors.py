@@ -17,3 +17,6 @@ class RequestError(Error):
 
 class RequestResultIsNotOk(ResponseError):
     """Exception thrown when API response is not OK."""
+
+class TelegramNoAccesible(Exception):
+    pass
