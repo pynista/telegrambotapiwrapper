@@ -1,3 +1,4 @@
+prettyprinter
 bleach
 certifi
 cffi

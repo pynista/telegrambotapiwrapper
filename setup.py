@@ -8,7 +8,7 @@ from distutils.core import setup
 __title__ = 'telegrambotapiwrapper'
 __description__ = 'Python Telegram Bot Api Wrapper.'
 __url__ = 'https://github.com/pynista/telegrambotapiwrapper'
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 __author__ = 'Dzmitry Maliuzhenets'
 __author_email__ = 'dzmitrymaliuzhenets@gmail.com'
 __license__ = 'MIT'

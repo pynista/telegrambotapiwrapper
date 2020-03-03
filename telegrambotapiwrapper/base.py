@@ -3,13 +3,21 @@
 """A module containing a class that is the parent for all types of APIs."""
 
 import dataclasses
+from importlib import import_module
 from typing import List, Optional, Dict
 
-from telegrambotapiwrapper.annotation import AnnotationWrapper
+import prettyprinter
 
+from telegrambotapiwrapper.annotation import AnnotationWrapper
+extra_module = import_module('telegrambotapiwrapper._prettyprinter_mod')
+extra_module.install()
 
 class Base:  # pylint: disable=R0903
     """Base class for all types of APIs."""
+
+    def __str__(self):
+        return prettyprinter.pformat(self)
+
 
     @classmethod
     def _get_classname(cls):
