@@ -9,7 +9,7 @@ from typing import List, Optional, Dict
 import prettyprinter
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
-extra_module = import_module('telegrambotapiwrapper._prettyprinter_mod')
+extra_module = import_module('telegrambotapiwrapper.printpretty')
 extra_module.install()
 
 class Base:  # pylint: disable=R0903
