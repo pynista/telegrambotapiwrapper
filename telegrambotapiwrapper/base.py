@@ -16,7 +16,8 @@ class Base:  # pylint: disable=R0903
     """Base class for all types of APIs."""
 
     def __str__(self):
-        return prettyprinter.pformat(self)
+        return prettyprinter.pformat(self).replace(
+            "telegrambotapiwrapper.typelib.", "")
 
 
     @classmethod
