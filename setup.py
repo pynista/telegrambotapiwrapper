@@ -17,8 +17,15 @@ __copyright__ = 'Copyright 2019-2020 Dzmitry Maliuzhenets'
 with open('README.md', 'r', 'utf-8') as f:
     readme = f.read()
 
+
+requirements = [
+    'prettyprinter',
+    'jsonpickle',
+    'requests',
+]
+
 setup(
-    python_requires='>=3.7',
+    python_requires='~=3.7',
     name=__title__,
     version=__version__,
     author=__author__,
@@ -27,6 +34,7 @@ setup(
     long_description=readme,
     long_description_content_type='text/markdown',
     url=__url__,
+    install_requires=requirements,
     packages=setuptools.find_packages(),
     setup_requires=['wheel'],
     keywords='telegram api bot wrapper',
