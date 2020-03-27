@@ -9,8 +9,10 @@ from typing import List, Optional, Dict
 import prettyprinter
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
+
 extra_module = import_module('telegrambotapiwrapper.printpretty')
 extra_module.install()
+
 
 class Base:  # pylint: disable=R0903
     """Base class for all types of APIs."""
@@ -18,7 +20,6 @@ class Base:  # pylint: disable=R0903
     def __str__(self):
         return prettyprinter.pformat(self).replace(
             "telegrambotapiwrapper.typelib.", "")
-
 
     @classmethod
     def _get_classname(cls):

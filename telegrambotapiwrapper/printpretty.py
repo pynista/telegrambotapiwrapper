@@ -1,7 +1,6 @@
 from collections import OrderedDict
 from dataclasses import (
     fields,
-    MISSING,
 )
 
 from prettyprinter.prettyprinter import pretty_call, register_pretty

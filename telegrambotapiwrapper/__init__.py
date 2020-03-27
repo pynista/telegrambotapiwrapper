@@ -374,7 +374,6 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         else:
             # assert isinstance(photo, io.BytesIO):
             files = {'photo': photo}
-
             r = requests.post(url, files=files, data=values)
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('Message'))

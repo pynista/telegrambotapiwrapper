@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 """Response functionality from Telegram Bot Api."""
 import jsonpickle
 

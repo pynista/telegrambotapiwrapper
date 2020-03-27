@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 """A module for obtaining information about funcs arguments and their names."""
 import inspect
 

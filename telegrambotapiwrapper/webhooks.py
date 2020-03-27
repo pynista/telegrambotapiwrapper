@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2019 Dzmitry Maliuzhenets; MIT License
+
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.response import handle_response
 from telegrambotapiwrapper.typelib import Update
