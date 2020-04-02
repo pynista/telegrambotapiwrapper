@@ -110,6 +110,7 @@ class Message(Base):
     location: Optional[Location] = None
     venue: Optional[Venue] = None
     poll: Optional[Poll] = None
+    dice: Optional[Dice] = None
     new_chat_members: Optional[List[User]] = None
     left_chat_member: Optional[User] = None
     new_chat_title: Optional[str] = None
@@ -151,6 +152,17 @@ class PhotoSize(Base):
     width: int
     height: int
     file_size: Optional[int] = None
+
+@dataclass
+class Dice(Base):
+    """This object represents a dice with random value from 1 to 6."""
+    value: int
+
+@dataclass
+class BotCommand(Base):
+    """This object represents a bot command."""
+    command: str
+    description: str
 
 
 @dataclass
@@ -1290,6 +1302,7 @@ class StickerSet(Base):
     is_animated: bool
     contains_masks: bool
     stickers: List[Sticker]
+    thumb: Optional[PhotoSize] = None
 
 
 @dataclass

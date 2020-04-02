@@ -190,34 +190,54 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             self,
             user_id: int,
             name: str,
-            png_sticker: Union[BinaryIO, str],
             emojis: str,
+            png_sticker: Union[BinaryIO, str] = None,
+            tgs_sticker: Optional[BinaryIO] = None,
             mask_position: Optional[MaskPosition] = None,
     ) -> bool:
         """Use this method to add a new sticker to a set created by the bot.
            Returns True on success."""
 
         url = self._get_tg_api_method_url('addStickerToSet')
-        values = frames.outer_args()
-        del values['png_sticker']
 
-        if isinstance(png_sticker, str):
-            return self._make_request()
+        if tgs_sticker is None:
+
+            if isinstance(png_sticker, str):
+                return self._make_request()
+            else:
+                values = frames.outer_args()
+                del values['png_sticker']
+                files = {'png_sticker': png_sticker}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('bool'))
         else:
-            # assert isinstance(png_sticker, io.BytesIO):
-            files = {'png_sticker': png_sticker}
+            values = frames.outer_args()
+            files = {}
 
-            r = requests.post(url, files=files, data=values)
-            return handle_response(
-                r.content.decode('utf-8'), AnnotationWrapper('bool'))
+            del values['tgs_sticker']
+            files['tgs_sticker'] = tgs_sticker
+
+            if isinstance(png_sticker, str):
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('bool'))
+            else:
+                del values['png_sticker']
+                files['png_sticker'] = png_sticker
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('bool'))
 
     def create_new_sticker_set(
             self,
             user_id: int,
             name: str,
             title: str,
-            png_sticker: Union[BinaryIO, str],
             emojis: str,
+            png_sticker: Optional[Union[BinaryIO, str]] = None,
+            tgs_sticker: Optional[BinaryIO] = None,
             contains_masks: Optional[bool] = None,
             mask_position: Optional[MaskPosition] = None,
     ) -> bool:
@@ -226,14 +246,25 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
            success."""
 
         url = self._get_tg_api_method_url('createNewStickerSet')
-        values = frames.outer_args()
-        del values['png_sticker']
 
-        if isinstance(png_sticker, str):
-            return self._make_request()
-        else:
-            # assert isinstance(png_sticker, io.BytesIO):
-            files = {'png_sticker': png_sticker}
+
+        if png_sticker is not None:
+
+            if isinstance(png_sticker, str):
+                return self._make_request()
+            else:
+                values = frames.outer_args()
+                del values['png_sticker']
+                files = {'png_sticker': png_sticker}
+
+                r = requests.post(url, files=files, data=values)
+                return handle_response(
+                    r.content.decode('utf-8'), AnnotationWrapper('bool'))
+
+        if tgs_sticker is not None:
+            values = frames.outer_args()
+            del values['tgs_sticker']
+            files = {'tgs_sticker': tgs_sticker}
 
             r = requests.post(url, files=files, data=values)
             return handle_response(
@@ -1367,3 +1398,45 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         """Use this method to set a custom title for an administrator in a
         supergroup promoted by the bot. Returns True on success."""
         return self._make_request()
+
+    def send_dice(self,
+                  chat_id: Union[int, str],
+                  disable_notification: Optional[bool] = None,
+                  reply_to_message_id: Optional[int] = None,
+                  reply_markup: Optional[
+                      Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
+                            ReplyKeyboardRemove, ForceReply]] = None,
+                  ) -> bool:
+        """Use this method to send a dice, which will have a random value from 1 to 6. On success, the sent Message is
+        returned."""
+        return self._make_request()
+
+    def get_my_commands(self) -> List[BotCommand]:
+        """Use this method to get the current list of the bot's commands. Requires no parameters.
+        Returns Array of BotCommand on success."""
+        return self._make_request()
+
+    def set_my_commands(self, commands: List[BotCommand]) -> bool:
+        """Use this method to change the list of the bot's commands. Returns True on success."""
+        return self._make_request()
+
+    def set_sticker_set_thumb(self, name: str, user_id: int, thumb: Optional[Union[BinaryIO, str]] = None) -> bool:
+        """Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker
+        sets only. Returns True on success."""
+        if thumb is None:
+            return self._make_request()
+        elif isinstance(thumb, str):
+            return self._make_request()
+
+        else:
+            values = frames.outer_args()
+            del values['thumb']
+            files = {'thumb': thumb}
+
+            url = self._get_tg_api_method_url('setStickerSetThumb')
+            r = requests.post(url, files=files, data=values)
+            return handle_response(
+                r.content.decode('utf-8'), AnnotationWrapper('bool'))
+
+
+
