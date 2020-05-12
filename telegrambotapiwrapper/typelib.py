@@ -82,7 +82,7 @@ class Message(Base):
     message_id: int
     date: int
     chat: Chat
-    from_: Optional[User] = None
+    from_user: Optional[User] = None
     forward_from: Optional[User] = None
     forward_from_chat: Optional[Chat] = None
     forward_from_message_id: Optional[int] = None
@@ -153,10 +153,13 @@ class PhotoSize(Base):
     height: int
     file_size: Optional[int] = None
 
+
 @dataclass
 class Dice(Base):
     """This object represents a dice with random value from 1 to 6."""
+    emoji: str
     value: int
+
 
 @dataclass
 class BotCommand(Base):
@@ -299,6 +302,10 @@ class Poll(Base):
     type: str
     allows_multiple_answers: bool
     correct_option_id: Optional[int] = None
+    explanation: Optional[str] = None
+    explanation_entities: Optional[List[MessageEntity]] = None
+    open_period: Optional[int] = None
+    close_date: Optional[int] = None
 
 
 @dataclass
@@ -394,7 +401,7 @@ class CallbackQuery(Base):
        Exactly one of the fields data or game_short_name will     be present."""
 
     id: str
-    from_: User
+    from_user: User
     chat_instance: str
     message: Optional[Message] = None
     inline_message_id: Optional[str] = None
@@ -594,7 +601,7 @@ class InlineQuery(Base):
        results."""
 
     id: str
-    from_: User
+    from_user: User
     query: str
     offset: str
     location: Optional[Location] = None
@@ -1029,7 +1036,7 @@ class ChosenInlineResult(Base):
        and sent to their     chat partner."""
 
     result_id: str
-    from_: User
+    from_user: User
     query: str
     location: Optional[Location] = None
     inline_message_id: Optional[str] = None
@@ -1258,7 +1265,7 @@ class ShippingQuery(Base):
     """This object contains information about an incoming shipping query."""
 
     id: str
-    from_: User
+    from_user: User
     invoice_payload: str
     shipping_address: ShippingAddress
 
@@ -1269,7 +1276,7 @@ class PreCheckoutQuery(Base):
        query."""
 
     id: str
-    from_: User
+    from_user: User
     currency: str
     total_amount: int
     invoice_payload: str

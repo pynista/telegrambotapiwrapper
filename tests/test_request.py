@@ -2,8 +2,8 @@ import unittest
 
 import jsonpickle
 
-from telegrambotapiwrapper.typelib import *
 from telegrambotapiwrapper.request import json_payload
+from telegrambotapiwrapper.typelib import *
 
 
 class TestRequest(unittest.TestCase):

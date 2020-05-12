@@ -1,5 +1,12 @@
 telegrambotapiwrapper Changelog
 =================
+
+0.3.8
+------
+*May 12, 2020*
+API приведено в соответствие с Bot API 4.8 (см. изменения Telegram Bot Api от April 24, 2020)
+
+
 0.3.7
 ------
 *April 4, 2020*

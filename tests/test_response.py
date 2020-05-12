@@ -1,14 +1,14 @@
 import unittest
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
-from telegrambotapiwrapper.typelib import *
-from telegrambotapiwrapper.response import to_api_type
 from telegrambotapiwrapper.response import dataclass_fields_to_jdict
-from telegrambotapiwrapper.response import replace_from_word
+from telegrambotapiwrapper.response import replace__from__by__from_user
+from telegrambotapiwrapper.response import to_api_type
+from telegrambotapiwrapper.typelib import *
 
 
 def dataclass_fields_to_jdict_for_testing(obj: dict):
-    return replace_from_word(dataclass_fields_to_jdict(obj))
+    return replace__from__by__from_user(dataclass_fields_to_jdict(obj))
 
 
 class TestToApiTypeFunction(unittest.TestCase):
@@ -47,7 +47,7 @@ class TestToApiTypeFunction(unittest.TestCase):
                                             can_send_polls=True,
                                             can_change_info=False,
                                             can_invite_users=True,
-                                           )
+                                            )
 
         chat2_permissions = ChatPermissions(can_send_messages=True,
                                             can_send_media_messages=False,
@@ -134,11 +134,11 @@ class TestToApiTypeFunction(unittest.TestCase):
             message_id=12312321,
             date=4584979847685478,
             chat=chat,
-            from_=user,
+            from_user=user,
         )
 
         for message in [
-                message1,
+            message1,
         ]:
             to_convert = message._fields_items
             self.assertEqual(
@@ -157,7 +157,7 @@ class TestToApiTypeFunction(unittest.TestCase):
 
         callback_query = CallbackQuery(
             id="dfgrewregfrewfgd",
-            from_=user,
+            from_user=user,
             chat_instance="3243543",
         )
 

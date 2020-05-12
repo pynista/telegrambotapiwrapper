@@ -33,4 +33,5 @@ def pretty_dataclass_instance(value, ctx):
 
 
 def install():
-    register_pretty(predicate=is_instance_of_dataclass)(pretty_dataclass_instance)
+    register_pretty(predicate=is_instance_of_dataclass)(
+        pretty_dataclass_instance)

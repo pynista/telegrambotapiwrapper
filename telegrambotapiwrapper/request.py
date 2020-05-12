@@ -6,19 +6,19 @@
 import jsonpickle
 
 
-def replace_from__word(d: dict):
-    """Replace recursive keys in the object from_ to from."""
+def replace__from_user__to__from(d: dict):
+    """Replace recursive keys in the object from_user to from."""
     res = {}
     if not isinstance(d, (dict, list)):
         return d
     if isinstance(d, list):
-        return [replace_from__word(v) for v in d]
+        return [replace__from_user__to__from(v) for v in d]
 
     for key, value in d.items():
-        if key == 'from_':
-            res['from'] = replace_from__word(d['from_'])
+        if key == 'from_user':
+            res['from'] = replace__from_user__to__from(d['from_user'])
         else:
-            res[key] = replace_from__word(d[key])
+            res[key] = replace__from_user__to__from(d[key])
     return res
 
 
@@ -46,6 +46,6 @@ def json_payload(args: dict) -> str:
     jstr = jsonpickle.encode(args, unpicklable=False)
     py_obj = jsonpickle.decode(jstr)
     py_obj = remove_none_values(py_obj)
-    py_obj = replace_from__word(py_obj)
+    py_obj = replace__from_user__to__from(py_obj)
     jstr = jsonpickle.dumps(py_obj)
     return jstr

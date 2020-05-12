@@ -101,7 +101,8 @@ class TestAnnotationWrapper(unittest.TestCase):
         }
 
         for k, v in data_to_test.items():
-            self.assertEqual(AnnotationWrapper(k).inner_part_of_list_of_list, v)
+            self.assertEqual(AnnotationWrapper(k).inner_part_of_list_of_list,
+                             v)
 
     def test_is_simple(self):
         data_to_test = {
@@ -243,7 +244,6 @@ class TestAnnotationWrapper(unittest.TestCase):
         for k, v in data_to_test.items():
             self.assertEqual(AnnotationWrapper(k).is_simple_in_opt, v)
 
-
     def test_sanitized(self):
         data_to_test = {
             "typing.Union[telegrambotapiwrapper.typelib.Message, bool]": 'Union[Message, bool]',
@@ -251,7 +251,6 @@ class TestAnnotationWrapper(unittest.TestCase):
         }
         for k, v in data_to_test.items():
             self.assertEqual(AnnotationWrapper(k).sanitized, v)
-
 
     def test_is_simple_in_opt_and_not_opt(self):
         data_to_test = {
@@ -340,9 +339,8 @@ class TestAnnotationWrapper(unittest.TestCase):
             'WebhookInfo': False,
         }
         for k, v in data_to_test.items():
-            self.assertEqual(AnnotationWrapper(k).is_simple_in_opt_and_not_opt, v)
-
-
+            self.assertEqual(AnnotationWrapper(k).is_simple_in_opt_and_not_opt,
+                             v)
 
     def test_is_optional(self):
         data_to_test = {
@@ -523,7 +521,8 @@ class TestAnnotationWrapper(unittest.TestCase):
             'Union[Message, bool]': ['Message', 'bool'],
             'Union[int, str]': ['int', 'str'],
             'Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]': [
-                'InlineKeyboardMarkup', 'ReplyKeyboardMarkup', 'ReplyKeyboardRemove', 'ForceReply'
+                'InlineKeyboardMarkup', 'ReplyKeyboardMarkup',
+                'ReplyKeyboardRemove', 'ForceReply'
             ]
         }
         for k, v in data_to_test.items():

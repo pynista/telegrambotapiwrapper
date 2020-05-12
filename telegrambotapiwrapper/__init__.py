@@ -247,7 +247,6 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
 
         url = self._get_tg_api_method_url('createNewStickerSet')
 
-
         if png_sticker is not None:
 
             if isinstance(png_sticker, str):
@@ -1069,6 +1068,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             type: Optional[str] = None,
             allows_multiple_answers: Optional[bool] = None,
             correct_option_id: Optional[int] = None,
+            explanation: Optional[str] = None,
+            explanation_parse_mode: Optional[str] = None,
+            open_period: Optional[int] = None,
+            close_date: Optional[int] = None,
             is_closed: Optional[bool] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
@@ -1401,6 +1404,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
 
     def send_dice(self,
                   chat_id: Union[int, str],
+                  emoji: Optional[str] = None,
                   disable_notification: Optional[bool] = None,
                   reply_to_message_id: Optional[int] = None,
                   reply_markup: Optional[
@@ -1420,7 +1424,8 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         """Use this method to change the list of the bot's commands. Returns True on success."""
         return self._make_request()
 
-    def set_sticker_set_thumb(self, name: str, user_id: int, thumb: Optional[Union[BinaryIO, str]] = None) -> bool:
+    def set_sticker_set_thumb(self, name: str, user_id: int, thumb: Optional[
+        Union[BinaryIO, str]] = None) -> bool:
         """Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker
         sets only. Returns True on success."""
         if thumb is None:
@@ -1437,6 +1442,3 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             r = requests.post(url, files=files, data=values)
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('bool'))
-
-
-

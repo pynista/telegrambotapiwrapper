@@ -22,19 +22,19 @@ def dataclass_fields_to_jdict(fields: dict) -> dict:
     return res
 
 
-def replace_from_word(d: dict):
-    """Replace recursive keys in the object from to from_."""
+def replace__from__by__from_user(d: dict):
+    """Replace recursive keys in the object from to from_user."""
     res = {}
     if not isinstance(d, (dict, list)):
         return d
     if isinstance(d, list):
-        return [replace_from_word(v) for v in d]
+        return [replace__from__by__from_user(v) for v in d]
 
     for key, value in d.items():
         if key == 'from':
-            res['from_'] = replace_from_word(d['from'])
+            res['from_user'] = replace__from__by__from_user(d['from'])
         else:
-            res[key] = replace_from_word(d[key])
+            res[key] = replace__from__by__from_user(d[key])
     return res
 
 
@@ -182,5 +182,5 @@ def handle_response(raw_response: str,
         RequestResultIsNotOk: if the answer contains no result
     """
     res = get_result(raw_response)
-    res = replace_from_word(res)
+    res = replace__from__by__from_user(res)
     return to_api_type(res, method_response_type)
