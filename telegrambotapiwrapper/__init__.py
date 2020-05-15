@@ -54,8 +54,9 @@ InlineQueryResult = Union[
 class ApiBase:  # pylint: disable=too-few-public-methods
     """This class contains methods that are not methods Telegram Bot Api."""
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, proxies: Optional[dict]):
         self.token = token
+        self.proxies = proxies
 
     @staticmethod
     def _get_tg_api_method_name(py_style_method_name):
@@ -98,6 +99,12 @@ class ApiBase:  # pylint: disable=too-few-public-methods
         anno_wrapper = AnnotationWrapper(annotation)
         return anno_wrapper.sanitized
 
+    def _make_post_request(self, url, **kwargs):
+        if self.proxies:
+            return requests.post(url, proxies=self.proxies, **kwargs)
+        else:
+            return requests.post(url, **kwargs)
+
     def _make_request(self):
         """Make a request to Telegram Bot Api."""
         args = frames.outer2_args()
@@ -110,8 +117,11 @@ class ApiBase:  # pylint: disable=too-few-public-methods
 
         url = self._get_tg_api_method_url(tg_method_name)
 
-        r = requests.post(
-            url, data=payload, headers={'Content-Type': 'application/json'})
+        r = self._make_post_request(url,
+                                    data=payload,
+                                    headers={
+                                        'Content-Type': 'application/json'},
+                                    )
         return handle_response(r.content.decode('utf-8'), result_type)
 
 
@@ -125,8 +135,8 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         token (str): token
     """
 
-    def __init__(self, token: str):
-        super().__init__(token=token)
+    def __init__(self, token: str, proxies=Optional[dict]):
+        super().__init__(token=token, proxies=proxies)
 
     def set_chat_photo(
             self,
@@ -144,7 +154,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         del values['photo']
         files = {'photo': photo}
 
-        r = requests.post(url, files=files, data=values)
+        r = self._make_post_request(url,
+                                    files=files,
+                                    data=values,
+                                    )
         return handle_response(
             r.content.decode('utf-8'), AnnotationWrapper('bool'))
 
@@ -182,7 +195,11 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             # assert isinstance(png_sticker, io.BytesIO):
             files = {'sticker': sticker}
 
-            r = requests.post(url, files=files, data=values)
+            r = self._make_post_request(url,
+                                        files=files,
+                                        data=values,
+                                        )
+
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -209,7 +226,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['png_sticker']
                 files = {'png_sticker': png_sticker}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('bool'))
         else:
@@ -220,13 +240,19 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             files['tgs_sticker'] = tgs_sticker
 
             if isinstance(png_sticker, str):
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('bool'))
             else:
                 del values['png_sticker']
                 files['png_sticker'] = png_sticker
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('bool'))
 
@@ -256,7 +282,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['png_sticker']
                 files = {'png_sticker': png_sticker}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('bool'))
 
@@ -265,7 +294,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             del values['tgs_sticker']
             files = {'tgs_sticker': tgs_sticker}
 
-            r = requests.post(url, files=files, data=values)
+            r = self._make_post_request(url,
+                                        files=files,
+                                        data=values,
+                                        )
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('bool'))
 
@@ -284,7 +316,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         del values['png_sticker']
         files = {'png_sticker': png_sticker}
 
-        r = requests.post(url, files=files, data=values)
+        r = self._make_post_request(url,
+                                    files=files,
+                                    data=values,
+                                    )
         return handle_response(
             r.content.decode('utf-8'), AnnotationWrapper('File'))
 
@@ -307,7 +342,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             del values['certificate']
             files = {'certificate': certificate}
 
-            r = requests.post(url, files=files, data=values)
+            r = self._make_post_request(url,
+                                        files=files,
+                                        data=values,
+                                        )
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('bool'))
         else:
@@ -346,7 +384,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['audio']
                 files = {'audio': audio}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -354,7 +395,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['thumb']
                 files = {'thumb': thumb}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -363,7 +407,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['audio']
                 del values['thumb']
                 files = {'audio': audio, 'thumb': thumb}
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
         else:
@@ -376,7 +423,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['audio']
                 files = {'audio': audio}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -404,7 +454,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         else:
             # assert isinstance(photo, io.BytesIO):
             files = {'photo': photo}
-            r = requests.post(url, files=files, data=values)
+            r = self._make_post_request(url,
+                                        files=files,
+                                        data=values,
+                                        )
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -843,7 +896,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['animation']
                 files = {'animation': animation}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -851,7 +907,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['thumb']
                 files = {'thumb': thumb}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -860,7 +919,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['animation']
                 del values['thumb']
                 files = {'animation': animation, 'thumb': thumb}
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
         else:
@@ -873,7 +935,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['animation']
                 files = {'animation': animation}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -935,7 +1000,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['document']
                 files = {'document': document}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -943,7 +1011,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['thumb']
                 files = {'thumb': thumb}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -952,7 +1023,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['document']
                 del values['thumb']
                 files = {'document': document, 'thumb': thumb}
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
         else:
@@ -965,7 +1039,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['document']
                 files = {'document': document}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1137,7 +1214,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['video']
                 files = {'video': video}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1145,7 +1225,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['thumb']
                 files = {'thumb': thumb}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1154,7 +1237,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['video']
                 del values['thumb']
                 files = {'video': video, 'thumb': thumb}
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
         else:
@@ -1166,8 +1252,11 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 # assert isinstance(document, io.BytesIO)
                 del values['video']
                 files = {'video': video}
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
 
-                r = requests.post(url, files=files, data=values)
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1199,7 +1288,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['video_note']
                 files = {'video_note': video_note}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1207,7 +1299,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['thumb']
                 files = {'thumb': thumb}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1216,7 +1311,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['video_note']
                 del values['thumb']
                 files = {'video_note': video_note, 'thumb': thumb}
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
         else:
@@ -1229,7 +1327,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                 del values['video_note']
                 files = {'video_note': video_note}
 
-                r = requests.post(url, files=files, data=values)
+                r = self._make_post_request(url,
+                                            files=files,
+                                            data=values,
+                                            )
                 return handle_response(
                     r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1263,7 +1364,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             # assert isinstance(photo, io.BytesIO):
             files = {'voice': voice}
 
-            r = requests.post(url, files=files, data=values)
+            r = self._make_post_request(url,
+                                        files=files,
+                                        data=values,
+                                        )
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('Message'))
 
@@ -1439,6 +1543,9 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             files = {'thumb': thumb}
 
             url = self._get_tg_api_method_url('setStickerSetThumb')
-            r = requests.post(url, files=files, data=values)
+            r = self._make_post_request(url,
+                                        files=files,
+                                        data=values,
+                                        )
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('bool'))
