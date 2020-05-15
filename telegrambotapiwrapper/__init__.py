@@ -54,7 +54,7 @@ InlineQueryResult = Union[
 class ApiBase:  # pylint: disable=too-few-public-methods
     """This class contains methods that are not methods Telegram Bot Api."""
 
-    def __init__(self, token: str, proxies: Optional[dict]=None):
+    def __init__(self, token: str, proxies: Optional[dict] = None):
         self.token = token
         self.proxies = proxies
 
@@ -135,7 +135,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         token (str): token
     """
 
-    def __init__(self, token: str, proxies=Optional[dict]):
+    def __init__(self, token: str, proxies: Optional[dict] = None):
         super().__init__(token=token, proxies=proxies)
 
     def set_chat_photo(
