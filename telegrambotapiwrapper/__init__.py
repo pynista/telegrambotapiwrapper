@@ -58,6 +58,11 @@ class ApiBase:  # pylint: disable=too-few-public-methods
         self.token = token
         self.proxies = proxies
 
+    @property
+    def public_ip(self) -> str:
+        """Get public ip address."""
+        return requests.get('https://checkip.amazonaws.com').text.strip()
+
     @staticmethod
     def _get_tg_api_method_name(py_style_method_name):
         """Get Telegram API method name from python method name."""

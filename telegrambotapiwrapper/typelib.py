@@ -90,6 +90,7 @@ class Message(Base):
     forward_sender_name: Optional[str] = None
     forward_date: Optional[int] = None
     reply_to_message: Optional[Message] = None
+    via_bot: Optional[Message] = None
     edit_date: Optional[int] = None
     media_group_id: Optional[str] = None
     author_signature: Optional[str] = None
@@ -659,6 +660,7 @@ class InlineQueryResultGif(Base):
     gif_width: Optional[int] = None
     gif_height: Optional[int] = None
     gif_duration: Optional[int] = None
+    thumb_mime_type: Optional[str] = None
     title: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
@@ -681,6 +683,7 @@ class InlineQueryResultMpeg4Gif(Base):
     mpeg4_width: Optional[int] = None
     mpeg4_height: Optional[int] = None
     mpeg4_duration: Optional[int] = None
+    thumb_mime_type: Optional[str] = None
     title: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
