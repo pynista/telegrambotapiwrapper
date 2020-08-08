@@ -58,10 +58,6 @@ class ApiBase:  # pylint: disable=too-few-public-methods
         self.token = token
         self.proxies = proxies
 
-    @property
-    def public_ip(self) -> str:
-        """Get public ip address."""
-        return requests.get('https://checkip.amazonaws.com').text.strip()
 
     @staticmethod
     def _get_tg_api_method_name(py_style_method_name):
@@ -142,6 +138,12 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
 
     def __init__(self, token: str, proxies: Optional[dict] = None):
         super().__init__(token=token, proxies=proxies)
+
+    @property
+    def public_ip(self) -> str:
+        """Get public ip address."""
+        return requests.get('https://checkip.amazonaws.com',
+                            proxies=self.proxies).text.strip()
 
     def set_chat_photo(
             self,
