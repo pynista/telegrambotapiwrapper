@@ -54,9 +54,9 @@ InlineQueryResult = Union[
 class ApiBase:  # pylint: disable=too-few-public-methods
     """This class contains methods that are not methods Telegram Bot Api."""
 
-    def __init__(self, token: str, proxies: Optional[dict] = None):
+    def __init__(self, token: str, proxy: Optional[dict] = None):
         self.token = token
-        self.proxies = proxies
+        self.proxy = proxy
 
     @staticmethod
     def _get_tg_api_method_name(py_style_method_name):
@@ -100,8 +100,8 @@ class ApiBase:  # pylint: disable=too-few-public-methods
         return anno_wrapper.sanitized
 
     def _make_post_request(self, url, **kwargs):
-        if self.proxies:
-            return requests.post(url, proxies=self.proxies, **kwargs)
+        if self.proxy:
+            return requests.post(url, proxy=self.proxy, **kwargs)
         else:
             return requests.post(url, **kwargs)
 
@@ -135,8 +135,8 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
         token (str): token
     """
 
-    def __init__(self, token: str, proxies: Optional[dict] = None):
-        super().__init__(token=token, proxies=proxies)
+    def __init__(self, token: str, proxy: Optional[dict] = None):
+        super().__init__(token=token, proxy=proxy)
 
     def set_chat_photo(
             self,
