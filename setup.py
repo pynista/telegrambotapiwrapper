@@ -6,7 +6,7 @@ import setuptools
 __title__ = 'telegrambotapiwrapper'
 __description__ = 'Python Telegram Bot Api Wrapper.'
 __url__ = 'https://github.com/pynista/telegrambotapiwrapper'
-__version__ = '0.4.5'
+__version__ = '0.5.0'
 __author__ = 'Dzmitry Maliuzhenets'
 __author_email__ = 'dzmitrymaliuzhenets@gmail.com'
 __license__ = 'MIT'
@@ -42,6 +42,8 @@ setup(
         'Natural Language :: Russian',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Operating System :: OS Independent',
     ],
