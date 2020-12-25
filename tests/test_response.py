@@ -2,13 +2,13 @@ import unittest
 
 from telegrambotapiwrapper.annotation import AnnotationWrapper
 from telegrambotapiwrapper.response import dataclass_fields_to_jdict
-from telegrambotapiwrapper.response import replace__from__by__from_user
+from telegrambotapiwrapper.response import replace__from__by__from_
 from telegrambotapiwrapper.response import to_api_type
 from telegrambotapiwrapper.typelib import *
 
 
 def dataclass_fields_to_jdict_for_testing(obj: dict):
-    return replace__from__by__from_user(dataclass_fields_to_jdict(obj))
+    return replace__from__by__from_(dataclass_fields_to_jdict(obj))
 
 
 class TestToApiTypeFunction(unittest.TestCase):
@@ -134,7 +134,7 @@ class TestToApiTypeFunction(unittest.TestCase):
             message_id=12312321,
             date=4584979847685478,
             chat=chat,
-            from_user=user,
+            from_=user,
         )
 
         for message in [
@@ -157,7 +157,7 @@ class TestToApiTypeFunction(unittest.TestCase):
 
         callback_query = CallbackQuery(
             id="dfgrewregfrewfgd",
-            from_user=user,
+            from_=user,
             chat_instance="3243543",
         )
 

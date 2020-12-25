@@ -1,8 +1,8 @@
 import unittest
 
-from telegrambotapiwrapper.request import replace__from_user__to__from
+from telegrambotapiwrapper.request import replace__from___to__from
 from telegrambotapiwrapper.response import is_str_int_float_bool
-from telegrambotapiwrapper.response import replace__from__by__from_user
+from telegrambotapiwrapper.response import replace__from__by__from_
 
 
 def is_ends_with_underscore(value: str):
@@ -32,8 +32,8 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(is_ends_with_underscore(""))
 
     def test_replace_from_word(self):
-        """from -> from_user"""
-        without_from_user = {
+        """from -> from_"""
+        without_from_ = {
             'chat': {
                 'all_members_are_administrators': True,
                 'first_name': 'regfrefre',
@@ -62,16 +62,16 @@ class TestUtils(unittest.TestCase):
             'message_id': 12312321
         }
 
-        res = replace__from__by__from_user(without_from_user)
-        self.assertIn("from_user", res['chat']['pinned_message']['chat'])
+        res = replace__from__by__from_(without_from_)
+        self.assertIn("from_", res['chat']['pinned_message']['chat'])
         self.assertNotIn("from", res['chat']['pinned_message']['chat'])
-        self.assertIn("from_user", res)
+        self.assertIn("from_", res)
         self.assertNotIn("from", res)
 
     def test_replace_from__word(self):
-        """from_user -> from"""
+        """from_ -> from"""
 
-        with_from_user = {
+        with_from_ = {
             'chat': {
                 'all_members_are_administrators': True,
                 'first_name': 'regfrefre',
@@ -81,7 +81,7 @@ class TestUtils(unittest.TestCase):
                         'id': 12344332534,
                         'title': 'fjhdkjfhskdlhsj',
                         'type': 'sddsfdsf',
-                        'from_user': False
+                        'from_': False
                     },
                     'date': 12435324,
                     'message_id': 123214234
@@ -91,7 +91,7 @@ class TestUtils(unittest.TestCase):
                 'username': 'regfrefre'
             },
             'date': 4584979847685478,
-            'from_user': {
+            'from_': {
                 'first_name': '23fdvfvdsc',
                 'id': 1232343,
                 'is_bot': False,
@@ -100,8 +100,8 @@ class TestUtils(unittest.TestCase):
             'message_id': 12312321
         }
 
-        res = replace__from_user__to__from(with_from_user)
+        res = replace__from___to__from(with_from_)
         self.assertIn("from", res['chat']['pinned_message']['chat'])
-        self.assertNotIn("from_user", res['chat']['pinned_message']['chat'])
+        self.assertNotIn("from_", res['chat']['pinned_message']['chat'])
         self.assertIn("from", res)
-        self.assertNotIn("from_user", res)
+        self.assertNotIn("from_", res)

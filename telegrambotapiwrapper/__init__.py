@@ -178,6 +178,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             sticker: Union[BinaryIO, str],
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -327,8 +328,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             self,
             url: str,
             certificate: Optional[BinaryIO] = None,
+            ip_address: Optional[str] = None,
             max_connections: Optional[int] = None,
             allowed_updates: Optional[List[str]] = None,
+            drop_pending_updates: Optional[bool] = None,
     ) -> bool:
         """Use this method to specify a url and receive incoming updates via an
            outgoing webhook. Whenever there is an update for the bot, we will
@@ -357,12 +360,14 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             audio: Union[BinaryIO, str],
             caption: Optional[str] = None,
             parse_mode: Optional[str] = None,
+            caption_entities: Optional[List[MessageEntity]] = None,
             duration: Optional[int] = None,
             performer: Optional[str] = None,
             title: Optional[str] = None,
             thumb: Optional[Union[BinaryIO, str]] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -436,8 +441,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             photo: Union[BinaryIO, str],
             caption: Optional[str] = None,
             parse_mode: Optional[str] = None,
+            caption_entities: Optional[List[MessageEntity]] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -569,7 +576,9 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
 
         return self._make_request()
 
-    def delete_webhook(self, ) -> bool:
+    def delete_webhook(self,
+                       drop_pending_updates: Optional[bool] = None,
+                       ) -> bool:
         """Use this method to remove webhook integration if you decide to switch
            back to getUpdates. Returns True on success."""
 
@@ -582,6 +591,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             inline_message_id: Optional[str] = None,
             caption: Optional[str] = None,
             parse_mode: Optional[str] = None,
+            caption_entities: Optional[List[MessageEntity]] = None,
             reply_markup: Optional[InlineKeyboardMarkup] = None,
     ) -> Union[Message, bool]:
         """Use this method to edit captions of messages sent by the bot or via
@@ -597,6 +607,9 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             chat_id: Optional[Union[int, str]] = None,
             message_id: Optional[int] = None,
             inline_message_id: Optional[str] = None,
+            horizontal_accuracy: Optional[float] = None,
+            heading: Optional[int] = None,
+            proximity_alert_radius: Optional[int] = None,
             reply_markup: Optional[InlineKeyboardMarkup] = None,
     ) -> Union[Message, bool]:
         """Use this method to edit live location messages sent by the bot or via
@@ -682,9 +695,8 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             self,
             chat_id: Union[int, str],
     ) -> Chat:
-        """Use this method to get up to date information about the chat (current
-           name of the user for one-on-one conversations, current username of a
-           user, group or channel, etc.). Returns a Chat object on success."""
+        """Use this method to get up to date information about the chat (current name of the user for one-on-one
+        conversations, current username of a user, group or channel, etc.). Returns a Chat object on success."""
 
         return self._make_request()
 
@@ -834,6 +846,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             self,
             chat_id: Union[int, str],
             user_id: int,
+            is_anonymous: Optional[bool] = None,
             can_change_info: Optional[bool] = None,
             can_post_messages: Optional[bool] = None,
             can_edit_messages: Optional[bool] = None,
@@ -874,8 +887,10 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             thumb: Optional[Union[BinaryIO, str]] = None,
             caption: Optional[str] = None,
             parse_mode: Optional[str] = None,
+            caption_entities: Optional[List[MessageEntity]] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -963,6 +978,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             vcard: Optional[str] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -979,8 +995,11 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             thumb: Optional[Union[BinaryIO, str]] = None,
             caption: Optional[str] = None,
             parse_mode: Optional[str] = None,
+            caption_entities: Optional[List[MessageEntity]] = None,
+            disable_content_type_detection: Optional[bool] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1052,6 +1071,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             game_short_name: str,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[InlineKeyboardMarkup] = None,
     ) -> Message:
         """Use this method to send a game. On success, the sent Message is
@@ -1083,6 +1103,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             is_flexible: Optional[bool] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[InlineKeyboardMarkup] = None,
     ) -> Message:
         """Use this method to send invoices. On success, the sent Message is
@@ -1095,9 +1116,13 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             chat_id: Union[int, str],
             latitude: float,
             longitude: float,
+            horizontal_accuracy: Optional[float] = None,
+            heading: Optional[int] = None,
             live_period: Optional[int] = None,
+            proximity_alert_radius: Optional[int] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1113,9 +1138,11 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             media: List[Union[InputMediaPhoto, InputMediaVideo]],
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
-    ) -> Message:
-        """Use this method to send a group of photos or videos as an album. On
-           success, an array of the sent Messages is returned."""
+            allow_sending_without_reply: Optional[bool] = None,
+    ) -> List[Message]:
+        """Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio
+        files can be only grouped in an album with messages of the same type. On success, an array of Messages that
+        were sent is returned."""
 
         return self._make_request()
 
@@ -1127,6 +1154,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             disable_web_page_preview: Optional[bool] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1152,6 +1180,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             is_closed: Optional[bool] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1170,8 +1199,11 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             address: str,
             foursquare_id: Optional[str] = None,
             foursquare_type: Optional[str] = None,
+            google_place_id: Optional[str] = None,
+            google_place_type: Optional[str] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1191,9 +1223,11 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             thumb: Optional[Union[BinaryIO, str]] = None,
             caption: Optional[str] = None,
             parse_mode: Optional[str] = None,
+            caption_entities: Optional[List[MessageEntity]] = None,
             supports_streaming: Optional[bool] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1269,6 +1303,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             thumb: Optional[Union[BinaryIO, str]] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1340,9 +1375,11 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             voice: Union[BinaryIO, str],
             caption: Optional[str] = None,
             parse_mode: Optional[str] = None,
+            caption_entities: Optional[List[MessageEntity]] = None,
             duration: Optional[int] = None,
             disable_notification: Optional[bool] = None,
             reply_to_message_id: Optional[int] = None,
+            allow_sending_without_reply: Optional[bool] = None,
             reply_markup: Optional[
                 Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                       ReplyKeyboardRemove, ForceReply]] = None,
@@ -1478,22 +1515,35 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
             self,
             chat_id: Union[int, str],
             user_id: int,
+            only_if_banned: Optional[bool] = None,
     ) -> bool:
-        """Use this method to unban a previously kicked user iouter_argsn a supergroup or
-           channel. The user will not return to the group or channel
-           automatically, but will be able to join via link, etc. The bot must be
-           an administrator for this to work. Returns True on success."""
+        """Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the
+        group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for
+        this to work. By default, this method guarantees that after the call the user is not a member of the chat, but
+        will be able to join it. So if the user is a member of the chat they will also be removed from the chat. If you
+        don't want this, use the parameter only_if_banned. Returns True on success."""
 
         return self._make_request()
 
     def unpin_chat_message(
             self,
             chat_id: Union[int, str],
+            message_id: Optional[int] = None,
     ) -> bool:
         """Use this method to unpin a message in a group, a supergroup, or a
            channel. The bot must be an administrator in the chat for this to work
            and must have the ‘can_pin_messages’ admin right in the supergroup or
            ‘can_edit_messages’ admin right in the channel. Returns True on success."""
+
+        return self._make_request()
+
+    def unpin_all_chat_messages(
+            self,
+            chat_id: Union[int, str],
+    ) -> bool:
+        """Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot
+        must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a
+        supergroup or 'can_edit_messages' admin right in a channel. Returns True on success."""
 
         return self._make_request()
 
@@ -1511,6 +1561,7 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                   emoji: Optional[str] = None,
                   disable_notification: Optional[bool] = None,
                   reply_to_message_id: Optional[int] = None,
+                  allow_sending_without_reply: Optional[bool] = None,
                   reply_markup: Optional[
                       Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
                             ReplyKeyboardRemove, ForceReply]] = None,
@@ -1549,3 +1600,42 @@ class Api(ApiBase):  # pylint: disable=too-many-public-methods
                                         )
             return handle_response(
                 r.content.decode('utf-8'), AnnotationWrapper('bool'))
+
+    def log_out(self) -> bool:
+        """Use this method to log out from the cloud Bot API server before launching the bot locally. You must log out
+        the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a
+        successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud
+        Bot API server for 10 minutes. Returns True on success. Requires no parameters."""
+        return self._make_request()
+
+    def close(self) -> bool:
+        """Use this method to close the bot instance before moving it from one local server to another. You need to
+        delete the webhook before calling this method to ensure that the bot isn't launched again after server restart.
+        The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success.
+        Requires no parameters.
+        """
+        return self._make_request()
+
+    def copy_message(self,
+                     chat_id: Union[int, str],
+                     from_chat_id: Union[int, str],
+                     message_id: int,
+                     caption: Optional[str] = None,
+                     parse_mode: Optional[str] = None,
+                     caption_entities: Optional[List[MessageEntity]] = None,
+                     disable_notification: Optional[bool] = None,
+                     reply_to_message_id: Optional[int] = None,
+                     allow_sending_without_reply: Optional[bool] = None,
+                     reply_markup: Union[InlineKeyboardMarkup,
+                                         ReplyKeyboardMarkup,
+                                         ReplyKeyboardRemove,
+                                         ForceReply] = None,
+                     ):
+        """Use this method to copy messages of any kind. The method is analogous to the method forwardMessages, but the
+        copied message doesn't have a link to the original message. Returns the MessageId of the sent message on
+        success."""
+        return self._make_request()
+
+
+
+

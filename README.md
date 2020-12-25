@@ -2,7 +2,7 @@
 
 `telegrambotapiwrapper` is Telegram Bot Api implementation for Python
 # Requirements
-Python 3.7 or Python 3.8
+cpython: 3.7, 3.8, 3.9
 # Installation
 ```
 pip install telegrambotapiwrapper
@@ -56,7 +56,7 @@ Message(message_id=299, date=1558966491, chat=Chat(id=--12345678912345, type='ch
 * All types of Telegram Bot Api are imported from the `typelib` module.
 ## License
 MIT License
-Copyright (c) 2019 Dzmitry Maliuzhenets
+Copyright (c) 2020 Dzmitry Maliuzhenets
 
 See LICENSE for details.
 

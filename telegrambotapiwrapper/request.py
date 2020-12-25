@@ -6,25 +6,24 @@
 import jsonpickle
 
 
-def replace__from_user__to__from(d: dict):
-    """Replace recursive keys in the object from_user to from."""
+def replace__from___to__from(d: dict):
+    """Replace recursive keys in the object from_ to from."""
     res = {}
     if not isinstance(d, (dict, list)):
         return d
     if isinstance(d, list):
-        return [replace__from_user__to__from(v) for v in d]
+        return [replace__from___to__from(v) for v in d]
 
     for key, value in d.items():
-        if key == 'from_user':
-            res['from'] = replace__from_user__to__from(d['from_user'])
+        if key == 'from_':
+            res['from'] = replace__from___to__from(d['from_'])
         else:
-            res[key] = replace__from_user__to__from(d[key])
+            res[key] = replace__from___to__from(d[key])
     return res
 
 
 def json_payload(args: dict) -> str:
     """Get the string containing the object to send to Telegram Bot Api.
-
     Args:
         args(dict): data dictionary to send
     Returns:
@@ -46,6 +45,6 @@ def json_payload(args: dict) -> str:
     jstr = jsonpickle.encode(args, unpicklable=False)
     py_obj = jsonpickle.decode(jstr)
     py_obj = remove_none_values(py_obj)
-    py_obj = replace__from_user__to__from(py_obj)
+    py_obj = replace__from___to__from(py_obj)
     jstr = jsonpickle.dumps(py_obj)
     return jstr

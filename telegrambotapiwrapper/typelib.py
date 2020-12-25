@@ -64,7 +64,6 @@ class Chat(Base):
     username: Optional[str] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
-    # all_members_are_administrators: Optional[bool] = None
     photo: Optional[ChatPhoto] = None
     description: Optional[str] = None
     invite_link: Optional[str] = None
@@ -73,6 +72,7 @@ class Chat(Base):
     slow_mode_delay: Optional[int] = None
     sticker_set_name: Optional[str] = None
     can_set_sticker_set: Optional[bool] = None
+    location: Optional[ChatLocation] = None
 
 
 @dataclass
@@ -82,7 +82,8 @@ class Message(Base):
     message_id: int
     date: int
     chat: Chat
-    from_user: Optional[User] = None
+    from_: Optional[User] = None
+    sender_chat: Optional[Chat] = None
     forward_from: Optional[User] = None
     forward_from_chat: Optional[Chat] = None
     forward_from_message_id: Optional[int] = None
@@ -127,6 +128,7 @@ class Message(Base):
     successful_payment: Optional[SuccessfulPayment] = None
     connected_website: Optional[str] = None
     passport_data: Optional[PassportData] = None
+    proximity_alert_triggered: Optional[ProximityAlertTriggered] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
 
 
@@ -179,6 +181,7 @@ class Audio(Base):
     duration: int
     performer: Optional[str] = None
     title: Optional[str] = None
+    file_name: Optional[str] = None
     mime_type: Optional[str] = None
     file_size: Optional[int] = None
     thumb: Optional[PhotoSize] = None
@@ -207,6 +210,7 @@ class Video(Base):
     height: int
     duration: int
     thumb: Optional[PhotoSize] = None
+    file_name: Optional[str] = None
     mime_type: Optional[str] = None
     file_size: Optional[int] = None
 
@@ -269,6 +273,10 @@ class Location(Base):
 
     longitude: float
     latitude: float
+    horizontal_accuracy: Optional[float] = None
+    live_period: Optional[int] = None
+    heading: Optional[int] = None
+    proximity_alert_radius: Optional[int] = None
 
 
 @dataclass
@@ -280,6 +288,8 @@ class Venue(Base):
     address: str
     foursquare_id: Optional[str] = None
     foursquare_type: Optional[str] = None
+    google_place_id: Optional[str] = None
+    google_place_type: Optional[str] = None
 
 
 @dataclass
@@ -402,7 +412,7 @@ class CallbackQuery(Base):
        Exactly one of the fields data or game_short_name will     be present."""
 
     id: str
-    from_user: User
+    from_: User
     chat_instance: str
     message: Optional[Message] = None
     inline_message_id: Optional[str] = None
@@ -437,6 +447,7 @@ class ChatMember(Base):
     user: User
     status: str
     custom_title: Optional[str] = None
+    is_anonymous: Optional[bool] = None
     until_date: Optional[int] = None
     can_be_edited: Optional[bool] = None
     can_change_info: Optional[bool] = None
@@ -471,6 +482,7 @@ class InputMediaPhoto(Base):
     media: str
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
 
 
 @dataclass
@@ -482,6 +494,7 @@ class InputMediaVideo(Base):
     thumb: Optional[Union[InputFile, str]] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     width: Optional[int] = None
     height: Optional[int] = None
     duration: Optional[int] = None
@@ -498,6 +511,7 @@ class InputMediaAnimation(Base):
     thumb: Optional[Union[InputFile, str]] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     width: Optional[int] = None
     height: Optional[int] = None
     duration: Optional[int] = None
@@ -512,6 +526,7 @@ class InputMediaAudio(Base):
     thumb: Optional[Union[InputFile, str]] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     duration: Optional[int] = None
     performer: Optional[str] = None
     title: Optional[str] = None
@@ -526,6 +541,8 @@ class InputMediaDocument(Base):
     thumb: Optional[Union[InputFile, str]] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
+    disable_content_type_detection: Optional[bool] = None
 
 
 @dataclass
@@ -589,6 +606,7 @@ class WebhookInfo(Base):
     url: str
     has_custom_certificate: bool
     pending_update_count: int
+    ip_address: Optional[str] = None
     last_error_date: Optional[int] = None
     last_error_message: Optional[str] = None
     max_connections: Optional[int] = None
@@ -602,7 +620,7 @@ class InlineQuery(Base):
        results."""
 
     id: str
-    from_user: User
+    from_: User
     query: str
     offset: str
     location: Optional[Location] = None
@@ -642,6 +660,7 @@ class InlineQueryResultPhoto(Base):
     description: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -664,6 +683,7 @@ class InlineQueryResultGif(Base):
     title: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -687,6 +707,7 @@ class InlineQueryResultMpeg4Gif(Base):
     title: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -707,6 +728,7 @@ class InlineQueryResultVideo(Base):
     title: str
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     video_width: Optional[int] = None
     video_height: Optional[int] = None
     video_duration: Optional[int] = None
@@ -728,6 +750,7 @@ class InlineQueryResultAudio(Base):
     title: str
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     performer: Optional[str] = None
     audio_duration: Optional[int] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
@@ -747,6 +770,7 @@ class InlineQueryResultVoice(Base):
     title: str
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     voice_duration: Optional[int] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
@@ -767,6 +791,7 @@ class InlineQueryResultDocument(Base):
     mime_type: str
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     description: Optional[str] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
@@ -786,7 +811,10 @@ class InlineQueryResultLocation(Base):
     latitude: float
     longitude: float
     title: str
+    horizontal_accuracy: Optional[float] = None
     live_period: Optional[int] = None
+    heading: Optional[int] = None
+    proximity_alert_radius: Optional[int] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
     thumb_url: Optional[str] = None
@@ -808,6 +836,8 @@ class InlineQueryResultVenue(Base):
     address: str
     foursquare_id: Optional[str] = None
     foursquare_type: Optional[str] = None
+    google_place_id: Optional[str] = None
+    google_place_type: Optional[str] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
     thumb_url: Optional[str] = None
@@ -859,6 +889,7 @@ class InlineQueryResultCachedPhoto(Base):
     description: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -877,6 +908,7 @@ class InlineQueryResultCachedGif(Base):
     title: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -895,6 +927,7 @@ class InlineQueryResultCachedMpeg4Gif(Base):
     title: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -927,6 +960,7 @@ class InlineQueryResultCachedDocument(Base):
     description: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -945,6 +979,7 @@ class InlineQueryResultCachedVideo(Base):
     description: Optional[str] = None
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -962,6 +997,7 @@ class InlineQueryResultCachedVoice(Base):
     title: str
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -978,6 +1014,7 @@ class InlineQueryResultCachedAudio(Base):
     audio_file_id: str
     caption: Optional[str] = None
     parse_mode: Optional[str] = None
+    caption_entities: Optional[List[MessageEntity]] = None
     reply_markup: Optional[InlineKeyboardMarkup] = None
     input_message_content: Optional[InputMessageContent] = None
 
@@ -1006,7 +1043,10 @@ class InputLocationMessageContent(Base):
 
     latitude: float
     longitude: float
+    horizontal_accuracy: Optional[float] = None
     live_period: Optional[int] = None
+    heading: Optional[int] = None
+    proximity_alert_radius: Optional[int] = None
 
 
 @dataclass
@@ -1020,6 +1060,8 @@ class InputVenueMessageContent(Base):
     address: str
     foursquare_id: Optional[str] = None
     foursquare_type: Optional[str] = None
+    google_place_id: Optional[str] = None
+    google_place_type: Optional[str] = None
 
 
 @dataclass
@@ -1039,7 +1081,7 @@ class ChosenInlineResult(Base):
        and sent to their     chat partner."""
 
     result_id: str
-    from_user: User
+    from_: User
     query: str
     location: Optional[Location] = None
     inline_message_id: Optional[str] = None
@@ -1268,7 +1310,7 @@ class ShippingQuery(Base):
     """This object contains information about an incoming shipping query."""
 
     id: str
-    from_user: User
+    from_: User
     invoice_payload: str
     shipping_address: ShippingAddress
 
@@ -1279,7 +1321,7 @@ class PreCheckoutQuery(Base):
        query."""
 
     id: str
-    from_user: User
+    from_: User
     currency: str
     total_amount: int
     invoice_payload: str
@@ -1339,3 +1381,18 @@ class PollAnswer(Base):
     poll_id: str
     user: User
     option_ids: List[int]
+
+
+@dataclass
+class ChatLocation(Base):
+    """Represents a location to which a chat is connected."""
+    location: Location
+    address: str
+
+@dataclass
+class ProximityAlertTriggered(Base):
+    """This object represents the content of a service message, sent whenever a user in the chat triggers a proximity
+    alert set by another user."""
+    traveler: User
+    watcher: User
+    distance: int

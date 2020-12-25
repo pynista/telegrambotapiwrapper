@@ -6,8 +6,9 @@ import jsonpickle
 
 import telegrambotapiwrapper.typelib as types_module
 from telegrambotapiwrapper.annotation import AnnotationWrapper
-from telegrambotapiwrapper.errors import RequestResultIsNotOk
+from telegrambotapiwrapper.errors import UnsuccessfulRequest
 from telegrambotapiwrapper.request import json_payload
+from telegrambotapiwrapper.typelib import ResponseParameters
 
 
 def is_str_int_float_bool(value):
@@ -22,28 +23,26 @@ def dataclass_fields_to_jdict(fields: dict) -> dict:
     return res
 
 
-def replace__from__by__from_user(d: dict):
-    """Replace recursive keys in the object from to from_user."""
+def replace__from__by__from_(d: dict):
+    """Replace recursive keys in the object from to from_."""
     res = {}
     if not isinstance(d, (dict, list)):
         return d
     if isinstance(d, list):
-        return [replace__from__by__from_user(v) for v in d]
+        return [replace__from__by__from_(v) for v in d]
 
     for key, value in d.items():
         if key == 'from':
-            res['from_user'] = replace__from__by__from_user(d['from'])
+            res['from_'] = replace__from__by__from_(d['from'])
         else:
-            res[key] = replace__from__by__from_user(d[key])
+            res[key] = replace__from__by__from_(d[key])
     return res
 
 
 def to_api_type(obj, anno: AnnotationWrapper):
     """Convert object to api type
-
     Convert the result of the request to the Telegram Bot API into the
     appropriate type.
-
     Notes:
         1)
             In the current versions of Telegram Bot Api (4.2), the following
@@ -142,45 +141,50 @@ def to_api_type(obj, anno: AnnotationWrapper):
                 continue
         return api_type(**to_type)
 
-
 def get_result(raw_response: str):
     """Extract the result from the raw response from the Bot API telegram.
-
     Args:
         raw_response (str): `raw` response from Bot API telegram
-
     Raises:
         RequestResultIsNotOk: if the answer contains no result
-
     Note:
         If raw_response does not contain an `ok` field, then we assume that this
         is an extracted result, for example, for testing purposes.
     """
     response = jsonpickle.loads(raw_response)
-    try:
-        is_ok = response["ok"]
-    except KeyError:
-        return response
-    if is_ok:
+    ok_field = response['ok']
+    if ok_field: # TODO: проверить тип ok_field т.е. что это булевское значение, а не строка
         return response['result']
-
     else:
-        raise RequestResultIsNotOk("error_code: {}, description: {}".format(
-            response['error_code'], response['description']))
+        description = response['description']
+        error_code = response['error_code']
+        parameters = response.get('parameters', None)
+        if not parameters:
+            raise UnsuccessfulRequest(description=description, error_code=error_code)
+        else:
+            to_rp = {}
+            if 'migrate_to_chat_id' in parameters:
+                to_rp['migrate_to_chat_id'] = parameters['migrate_to_chat_id']
+            if 'retry_after' in parameters:
+                to_rp['retry_after'] = parameters['retry_after']
+            raise UnsuccessfulRequest\
+                (description=description, error_code=error_code, parameters=ResponseParameters(**to_rp))
+
+
+
+
 
 
 def handle_response(raw_response: str,
                     method_response_type: AnnotationWrapper):
     """Parse a string that is a response from the Telegram Bot API.
-
     Args:
         raw_response (str): response from Telegram Bot API
         method_response_type (AnnotationWrapper): annotation of the expected
             response
-
     Raises:
         RequestResultIsNotOk: if the answer contains no result
     """
     res = get_result(raw_response)
-    res = replace__from__by__from_user(res)
+    res = replace__from__by__from_(res)
     return to_api_type(res, method_response_type)
