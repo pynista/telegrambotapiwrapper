@@ -3,7 +3,13 @@
 [Why telegrambotapiwrapper?](https://github.com/pynista/telegrambotapiwrapper#why)  
 [Requirements](https://github.com/pynista/telegrambotapiwrapper#requirements)  
 [Installation](https://github.com/pynista/telegrambotapiwrapper#installation)  
-[Usage](https://github.com/pynista/telegrambotapiwrapper#usage)  
+[Usage](https://github.com/pynista/telegrambotapiwrapper#usage)
+- [General remarks](https://github.com/pynista/telegrambotapiwrapper#remarks)  
+- [Types](https://github.com/pynista/telegrambotapiwrapper#types)
+- [Methods](https://github.com/pynista/telegrambotapiwrapper#methods)
+- [Making requests](https://github.com/pynista/telegrambotapiwrapper#requests)
+- [Responses](https://github.com/pynista/telegrambotapiwrapper#responses)  
+
 [Examples](https://github.com/pynista/telegrambotapiwrapper#examples)  
 [FAQ](https://github.com/pynista/telegrambotapiwrapper#FAQ)  
 [License](https://github.com/pynista/telegrambotapiwrapper#license)  
@@ -34,11 +40,11 @@ CPython
 pip install telegrambotapiwrapper
 ```
 # Usage<a name="usage"></a>
-## Общие замечания
+## General remarks<a name="remarks"></a>
 * Implemented all methods Telegram Bot Api
 * Implemented all types Telegram Bot Api
 
-## Types
+## Types<a name="types"></a>
 All types of Telegram Bot Api are imported from the `typelib` module.
 
 For example:
@@ -62,7 +68,7 @@ For example:
 ...)
 ```
 
-## Methods
+## Methods<a name="methods"></a>
 
 All Telegram Bot Api methods can be accessed through an instance of the `Api` class
 
@@ -75,8 +81,8 @@ For example:
 >>> bot_api.send_message(chat_id=-321532153215, text="Hello world")
 ```
 
-## Making requests
-## Responses
+## Making requests<a name="requests"></a>
+## Responses<a name="responses"></a>
 # Examples<a name="examples"></a>
 ### 1. Getting information about bot
 ```python
