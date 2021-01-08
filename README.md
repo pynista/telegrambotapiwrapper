@@ -45,7 +45,7 @@ pip install telegrambotapiwrapper
 * Implemented all types Telegram Bot Api
 
 ## Types<a name="types"></a>
-All types of Telegram Bot Api are imported from the `typelib` module.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All types of Telegram Bot Api are imported from the `typelib` module.
 
 For example:
 ```python
@@ -54,7 +54,7 @@ For example:
 >>> user = User(id=123456789, is_bot=False, first_name="UserFirstName")
 ```
 
-Types are all completely in line with the Telegram API's definition of the types, except for the Message's from field, which is renamed to from_ (because from is a Python reserved token)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Types are all completely in line with the Telegram API's definition of the types, except for the Message's `from` field, which is renamed to `from_` (because `from` is a Python keyword)
 
 For example:
 ```python
@@ -70,9 +70,8 @@ For example:
 
 ## Methods<a name="methods"></a>
 
-All Telegram Bot Api methods can be accessed through an instance of the `Api` class
-
-Methods are renamed to follow common Python naming conventions. E.g. getMe is renamed to get_me and sendMessage to send_message.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All Telegram Bot Api methods can be accessed through an instance of the `Api` class. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Methods are renamed to follow common Python naming conventions. E.g. getMe is renamed to get_me and sendMessage to send_message.
 
 For example:
 ```python
@@ -83,6 +82,9 @@ For example:
 
 ## Making requests<a name="requests"></a>
 ## Responses<a name="responses"></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;В случае успешного выполнения запроса, будет возвращено тот объект, который определен [документацией](https://core.telegram.org/bots/api#available-methods) для данного метода.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Например, для в случае успешного выполнения метода [sendMessage()](https://core.telegram.org/bots/api#sendmessage) будет возвращен объект [Message](https://core.telegram.org/bots/api#message).
 # Examples<a name="examples"></a>
 ### 1. Getting information about bot
 ```python
