@@ -83,31 +83,22 @@ For example:
 ## Making requests<a name="requests"></a>
 ## Responses<a name="responses"></a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;В случае *успешного* выполнения запроса, будет возвращено тот объект, который определен [документацией](https://core.telegram.org/bots/api#available-methods) для данного метода.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Например, для в случае успешного выполнения метода [sendMessage()](https://core.telegram.org/bots/api#sendmessage) будет возвращен объект [Message](https://core.telegram.org/bots/api#message).
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Например, для в случае успешного выполнения метода [sendMessage()](https://core.telegram.org/bots/api#sendmessage) будет возвращен объект [Message](https://core.telegram.org/bots/api#message).  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;В случае неуспешного запроса будет выбрано сгенерировано исключение `telegrambotapiwrapper.errors.UnsuccessfulRequest`.  
 
+Экземпляр исключения `UnsuccessfulRequest` имеет в том числе и следующие атрибуты:
 
-> **_NOTE:_**  Данное исключение генерируется на основании  следующей [информации](https://core.telegram.org/bots/api#making-requests):
-> 
-> The response contains a JSON object, which always has a Boolean field 'ok' and may have an optional String field 'description' with a human-readable description of the result. If 'ok' equals true, the request was successful and the result of the query can be found in the 'result' field. In case of an unsuccessful request, 'ok' equals false and the error is explained in the 'description'. An Integer 'error_code' field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field 'parameters' of the type ResponseParameters, which can help to automatically handle the error.
+Attribute name | Optional | Explanation
+------------ | ------------- | -------------
+description | No | Error explanation
+error_code |  No | Integer error code
+parameters |  Yes | Some errors may also have an optional field 'parameters' of the type ResponseParameters, which can help to automatically handle the error.
 
-
-Attribute name | Second Header
------------- | -------------
-description | Error explanation
-error_code |  Integer error code
-parameters |  Some errors may also have an optional field 'parameters' of the type ResponseParameters, which can help to automatically handle the error.
-
-
+Для прояснения как генерируется данное исключение следует ознакомиться со следующей [информацией](https://core.telegram.org/bots/api#making-requests):
 <details>
-  <summary>Spoiler warning</summary>
+  <summary>From official Telegram documentation</summary>
   
-  Spoiler text. Note that it's important to have a space after the summary tag. You should be able to write any markdown you want inside the `<details>` tag... just make sure you close `<details>` afterward.
-  
-  ```javascript
-  console.log("I'm a code block!");
-  ```
+  > The response contains a JSON object, which always has a Boolean field 'ok' and may have an optional String field 'description' with a human-readable description of the result. If 'ok' equals true, the request was successful and the result of the query can be found in the 'result' field. In case of an unsuccessful request, 'ok' equals false and the error is explained in the 'description'. An Integer 'error_code' field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field 'parameters' of the type ResponseParameters, which can help to automatically handle the error.
   
 </details>
 
