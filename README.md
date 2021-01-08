@@ -1,12 +1,25 @@
-# What is telegrambotapiwrapper?
+# Table of contents
+[What is telegrambotapiwrapper?](https://github.com/pynista/telegrambotapiwrapper#whatis)  
+[Why telegrambotapiwrapper?](https://github.com/pynista/telegrambotapiwrapper#why)  
+[Requirements](https://github.com/pynista/telegrambotapiwrapper#requirements)  
+[Installation](https://github.com/pynista/telegrambotapiwrapper#installation)  
+[Usage](https://github.com/pynista/telegrambotapiwrapper#usage)  
+[Examples](https://github.com/pynista/telegrambotapiwrapper#examples)  
+[FAQ](https://github.com/pynista/telegrambotapiwrapper#FAQ)  
+[License](https://github.com/pynista/telegrambotapiwrapper#license)  
+[Contributing](https://github.com/pynista/telegrambotapiwrapper#contributing)  
+[Contacts](https://github.com/pynista/telegrambotapiwrapper#contacts)  
+
+
+# What is telegrambotapiwrapper?<a name="whatis"></a>
 
 `telegrambotapiwrapper` is Telegram Bot Api implementation for Python
 
-# Why telegrambotapiwrapper?
+# Why telegrambotapiwrapper?<a name="why"></a>
 
 `telegrambotapiwrapper`is stable reliable implementation of Telegram Bot Api
 
-# Requirements
+# Requirements<a name="whatis"></a>
 
 ## Python implementations
 
@@ -16,11 +29,11 @@ CPython
 
 3.7, 3.8, 3.9
 
-# Installation
+# Installation<a name="whatis"></a>
 ```
 pip install telegrambotapiwrapper
 ```
-# Usage
+# Usage<a name="usage"></a>
 ## Общие замечания
 * Implemented all methods Telegram Bot Api
 * Implemented all types Telegram Bot Api
@@ -35,7 +48,7 @@ For example:
 >>> user = User(id=123456789, is_bot=False, first_name="UserFirstName")
 ```
 
-Types are all completely in line with the Telegram API's definition of the types, except for the Message's from field, which is renamed to from_user (because from is a Python reserved token)
+Types are all completely in line with the Telegram API's definition of the types, except for the Message's from field, which is renamed to from_ (because from is a Python reserved token)
 
 For example:
 ```python
@@ -55,11 +68,17 @@ All Telegram Bot Api methods can be accessed through an instance of the `Api` cl
 
 Methods are renamed to follow common Python naming conventions. E.g. getMe is renamed to get_me and sendMessage to send_message.
 
+For example:
+```python
+>>> from telegrambotapiwrapper import Api
+>>> bot_api = Api(token="<paste your token here>")
+>>> bot_api.send_message(chat_id=-321532153215, text="Hello world")
+```
 
 ## Making requests
 ## Responses
-# Examples
-### 1. Получение информации о боте
+# Examples<a name="examples"></a>
+### 1. Getting information about bot
 ```python
 >>> from telegrambotapiwrapper import Api
 >>> first_bot_api = Api(token="<paste your token here>")
@@ -90,14 +109,14 @@ Message(message_id=299, date=1558966491, chat=Chat(id=--12345678912345, type='ch
 ```
 >  Note that chat_id is negative.
 ### 4.
-# FAQ
-# License
+# FAQ<a name="FAQ"></a>
+# License<a name="license"></a>
 MIT License
 Copyright (c) 2020 Dzmitry Maliuzhenets
 
 See LICENSE for details.
-# Contributing
+# Contributing<a name="contributing"></a>
 Feel free to contribute
 
-# Contacts
+# Contacts<a name="contacts"></a>
 maliuzhenetsdzmitry @ gmail dot com
