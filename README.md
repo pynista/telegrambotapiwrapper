@@ -25,8 +25,14 @@ pip install telegrambotapiwrapper
 * Implemented all methods Telegram Bot Api
 * Implemented all types Telegram Bot Api
 
-## Import
-* All types of Telegram Bot Api are imported from the `typelib` module.
+## Methods
+All API methods are located in the TeleBot class. 
+
+They are renamed to follow common Python naming conventions. E.g. getMe is renamed to get_me and sendMessage to send_message.
+## Types
+All types of Telegram Bot Api are imported from the `typelib` module.
+
+They are all completely in line with the Telegram API's definition of the types, except for the Message's from field, which is renamed to from_user (because from is a Python reserved token)
 ## Making requests
 ## Responses
 # Examples
@@ -63,11 +69,12 @@ Message(message_id=299, date=1558966491, chat=Chat(id=--12345678912345, type='ch
 ### 4.
 # FAQ
 # License
-The MIT License (MIT)
-# Contributing
 MIT License
 Copyright (c) 2020 Dzmitry Maliuzhenets
 
 See LICENSE for details.
+# Contributing
+Feel free to contribute
+
 # Contacts
 maliuzhenetsdzmitry @ gmail dot com
